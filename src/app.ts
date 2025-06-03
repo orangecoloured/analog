@@ -51,7 +51,7 @@ const ANALOG = {
       return;
     }
 
-    const response = await fetch(`/api?token=${(new URL(location.href)).searchParams.get("token")}`);
+    const response = await fetch(`/api/get?token=${(new URL(location.href)).searchParams.get("token")}`);
 
     if (!response.ok) {
       loading?.remove();
