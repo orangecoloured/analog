@@ -1,0 +1,206 @@
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root {
+  isolation: isolate;
+}
+
+/*
+  App
+*/
+:root {
+  color-scheme: light dark;
+  --colour-light: #F9F6EE;
+  --colour-dark: #28282b;
+  --color-gradient: linear-gradient(200deg, light-dark(var(--colour-dark), var(--colour-light)) 0%, light-dark(color-mix(in srgb, var(--colour-dark) 60%, transparent), color-mix(in srgb, var(--colour-light) 60%, transparent)) 100%);
+  --gap-m-max: max(2dvw, 2dvh);
+  --gap-s-min: min(1dvw, 1dvh);
+  --columns-count: 10;
+}
+
+@keyframes rotate {
+  0% { transform: rotateZ(0) }
+  100% { transform: rotateZ(360deg) }
+}
+
+#root {
+  height: 100dvh;
+  background-color: light-dark(var(--colour-light), var(--colour-dark));
+  font-family: monospace;
+  padding: var(--gap-m-max);
+  color: light-dark(var(--colour-dark), var(--colour-light));
+  overflow: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: var(--gap-m-max) 0;
+  position: relative;
+}
+
+.header {
+  position: sticky;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: var(--gap-m-max) 0;
+}
+
+.logo {
+  aspect-ratio: 1;
+  width: 64px;
+  background: var(--color-gradient);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 0;
+  align-self: center;
+  clip-path: polygon(4% 0%, 96% 0%, 100% 4%, 100% 96%, 96% 100%, 8% 100%, 0% 92%, 0% 4%);
+  position: relative;
+}
+
+.logo:before {
+  content: "";
+  position: absolute;
+  aspect-ratio: 1;
+  top: 6px;
+  left: 2px;
+  width: 4px;
+  background-color: light-dark(var(--colour-light), var(--colour-dark));
+}
+
+.logo > * {
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: bold;
+  color: light-dark(var(--colour-light), var(--colour-dark));
+  letter-spacing: 6px;
+  text-indent: -6px;
+  direction: rtl;
+}
+
+.title {
+  font-size: 14px;
+}
+
+.title:empty {
+  display: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(var(--columns-count), 1fr);
+  grid-column-gap: var(--gap-s-min);
+  min-width: max-content;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.row > * {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 40px;
+  gap: var(--gap-s-min) 0;
+}
+
+.row > *:empty:before {
+  content: "0";
+  font-size: 10px;
+  font-weight: bold;
+  opacity: 0.2;
+}
+
+.row[data-type="header"] {
+  position: sticky;
+  border-bottom: 1px solid light-dark(var(--colour-dark), var(--colour-light));
+  padding: var(--gap-s-min) 0;
+  top: calc(var(--gap-m-max) * -1);
+  background-color: light-dark(var(--colour-light), var(--colour-dark));
+  z-index: 1;
+}
+
+.row[data-type="bars"] {
+  min-height: 80px;
+  height: 10dvh;
+}
+
+.bar {
+  flex: 1;
+  width: 100%;
+  max-width: 40px;
+  background: var(--color-gradient);
+}
+
+.value {
+  font-size: 10px;
+  flex-shrink: 0;
+  font-weight: bold;
+}
+
+.url {
+  position: sticky;
+  left: 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#loading {
+  width: 16px;
+  height: 16px;
+  border: 2px solid light-dark(var(--colour-dark), var(--colour-light));
+  border-top-color: light-dark(color-mix(in srgb, var(--colour-dark) 40%, transparent), color-mix(in srgb, var(--colour-light) 40%, transparent));
+  border-radius: 50%;
+  align-self: center;
+  animation: rotate 800ms linear infinite;
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+    <style>
+        path {
+            fill: url(#gradient-dark);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            path {
+                fill: url(#gradient-light);
+            }
+        }
+    </style>
+    <linearGradient id="gradient-dark" x1="0.6" y1="0" x2="0.4" y2="1" gradientTransform="matrix(16,0,0,16,0,0)" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-opacity="1" style="stop-color:rgb(40,40,43)"/>
+        <stop offset="100%" stop-opacity="0.6" style="stop-color:rgb(40,40,43)"/>
+    </linearGradient>
+    <linearGradient id="gradient-light" x1="0.6" y1="0" x2="0.4" y2="1" gradientTransform="matrix(16,0,0,16,0,0)" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-opacity="1" style="stop-color:rgb(249,246,238)"/>
+        <stop offset="100%" stop-opacity="0.6" style="stop-color:rgb(249,246,238)"/>
+    </linearGradient>
+    <path d="M 0 1 L 1 0 L 15 0 L 16 1 L 16 15 L 15 16 L 2 16 L 0 14 L 0 1 Z" />
+</svg>
+  
