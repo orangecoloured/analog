@@ -5,13 +5,20 @@
       "schedule": "0 8 * * *"
     }
   ],
+  "functions": {
+    "api/get.ts": {
+      "memory": 1024
+    },
+    "api/post.ts": {
+      "memory": 1024
+    },
+    "api/cleanUp.ts": {
+      "memory": 1024
+    },
+  }
   "routes": [
-    { "src": "/api/get", "dest": "/api/get.ts" },
-    { "src": "/api/post", "dest": "/api/post.ts" },
-    {
-      "src": "/api/cleanUp",
-      "status": 404,
-      "continue": false
-    }
+    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
+    { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.ts" },
+    { "src": "/api/cleanUp", "status": 404, "continue": false}
   ]
 }
