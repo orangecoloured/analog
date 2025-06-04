@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/cleanUp.ts": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "crons": [
     {
       "path": "/api/cleanUp",
