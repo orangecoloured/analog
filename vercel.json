@@ -6,8 +6,8 @@
     }
   ],
   "routes": [
-    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
-    { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.ts" },
+    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.cts" },
+    { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.cts" },
     { "src": "/api/cleanUp", "status": 404, "continue": false}
   ]
 }
