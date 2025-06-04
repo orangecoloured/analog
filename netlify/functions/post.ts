@@ -1,5 +1,5 @@
 import type { Handler } from "@netlify/functions";
-import { pushData } from "../../src/api/push";
+import { pushData } from "../../api/push";
 
 export const handler: Handler = async (event) => {
   if (event.httpMethod !== "POST") {
