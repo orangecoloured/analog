@@ -17,7 +17,7 @@
     }
   },
   "routes": [
-    { "src": "/api/get", "methods": ["GET"], "dest": "dist/api/get.ts" },
+    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
     { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.ts" },
     { "src": "/api/cleanUp", "status": 404, "continue": false}
   ]
