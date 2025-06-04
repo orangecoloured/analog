@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "RCKT",
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@eslint/js": "^9.27.0",
     "@netlify/vite-plugin": "^2.1.2",
