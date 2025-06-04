@@ -16,7 +16,6 @@ function getAllTSFiles(dir: string, baseDir: string): Record<string, string> {
       if (stat.isDirectory()) {
         walk(fullPath)
       } else if (stat.isFile() && fullPath.endsWith('.ts')) {
-        // Remove base path and .ts extension to create key
         const relativePath = path.relative(baseDir, fullPath)
         const key = relativePath.replace(/\.ts$/, '') // e.g., "utils/helper"
         entries[key] = fullPath
