@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "vite build",
-    "dev": "concurrently 'vite' 'DEBUG=ioredis:* tsx watch --env-file=.env.local src/api/index.ts'"
+    "dev": "concurrently 'vite' 'DEBUG=ioredis:* tsx watch --env-file=.env.local api/index.ts'"
   },
   "keywords": [],
   "author": "RCKT",

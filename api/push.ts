@@ -1,4 +1,4 @@
-import { REDIS_KEY_PREFIX, uuid } from "../utils";
+import { REDIS_KEY_PREFIX, uuid } from "../src/utils";
 import { redis } from "./redis";
 
 export const pushData = (event: string) => {

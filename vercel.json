@@ -1,24 +1,24 @@
 {
   "crons": [
     {
-      "path": "/api/cleanUp",
+      "path": "/api/vercel/cleanUp",
       "schedule": "0 8 * * *"
     }
   ],
   "functions": {
-    "api/get.ts": {
+    "api/vercel/get.ts": {
       "memory": 1024
     },
-    "api/post.ts": {
+    "api/vercel/post.ts": {
       "memory": 1024
     },
-    "api/cleanUp.ts": {
+    "api/vercel/cleanUp.ts": {
       "memory": 1024
     }
   },
   "routes": [
-    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
-    { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.ts" },
+    { "src": "/api/get", "methods": ["GET"], "dest": "/api/vercel/get.ts" },
+    { "src": "/api/post", "methods": ["POST"], "dest": "/api/vercel/post.ts" },
     { "src": "/api/cleanUp", "status": 404, "continue": false}
   ]
 }
