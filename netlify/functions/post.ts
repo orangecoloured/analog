@@ -1,4 +1,4 @@
-import { Handler } from "@netlify/functions";
+import type { Handler } from "@netlify/functions";
 import { pushData } from "../../src/api/push";
 
 export const handler: Handler = async (event) => {
