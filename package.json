@@ -4,7 +4,7 @@
   "description": "Minimal analytics tool.",
   "main": "index.js",
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && npx tsc src/api/get.ts --esModuleInterop --outDir dist",
     "dev": "concurrently 'vite' 'DEBUG=ioredis:* tsx watch --env-file=.env.local src/api/index.ts'"
   },
   "keywords": [],
