@@ -14,7 +14,7 @@
     },
     "api/cleanUp.ts": {
       "memory": 1024
-    },
+    }
   },
   "routes": [
     { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
