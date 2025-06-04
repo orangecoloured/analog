@@ -1,13 +1,13 @@
 {
   "crons": [
     {
-      "path": "/api/cleanUp",
+      "path": "api/cleanUp",
       "schedule": "0 8 * * *"
     }
   ],
   "routes": [
-    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
-    { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.ts" },
+    { "src": "/api/get", "methods": ["GET"], "dest": "api/get.ts" },
+    { "src": "/api/post", "methods": ["POST"], "dest": "api/post.ts" },
     { "src": "/api/cleanUp", "status": 404, "continue": false }
   ]
 }
