@@ -5,9 +5,27 @@
       "schedule": "0 8 * * *"
     }
   ],
+  "functions": {
+    "api/get.ts": {
+      "memory": 1024
+    },
+    "api/post.ts": {
+      "memory": 1024
+    },
+    "api/cleanUp.ts": {
+      "memory": 1024
+    }
+  },
+  "builds": [
+    {
+      "src": "api/get.ts",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["src/api/**"] }
+    }
+  ],
   "routes": [
-    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.cts" },
-    { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.cts" },
+    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
+    { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.ts" },
     { "src": "/api/cleanUp", "status": 404, "continue": false}
   ]
 }

@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-const { cleanUpOldData } = require('../src/api/cleanUp');
+import { cleanUpOldData } from '../src/api/cleanUp';
 
 export default async function handler(_req: VercelRequest, res: VercelResponse) {
   await cleanUpOldData();
