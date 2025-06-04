@@ -1,4 +1,4 @@
-import { mockData, REDIS_KEY_PREFIX, uuid } from "../src/utils";
+import { mockData, REDIS_KEY_PREFIX, uuid } from "../utils";
 import { pipeline } from "./redis";
 
 export const setMockData = (props?: { range?: number, count?: number, timestampsCount?: number }) => {

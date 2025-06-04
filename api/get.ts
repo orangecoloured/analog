@@ -1,22 +1,28 @@
-import { REDIS_KEY_PREFIX, type TData } from "../src/utils";
-import { redis } from "./redis";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { getData } from "../src/api/get";
 
-export const getData = async(): Promise<TData> => {
-  const data: TData = {};
-  const prefix = `${REDIS_KEY_PREFIX}:`;
-  let cursor = "0";
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== "GET") {
+    return res.status(405).json({ error: "Method Not Allowed" });
+  }
 
-  do {
-    const [nextCursor, keys] = await redis.scan(cursor, "MATCH", `${prefix}*`, "COUNT", 100);
-    cursor = nextCursor;
+  const token = req.query.token as string;
 
-    for (const key of keys) {
-      const event = key.slice(prefix.length);
-      const timestamps = await redis.zrange(key, 0, -1, "WITHSCORES");
+  if (process.env.VITE_ANALOG_GET_TOKEN && token !== process.env.VITE_ANALOG_GET_TOKEN) {
+    return res.status(200).json({});
+  }
 
-      data[event] = timestamps.filter((_, i) => i % 2 !== 0).map(Number)
-    }
-  } while (cursor !== "0")
+  try {
+    const data = await getData();
+
+    return res.status(200).json(data);
+  } catch (error) {
+    res.status(500).setHeader("Content-Type", "text/plain");
   
-  return data;
-}
+    return res.send(`Internal Server Error: ${error instanceof Error ? error.message : error}`);
+  }
+};
+
+export const config = {
+  runtime: "edge",
+};
