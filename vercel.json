@@ -6,7 +6,7 @@
     }
   ],
   "functions": {
-    "dist/api/get.ts": {
+    "api/get.ts": {
       "memory": 1024
     },
     "api/post.ts": {
