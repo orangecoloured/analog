@@ -1,11 +1,12 @@
-import { getData } from "../src/api/get";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { getData } from "../dist/api/get";
 
-export default async function handler(req, res) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }
 
-  const token = req.query.token;
+  const token = req.query.token as string;
 
   if (process.env.VITE_ANALOG_GET_TOKEN && token !== process.env.VITE_ANALOG_GET_TOKEN) {
     return res.status(200).json({});
