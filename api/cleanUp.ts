@@ -1,4 +1,4 @@
-import { REDIS_KEY_PREFIX, TIME_RANGE_MAX } from "../utils";
+import { REDIS_KEY_PREFIX, TIME_RANGE_MAX } from "../src/utils";
 import { redis } from "./redis";
 
 export const cleanUpOldData = async () => {
