@@ -1,7 +1,7 @@
 import { defineConfig, type UserConfig } from "vite";
 import netlify from "@netlify/vite-plugin";
 import { PORT_DEV } from "./src/utils";
-import path from 'path'
+import path, { resolve } from 'path'
 
 const vercelBuildApiFiles = [
   'src/api/get.ts',
@@ -17,14 +17,20 @@ const baseConfig = {
     emptyOutDir: true,
     
     rollupOptions: {
-      input: vercelBuildApiFiles.reduce((entries, file) => {
-        const relativePath = path.relative('src', file)
-        const entryName = relativePath.replace(/\.ts$/, '')
-        
-        entries[entryName] = path.resolve(__dirname, file)
-        
-        return entries;
-      }, {} as Record<string, string>),
+      input: {
+        // Main app entry from index.html
+        main: resolve(__dirname, 'index.html'),
+
+        // Explicit API entries
+        ...vercelBuildApiFiles.reduce((entries, file) => {
+          const relativePath = path.relative('src', file);
+          const entryName = relativePath.replace(/\.ts$/, '');
+          
+          entries[entryName] = resolve(__dirname, file);
+          
+          return entries;
+        }, {} as Record<string, string>),
+      },
       output: {
         entryFileNames: '[name].js',
         //preserveModulesRoot: 'src',
