@@ -5,17 +5,6 @@
       "schedule": "0 8 * * *"
     }
   ],
-  "functions": {
-    "api/get.js": {
-      "memory": 1024
-    },
-    "api/post.js": {
-      "memory": 1024
-    },
-    "api/cleanUp.js": {
-      "memory": 1024
-    }
-  },
   "routes": [
     { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.js" },
     { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.js" },
