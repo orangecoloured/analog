@@ -1,7 +1,7 @@
 import { REDIS_KEY_PREFIX, TIME_RANGE_MAX } from "../utils";
 import { redis } from "./redis";
 
-export const cleanUpOldData = async () => {
+const cleanUpOldData = async () => {
   let offset = parseInt(process.env.VITE_ANALOG_TIME_RANGE as string, 10);
 
   if (isNaN(offset)) {
@@ -21,3 +21,5 @@ export const cleanUpOldData = async () => {
     }
   } while (cursor !== "0");
 }
+
+export default cleanUpOldData;

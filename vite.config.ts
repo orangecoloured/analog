@@ -1,10 +1,13 @@
 import { defineConfig, type UserConfig } from "vite";
 import netlify from "@netlify/vite-plugin";
 import { PORT_DEV } from "./src/utils";
-import { globSync } from "node:fs";
 import path from 'path'
 
-const apiFiles = globSync('src/api/**/*.ts')
+const vercelBuildApiFiles = [
+  'src/api/get.ts',
+  'src/api/push.ts',
+  'src/api/cleanUp.ts',
+]
 
 const baseConfig = {
   root: ".",
@@ -12,6 +15,8 @@ const baseConfig = {
   build: {
     outDir: "dist",
     emptyOutDir: true,
+
+    
   }
 }
 
