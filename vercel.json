@@ -5,9 +5,6 @@
       "schedule": "0 8 * * *"
     }
   ],
-  "builds": [
-    { "src": "api/**/*.ts", "use": "@vercel/node" }
-  ],
   "routes": [
     { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
     { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.ts" },
