@@ -11,10 +11,10 @@ export const getData = async(): Promise<TData> => {
     cursor = nextCursor;
 
     for (const key of keys) {
-      const path = key.slice(prefix.length);
-      const timestamps = await redis.zrange(key, 0, -1, 'WITHSCORES');
+      const event = key.slice(prefix.length);
+      const timestamps = await redis.zrange(key, 0, -1, "WITHSCORES");
 
-      data[path] = timestamps.filter((_, i) => i % 2 !== 0).map(Number)
+      data[event] = timestamps.filter((_, i) => i % 2 !== 0).map(Number)
     }
   } while (cursor !== "0")
   

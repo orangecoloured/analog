@@ -7,7 +7,7 @@ export const mockData = (props?: { range?: number, count?: number, timestampsCou
   const tsCount = props?.timestampsCount || MOCK_MAX_TIMESTAMPS_COUNT;
   const startDate = new Date();
   const dataset: TData = {};
-    
+
   startDate.setDate(startDate.getDate() - (dateRange - 1));
 
   Array.from(Array(recordsCount)).forEach(() => {

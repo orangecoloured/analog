@@ -4,8 +4,8 @@ import { pipeline } from "./redis";
 export const setMockData = (props?: { range?: number, count?: number, timestampsCount?: number }) => {
   const dataset = mockData(props);
 
-  for (const [path, timestamps] of Object.entries(dataset)) {
-    const key = `${REDIS_KEY_PREFIX}:${path}`;
+  for (const [event, timestamps] of Object.entries(dataset)) {
+    const key = `${REDIS_KEY_PREFIX}:${event}`;
     const args: (string | number)[] = [];
 
     for (const timestamp of timestamps) {

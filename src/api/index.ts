@@ -2,11 +2,11 @@ import * as http  from "http";
 import { getData } from "./get";
 import { pushData } from "./push";
 import url from "url";
-import { sendError } from "../utils";
+import { PORT_DEV, sendError } from "../utils";
 
 let port = parseInt(process.env.VITE_ANALOG_PORT_DEV as string, 10);
 
-port = isNaN(port) ? 5174 : port + 1;
+port = isNaN(port) ? PORT_DEV + 1 : port + 1;
 
 const server = http.createServer((req, res) => {
   switch (req.method) {
@@ -14,15 +14,15 @@ const server = http.createServer((req, res) => {
       const parsedUrl = url.parse(req.url || "", true);
 
       if (process.env.VITE_ANALOG_GET_TOKEN && parsedUrl.query.token !== process.env.VITE_ANALOG_GET_TOKEN) {
-        res.writeHead(200, { 'Content-Type': 'applications/json' });
-        res.end({});
+        res.writeHead(200, { "Content-Type": "applications/json" });
+        res.end("{}");
 
         return;
       }
 
       getData()
         .then(data => {
-          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify(data));
         })
         .catch(error => {
@@ -33,18 +33,18 @@ const server = http.createServer((req, res) => {
     }
 
     case "POST": {
-      let data = '';
+      let data = "";
 
-      req.on('data', (chunk: string) => {
+      req.on("data", (chunk: string) => {
         data += chunk;
       });
 
-      req.on('end', () => {
+      req.on("end", () => {
         try {
-          const path = JSON.parse(data).path;
+          const event = JSON.parse(data).event;
 
-          if (path) {
-            pushData(path)
+          if (event) {
+            pushData(event)
               .then(() => {
                 res.writeHead(200);
                 res.end();
@@ -53,7 +53,7 @@ const server = http.createServer((req, res) => {
                 sendError(res, error);
               });
           } else {
-            sendError(res, "No `path` found");
+            sendError(res, "No `event` found");
           }
         } catch (error) {
           sendError(res, error);
@@ -64,8 +64,8 @@ const server = http.createServer((req, res) => {
     }
 
     default: {
-      res.writeHead(405, { 'Content-Type': 'text/plain' });
-      res.end('Method Not Allowed');
+      res.writeHead(405, { "Content-Type": "text/plain" });
+      res.end("Method Not Allowed");
 
       break;
     }

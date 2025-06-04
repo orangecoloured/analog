@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import netlify from "@netlify/vite-plugin";
+import { PORT_DEV } from "./src/utils";
 
 const baseConfig = {
   root: ".",
@@ -30,7 +31,7 @@ export default defineConfig(({ command }) => {
   if (command === 'serve') {
     let port = parseInt(process.env.VITE_ANALOG_PORT_DEV as string, 10);
 
-    port = isNaN(port) ? 5173 : port;
+    port = isNaN(port) ? PORT_DEV : port;
 
     return {
       ...baseConfig,

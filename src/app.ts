@@ -1,4 +1,4 @@
-import { canGetData, TIME_RANGE_MAX, TIME_RANGE_MIN, type TData } from "./utils";
+import { TIME_RANGE_MAX, TIME_RANGE_MIN, type TData } from "./utils";
 
 const ANALOG = {
   data: {
@@ -44,13 +44,6 @@ const ANALOG = {
   
   renderData: async function () {
     const loading = document.getElementById("loading");
-
-    if (!canGetData()) {
-      loading?.remove();
-
-      return;
-    }
-
     const response = await fetch(`/api/get?token=${(new URL(location.href)).searchParams.get("token")}`);
 
     if (!response.ok) {
@@ -68,7 +61,7 @@ const ANALOG = {
 
     const timeRangeArray = Array.from(this.data.rangeMap).flat().filter((_, i) => i % 2 === 0).map((label: string) => {
       if (!lastMonth || !label.endsWith(lastMonth)) {
-        lastMonth = label.substring(label.indexOf('/') + 1);
+        lastMonth = label.substring(label.indexOf("/") + 1);
         
         return label;
       } else {
@@ -76,13 +69,13 @@ const ANALOG = {
       }
     });
 
-    (document.querySelector(':root') as HTMLElement)?.style.setProperty('--columns-count', `${columnsCount}`);
+    (document.querySelector(":root") as HTMLElement)?.style.setProperty("--columns-count", `${columnsCount}`);
 
     const header = `<div class="row" data-type="header">${timeRangeArray.reduce((markup, label) => `${markup}<div class="value">${label}</div>`, "")}</div>`;
 
-    const urlOrderValues: Record<string, number> = {};
+    const eventOrderValues: Record<string, number> = {};
     const dataWithRanges = Object.entries(dataset)
-      .map(([url, timestamps]) => {
+      .map(([event, timestamps]) => {
         const range = new Map(this.data.rangeMap);
         const timestampStart = this.data.dateStart.getTime();
         const timestampEnd = this.data.dateEnd.getTime();
@@ -92,7 +85,7 @@ const ANALOG = {
         });
 
         if (timestampsFiltered.length > 0) {
-          urlOrderValues[url] = Math.max(...timestampsFiltered);
+          eventOrderValues[event] = Math.max(...timestampsFiltered);
         }
         
         timestampsFiltered.forEach(timestamp => {
@@ -104,15 +97,15 @@ const ANALOG = {
         highestVisitsCount = Math.max(highestVisitsCount, Math.max(...range.values()));
 
         return {
-          url,
+          event,
           dataset: Array.from(range).flat().filter((_, i) => i % 2 !== 0),
         }
       })
       .filter(({ dataset }) => dataset.some(value => value > 0))
-      .sort((a, b) => urlOrderValues[b.url] - urlOrderValues[a.url]);
+      .sort((a, b) => eventOrderValues[b.event] - eventOrderValues[a.event]);
 
     const rows = dataWithRanges.reduce((markup, data) => {
-      return `${markup}<div class="url">${data.url}</div><div class="row" data-type="bars">${data.dataset.reduce((valuesMarkup, value) => {
+      return `${markup}<div class="event">${data.event}</div><div class="row" data-type="bars">${data.dataset.reduce((valuesMarkup, value) => {
         let bar = ""
         
         if (value) {

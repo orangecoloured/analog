@@ -4,13 +4,12 @@ import { pushData } from "../../src/api/push";
 export const handler: Handler = async (event) => {
   const body = JSON.parse(event.body || '{}');
 
-  if (body.path) {
+  if (body.event) {
     try {
-      await pushData(body.path);
+      await pushData(body.event);
 
       return {
         statusCode: 200,
-        body: "",
       }
     } catch (error) {
       return {
@@ -21,7 +20,7 @@ export const handler: Handler = async (event) => {
   } else {
     return {
       statusCode: 500,
-      body: "Internal Server Error: No `path` found",
+      body: "Internal Server Error: No `event` found",
     }
   }
 };
