@@ -6,7 +6,7 @@
     }
   ],
   "functions": {
-    "api/get.ts": {
+    "api/get.js": {
       "memory": 1024
     },
     "api/post.ts": {
@@ -17,7 +17,7 @@
     }
   },
   "routes": [
-    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
+    { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.js" },
     { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.ts" },
     { "src": "/api/cleanUp", "status": 404, "continue": false}
   ]
