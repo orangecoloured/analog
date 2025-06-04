@@ -1,31 +1,6 @@
 import { defineConfig, type UserConfig } from "vite";
 import netlify from "@netlify/vite-plugin";
 import { PORT_DEV } from "./src/utils";
-import path from "path";
-import fs from "fs";
-
-function getAllTSFiles(dir: string, baseDir: string): Record<string, string> {
-  const entries: Record<string, string> = {}
-
-  function walk(currentDir: string) {
-    const items = fs.readdirSync(currentDir)
-    for (const item of items) {
-      const fullPath = path.join(currentDir, item)
-      const stat = fs.statSync(fullPath)
-
-      if (stat.isDirectory()) {
-        walk(fullPath)
-      } else if (stat.isFile() && fullPath.endsWith('.ts')) {
-        const relativePath = path.relative(baseDir, fullPath)
-        const key = relativePath.replace(/\.ts$/, '') // e.g., "utils/helper"
-        entries[key] = fullPath
-      }
-    }
-  }
-
-  walk(dir)
-  return entries
-}
 
 const baseConfig = {
   root: ".",
@@ -46,29 +21,7 @@ const platformSpecificConfig = (config: UserConfig) => {
     }
 
     case (!!process.env.VERCEL): {
-      return {
-        ...config,
-        build: {
-          ...config.build,
-          rollupOptions: {
-            input: {
-              main: path.resolve(__dirname, 'index.html'),
-              ...getAllTSFiles(
-                path.resolve(__dirname, 'src/api'),
-                path.resolve(__dirname, 'src')
-              )
-            },
-            output: {
-              entryFileNames: assetInfo => {
-                if (assetInfo.name && assetInfo.name.startsWith('api/')) {
-                  return `${assetInfo.name}.js`
-                }
-                return `[name].js`
-              }
-            }
-          }
-        }
-      }
+      return config;
     }
 
     default:
