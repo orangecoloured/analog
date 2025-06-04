@@ -5,17 +5,6 @@
       "schedule": "0 8 * * *"
     }
   ],
-  "functions": {
-    "api/get.ts": {
-      "memory": 1024
-    },
-    "api/post.ts": {
-      "memory": 1024
-    },
-    "api/cleanUp.ts": {
-      "memory": 1024
-    }
-  },
   "builds": [
     {
       "src": "api/get.ts",
