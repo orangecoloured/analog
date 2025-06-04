@@ -5,8 +5,8 @@ import path from 'path'
 
 const vercelBuildApiFiles = [
   'src/api/get.ts',
-  'src/api/push.ts',
-  'src/api/cleanUp.ts',
+  //'src/api/push.ts',
+  //'src/api/cleanUp.ts',
 ]
 
 const baseConfig = {
@@ -15,8 +15,21 @@ const baseConfig = {
   build: {
     outDir: "dist",
     emptyOutDir: true,
-
     
+    rollupOptions: {
+      input: vercelBuildApiFiles.reduce((entries, file) => {
+        const relativePath = path.relative('src', file)
+        const entryName = relativePath.replace(/\.ts$/, '')
+        
+        entries[entryName] = path.resolve(__dirname, file)
+        
+        return entries;
+      }, {} as Record<string, string>),
+      output: {
+        entryFileNames: '[name].js',
+        //preserveModulesRoot: 'src',
+      },
+    },
   }
 }
 
