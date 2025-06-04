@@ -1,4 +1,4 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getData } from "../src/api/get";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
