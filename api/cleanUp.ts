@@ -1,12 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { cleanUpOldData } from "../src/api/cleanUp";
+import { cleanUpOldData } from '@/api/cleanUp';
 
 export default async function handler(_req: VercelRequest, res: VercelResponse) {
   await cleanUpOldData();
 
   return res.status(200);
 }
-
-export const config = {
-  runtime: "edge",
-};

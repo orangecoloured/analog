@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { pushData } from "../src/api/push";
+import { pushData } from "@/api//push";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -23,8 +23,4 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   
     return res.send("Internal Server Error: No `event` found");
   }
-};
-
-export const config = {
-  runtime: "edge",
 };

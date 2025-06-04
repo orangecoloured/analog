@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getData } from "../src/api/get";
+import { getData } from "@/api/get";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
@@ -21,8 +21,4 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   
     return res.send(`Internal Server Error: ${error instanceof Error ? error.message : error}`);
   }
-};
-
-export const config = {
-  runtime: "edge",
 };
