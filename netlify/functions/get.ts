@@ -2,6 +2,13 @@ import { Handler } from "@netlify/functions";
 import { getData } from "../../src/api/get";
 
 export const handler: Handler = async (event) => {
+  if (event.httpMethod !== "GET") {
+    return {
+      statusCode: 405,
+      body: "Method Not Allowed",
+    }
+  }
+
   const searchParams = new URLSearchParams(event.queryStringParameters as Record<string, string> || {});
 
   if (process.env.VITE_ANALOG_GET_TOKEN && searchParams.get("token") !== process.env.VITE_ANALOG_GET_TOKEN) {

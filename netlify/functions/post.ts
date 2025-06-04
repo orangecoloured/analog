@@ -2,6 +2,13 @@ import { Handler } from "@netlify/functions";
 import { pushData } from "../../src/api/push";
 
 export const handler: Handler = async (event) => {
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: "Method Not Allowed",
+    }
+  }
+
   const body = JSON.parse(event.body || '{}');
 
   if (body.event) {

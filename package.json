@@ -1,6 +1,6 @@
 {
   "name": "analog",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Minimal analytics tool.",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@netlify/functions": "^4.1.0",
+    "@vercel/node": "^5.2.1",
     "ioredis": "^5.6.1",
     "uuid": "^11.1.0"
   }

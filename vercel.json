@@ -1,8 +1,22 @@
 {
-  "builds": [
-    { "src": "vercel/api/*.ts", "use": "@vercel/node" }
+  "functions": {
+    "api/cleanUp.ts": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/cleanUp",
+      "schedule": "0 8 * * *"
+    }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" }
+    { "src": "/api/get", "dest": "/api/get.ts" },
+    { "src": "/api/post", "dest": "/api/post.ts" },
+    {
+      "src": "/api/cleanUp",
+      "status": 404,
+      "continue": false
+    }
   ]
 }
