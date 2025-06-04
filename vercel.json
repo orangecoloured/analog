@@ -5,17 +5,9 @@
       "schedule": "0 8 * * *"
     }
   ],
-  "builds": [
-    { "src": "package.json", "use": "@vercel/static-build" },
-    {
-      "src": "/api/get.ts",
-      "use": "@vercel/node",
-      "config": { "includeFiles": ["src/api/**"] }
-    }
-  ],
   "routes": [
     { "src": "/api/get", "methods": ["GET"], "dest": "/api/get.ts" },
     { "src": "/api/post", "methods": ["POST"], "dest": "/api/post.ts" },
-    { "src": "/api/cleanUp", "status": 404, "continue": false}
+    { "src": "/api/cleanUp", "status": 404, "continue": false }
   ]
 }

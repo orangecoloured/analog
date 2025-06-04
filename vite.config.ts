@@ -1,6 +1,10 @@
 import { defineConfig, type UserConfig } from "vite";
 import netlify from "@netlify/vite-plugin";
 import { PORT_DEV } from "./src/utils";
+import { globSync } from "node:fs";
+import path from 'path'
+
+const apiFiles = globSync('src/api/**/*.ts')
 
 const baseConfig = {
   root: ".",

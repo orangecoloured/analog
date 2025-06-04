@@ -1,5 +1,5 @@
 import type { Handler } from "@netlify/functions";
-import { getData } from "../../src/api/get";
+import getData from "../../src/api/get";
 
 export const handler: Handler = async (event) => {
   if (event.httpMethod !== "GET") {

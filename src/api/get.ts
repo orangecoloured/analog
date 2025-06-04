@@ -1,7 +1,7 @@
 import { REDIS_KEY_PREFIX, type TData } from "../utils";
 import { redis } from "./redis";
 
-export const getData = async(): Promise<TData> => {
+const getData = async(): Promise<TData> => {
   const data: TData = {};
   const prefix = `${REDIS_KEY_PREFIX}:`;
   let cursor = "0";
@@ -20,3 +20,5 @@ export const getData = async(): Promise<TData> => {
   
   return data;
 }
+
+export default getData;
