@@ -4,19 +4,12 @@
 [functions."cleanUp"]
   schedule = "@daily"
 
-[[headers]]
-  for = "/api/*" 
-  [headers.values]
-    access-control-allow-origin = "*"
-
 [[redirects]]
   from = "/api/get"
   to = "/.netlify/functions/get"
   status = 200
-  headers = { Access-Control-Allow-Origin = "*" }
 
 [[redirects]]
   from = "/api/post"
   to = "/.netlify/functions/post"
   status = 200
-  headers = { Access-Control-Allow-Origin = "*" }
