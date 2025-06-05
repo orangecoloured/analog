@@ -5,6 +5,11 @@
       "schedule": "0 8 * * *"
     }
   ],
+  "functions": {
+    "api/get.ts": {
+      "includeFiles": "src/api/get.ts"
+    }
+  },
   "routes": [
     { "src": "/api/get", "methods": ["GET"], "dest": "api/get.ts" },
     { "src": "/api/post", "methods": ["POST"], "dest": "api/post.ts" },
