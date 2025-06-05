@@ -1,7 +1,7 @@
 {
   "name": "analog",
   "version": "0.0.1",
-  "description": "Minimal analytics tool.",
+  "description": "A minimal analytics tool.",
   "main": "index.js",
   "scripts": {
     "build": "vite build",

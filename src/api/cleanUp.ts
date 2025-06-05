@@ -8,7 +8,7 @@ const cleanUpOldData = async () => {
     offset = TIME_RANGE_MAX;
   }
 
-  const cutoff = Date.now() - (offset * 24 * 60 * 60 * 1000);
+  const cutoff = Date.now() - ((offset + 1) * 24 * 60 * 60 * 1000);
   const pattern = `${REDIS_KEY_PREFIX}:*`;
   let cursor = "0";
 
