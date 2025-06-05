@@ -5,7 +5,7 @@
   schedule = "@daily"
 
 [[headers]]
-  for = "/*" 
+  for = "/api/*" 
   [headers.values]
     access-control-allow-origin = "*"
 
