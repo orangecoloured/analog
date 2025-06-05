@@ -7,7 +7,7 @@
   ],
   "functions": {
     "api/get.ts": {
-      "includeFiles": "src/api/get.ts"
+      "includeFiles": "src/api/get.mts"
     }
   },
   "routes": [

@@ -1,5 +1,5 @@
 import * as http  from "http";
-import getData from "./get";
+import getData from "./get.mts";
 import pushData from "./push";
 import * as url from "url";
 import { PORT_DEV, sendError } from "../utils";
