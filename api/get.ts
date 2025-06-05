@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createRequire } from "node:module";
-const getData = createRequire(import.meta.url)("../src/api/get.mts");
+const getData = createRequire(import.meta.url)("../src/api/get.ts");
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
