@@ -1,5 +1,8 @@
 [build]
   functions = "netlify/functions"
+  base = "/"
+  command = "vite build"
+  publish = "dist"
 
 [functions."cleanUp"]
   schedule = "@daily"
