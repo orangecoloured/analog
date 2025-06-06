@@ -1,4 +1,7 @@
 {
+  "github": {
+    "enabled": false
+  },
   "crons": [
     {
       "path": "/api/cleanUp",
