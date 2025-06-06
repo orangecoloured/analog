@@ -46,7 +46,7 @@ If you have `VITE_ANALOG_GET_TOKEN` assigned, then you need the `token` query pa
 
 #### `POST /api/post`
 ##### Request body parametres:
-- `event` — contains the event name (**required**)
+- `event: string` — contains the event name (**required**)
 ##### Response
 ```
 OK
