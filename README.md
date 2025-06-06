@@ -32,9 +32,19 @@ Currently, it only deploys on [Netlify](https://netlify.com). The settings are i
 ## Usage
 
 ### `GET /api/get`
-Query parametres:
+#### Request query parametres:
 - `token` — if present, must be equal to `VITE_ANALOG_GET_TOKEN` if it's assigned
+#### Response
+```
+{
+  "event-name": [1749223782651, 1749228792052],
+}
+```
 
 ### `POST /api/post`
-Body parametres:
+#### Request body parametres:
 - `event` — contains the event name (**required**)
+#### Response
+```
+OK
+```
