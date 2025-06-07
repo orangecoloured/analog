@@ -7,13 +7,20 @@ export const handler: Handler = async (event) => {
   if (!["GET", "POST", "OPTIONS"].includes(event.httpMethod)) {
     return {
       statusCode: 405,
+      headers: {
+        ...responseAccessHeaders(),
+      },
       body: "Method Not Allowed",
     }
   }
 
   if (![API_ENDPOINT, `${API_ENDPOINT}/`].includes(event.path as string)) {
+    console.log('PATH?', event.path, event.route);
     return {
       statusCode: 404,
+      headers: {
+        ...responseAccessHeaders(),
+      },
       body: "Not Found",
     };
   }
