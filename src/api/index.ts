@@ -42,7 +42,7 @@ const server = http.createServer((req, res) => {
     }
 
     case "POST": {
-      if (process.env.ANALOG_PROTECT_POST && token !== process.env.ANALOG_TOKEN) {
+      if (process.env.ANALOG_PROTECT_POST === "true" && token !== process.env.ANALOG_TOKEN) {
         res.writeHead(401, { "Content-Type": "text/plain" });
         res.end("Unauthorized");
 

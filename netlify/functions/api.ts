@@ -15,7 +15,6 @@ export const handler: Handler = async (event) => {
   }
 
   if (![API_ENDPOINT, `${API_ENDPOINT}/`].includes(event.path as string)) {
-    console.log('PATH?', event.path, event.route);
     return {
       statusCode: 404,
       headers: {
@@ -70,7 +69,7 @@ export const handler: Handler = async (event) => {
     }
 
     case "POST" : {
-      if (process.env.ANALOG_PROTECT_POST && token !== process.env.ANALOG_TOKEN) {
+      if (process.env.ANALOG_PROTECT_POST === "true" && token !== process.env.ANALOG_TOKEN) {
         return {
           statusCode: 401,
           headers: {
