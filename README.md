@@ -9,15 +9,16 @@ This is highly inspired by the [piratepx](https://piratepx.com).
 To store data you need a Redis instance. You can get one for free from [Upstash](https://upstash.com) or [Render](https://render.com).
 
 ## Environment variables
-The `VITE_` prefix is required, because the app is built using [Vite](https://vite.dev).
+For some variables the `VITE_` prefix is required, because the app is built using [Vite](https://vite.dev).
 
 | Key  | Value | Required |
 | :--- | :--- | :---: |
-| `VITE_ANALOG_GET_TOKEN`  | Used to protect viewing the dashboard. Leave empty if no protection required.  | |
-| `VITE_ANALOG_REDIS_URL`  | The connection url to your Redis instance. |❗|
-| `VITE_ANALOG_PAGE_TITLE`  | Page title. | |
-| `VITE_ANALOG_TIME_RANGE`  | Time range to show. Minimum is `10`, maximum is `30`. | |
-| `VITE_ANALOG_PORT_DEV`  | Port to use while developing. Defaults to `5173`. | |
+| `ANALOG_TOKEN` | Used to protect requests. Leave empty if no protection required.  | |
+| `ANALOG_REDIS_URL` | The connection url to your Redis instance. |❗|
+| `ANALOG_PROTECT_POST` | Use `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` request. | |
+| `VITE_ANALOG_PAGE_TITLE` | Page title. | |
+| `VITE_ANALOG_TIME_RANGE` | Time range to show. Minimum is `10`, maximum is `30`. | |
+| `VITE_ANALOG_PORT_DEV` | Port to use while developing. Defaults to `5173`. | |
 
 ## How to develop
 ```
@@ -31,12 +32,13 @@ Currently, it only deploys on [Netlify](https://netlify.com). The settings are i
 
 ## Usage
 ### Web application
-If you have `VITE_ANALOG_GET_TOKEN` assigned, then you need the `token` query parameter in the url. For example, `hostname/?token=SECRET`.
+If you have `ANALOG_TOKEN` environment variable present, then you need the `token` query parameter in the url. For example, `hostname/?token=ANALOG_TOKEN`.
 
 ### API
-#### `GET /api/get`
-##### Request query parametres:
-- `token` — if present, must be equal to `VITE_ANALOG_GET_TOKEN` if it's assigned
+Endpoint `/api`
+#### `GET`
+##### Request headers:
+- `Authorization` — if the environment variable `ANALOG_TOKEN` is present, the value must be equal to it, prefixed by `Basic `
 ##### Response
 ```
 {
@@ -44,7 +46,9 @@ If you have `VITE_ANALOG_GET_TOKEN` assigned, then you need the `token` query pa
 }
 ```
 
-#### `POST /api/post`
+#### `POST`
+##### Request headers:
+- `Authorization` — if the environment variables `ANALOG_PROTECT_POST` and `ANALOG_TOKEN` are present, the value must be equal to `ANALOG_TOKEN`, prefixed by `Basic `
 ##### Request body parametres:
 - `event: string` — contains the event name (**required**)
 ##### Response
