@@ -24,7 +24,7 @@ export const handler: Handler = async (event) => {
       body: "Not Found",
     };
   }
-
+  console.log('AUTH?', event.headers["Authorization"], event.headers["Authorization"]?.replace("Basic ", ""));
   const token = event.headers["Authorization"] ? event.headers["Authorization"].replace("Basic ", "") : null;
 
   switch (event.httpMethod) {
