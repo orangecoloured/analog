@@ -13,11 +13,11 @@ For some variables the `VITE_` prefix is required, because the app is built usin
 
 | Key  | Value | Required |
 | :--- | :--- | :---: |
-| `ANALOG_TOKEN` | Used to protect requests. Leave empty if no protection required.  | |
+| `ANALOG_TOKEN` | Used to protect requests. Leave empty if no protection is required.  | |
 | `ANALOG_REDIS_URL` | The connection url to your Redis instance. |❗|
-| `ANALOG_PROTECT_POST` | Use `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` request. | |
+| `ANALOG_PROTECT_POST` | Use `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` requests. | |
 | `VITE_ANALOG_PAGE_TITLE` | Page title. | |
-| `VITE_ANALOG_TIME_RANGE` | Time range to show. Minimum is `10`, maximum is `30`. | |
+| `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | |
 | `VITE_ANALOG_PORT_DEV` | Port to use while developing. Defaults to `5173`. | |
 
 ## How to develop
