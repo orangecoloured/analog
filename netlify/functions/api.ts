@@ -1,7 +1,6 @@
 import type { Handler } from "@netlify/functions";
-import { API_ENDPOINT, responseAccessHeaders } from "../../src/utils";
-import { getData } from "../../src/api/get";
-import { pushData } from "../../src/api/push";
+import { API_ENDPOINT, responseAccessHeaders } from "../../src/services/api";
+import { getData, pushData } from "../../src/services/redis";
 
 export const handler: Handler = async (event) => {
   if (!["GET", "POST", "OPTIONS"].includes(event.httpMethod)) {

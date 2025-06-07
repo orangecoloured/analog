@@ -1,8 +1,8 @@
 import * as http  from "http";
-import { getData } from "./get";
-import { pushData } from "./push";
 import * as url from "url";
-import { PORT_DEV, API_ENDPOINT, sendError } from "../utils";
+import { PORT_DEV } from "../utils";
+import { API_ENDPOINT, sendError } from "../services/api";
+import { getData, pushData } from "../services/redis";
 
 let port = parseInt(process.env.ANALOG_PORT_DEV as string, 10);
 

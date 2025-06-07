@@ -1,5 +1,5 @@
-import { REDIS_KEY_PREFIX, TIME_RANGE_MAX } from "../utils";
-import { redis } from "./redis";
+import { REDIS_KEY_PREFIX, redis } from ".";
+import { TIME_RANGE_MAX } from "../../utils";
 
 export const cleanUpOldData = async () => {
   let offset = parseInt(process.env.VITE_ANALOG_TIME_RANGE as string, 10);

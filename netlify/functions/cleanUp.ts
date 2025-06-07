@@ -1,5 +1,5 @@
 import type { Handler } from '@netlify/functions';
-import { cleanUpOldData } from "../../src/api/cleanUp";
+import { cleanUpOldData } from '../../src/services/redis';
 
 export const handler: Handler = async () => {
   await cleanUpOldData();
