@@ -1,7 +1,5 @@
 import { redis } from "./redis";
 
-const resetData = () => {
+export const resetData = () => {
   return redis.flushdb();
 }
-
-export default resetData;

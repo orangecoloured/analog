@@ -1,7 +1,7 @@
 import { REDIS_KEY_PREFIX, type TData } from "../utils";
 import { redis } from "./redis";
 
-const getData = async(): Promise<TData> => {
+export const getData = async(): Promise<TData> => {
   const data: TData = {};
   const prefix = `${REDIS_KEY_PREFIX}:`;
   let cursor = "0";
@@ -17,8 +17,6 @@ const getData = async(): Promise<TData> => {
       data[event] = timestamps.filter((_, i) => i % 2 !== 0).map(Number)
     }
   } while (cursor !== "0")
-  
+
   return data;
 }
-
-export default getData;

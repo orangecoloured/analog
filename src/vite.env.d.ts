@@ -5,11 +5,12 @@ interface ViteTypeOptions {
 }
 
 interface ImportMetaEnv {
-  readonly VITE_ANALOG_GET_TOKEN?: string;
-  readonly VITE_ANALOG_REDIS_URL: string;
+  readonly ANALOG_TOKEN?: string;
+  readonly ANALOG_REDIS_URL: string;
+  readonly ANALOG_PROTECT_POST?: "true" | "false";
   readonly VITE_ANALOG_PAGE_TITLE?: string;
   readonly VITE_ANALOG_TIME_RANGE?: string;
-  readonly VITE_ANALOG_PORT_DEV?: number;
+  readonly VITE_ANALOG_PORT_DEV?: string;
 }
 
 interface ImportMeta {

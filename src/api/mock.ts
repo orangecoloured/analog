@@ -1,7 +1,7 @@
 import { mockData, REDIS_KEY_PREFIX, uuid } from "../utils";
 import { pipeline } from "./redis";
 
-const setMockData = (props?: { range?: number, count?: number, timestampsCount?: number }) => {
+export const setMockData = (props?: { range?: number, count?: number, timestampsCount?: number }) => {
   const dataset = mockData(props);
 
   for (const [event, timestamps] of Object.entries(dataset)) {
@@ -17,5 +17,3 @@ const setMockData = (props?: { range?: number, count?: number, timestampsCount?:
 
   return pipeline.exec();
 }
-
-export default setMockData;

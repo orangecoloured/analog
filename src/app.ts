@@ -6,7 +6,7 @@ const ANALOG = {
     dateEnd: new Date(),
     dateStart: new Date(),
   },
-  
+
   updateTitle: function () {
     const title = document.getElementById("title");
 
@@ -14,15 +14,15 @@ const ANALOG = {
 
     if (pageTitle) {
       document.title = `${pageTitle} / ${document.title}`;
-      
+
       if (title) {
         title.innerHTML = pageTitle;
       }
     }
   },
-  
+
   generateRangeMap: function () {
-    let timeRange = parseInt(import.meta.env.VITE_ANALOG_TIME_RANGE, 10);
+    let timeRange = parseInt(import.meta.env.VITE_ANALOG_TIME_RANGE as string, 10);
 
     if (!isNaN(timeRange)) {
       timeRange = Math.min(Math.max(timeRange, TIME_RANGE_MIN), TIME_RANGE_MAX);
@@ -41,10 +41,19 @@ const ANALOG = {
       startDate.setDate(startDate.getDate() + 1);
     }
   },
-  
+
   renderData: async function () {
     const loading = document.getElementById("loading");
-    const response = await fetch(`/api/get?token=${(new URL(location.href)).searchParams.get("token")}`);
+    const token = (new URL(location.href)).searchParams.get("token");
+    const response = await fetch(`/api/events`, {
+      headers: {
+        ...(token ?
+          {
+            "Authorization": `Basic ${token}`,
+          } : null
+        )
+      }
+    });
 
     if (!response.ok) {
       loading?.remove();
@@ -62,7 +71,7 @@ const ANALOG = {
     const timeRangeArray = Array.from(this.data.rangeMap).flat().filter((_, i) => i % 2 === 0).map((label: string) => {
       if (!lastMonth || !label.endsWith(lastMonth)) {
         lastMonth = label.substring(label.indexOf("/") + 1);
-        
+
         return label;
       } else {
         return label.replace(`/${lastMonth}`, "");
@@ -79,7 +88,7 @@ const ANALOG = {
         const range = new Map(this.data.rangeMap);
         const timestampStart = this.data.dateStart.getTime();
         const timestampEnd = this.data.dateEnd.getTime();
-  
+
         const timestampsFiltered =  timestamps.filter(timestamp => {
           return timestamp >= timestampStart && timestamp <= timestampEnd;
         });
@@ -87,7 +96,7 @@ const ANALOG = {
         if (timestampsFiltered.length > 0) {
           eventOrderValues[event] = Math.max(...timestampsFiltered);
         }
-        
+
         timestampsFiltered.forEach(timestamp => {
           const label = (new Date(timestamp)).toLocaleString("en-GB", { month: "2-digit", day: "2-digit" });
 
@@ -107,7 +116,7 @@ const ANALOG = {
     const rows = dataWithRanges.reduce((markup, data) => {
       return `${markup}<div class="event">${data.event}</div><div class="row" data-type="bars">${data.dataset.reduce((valuesMarkup, value) => {
         let bar = ""
-        
+
         if (value) {
           const ratio = Math.floor((value / highestVisitsCount) * 100);
 
@@ -121,7 +130,7 @@ const ANALOG = {
     loading?.remove();
     root?.insertAdjacentHTML("beforeend", `${header}${rows}`);
   },
-  
+
   init: function () {
     this.updateTitle();
     this.generateRangeMap();

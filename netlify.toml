@@ -8,11 +8,6 @@
   schedule = "@daily"
 
 [[redirects]]
-  from = "/api/get"
-  to = "/.netlify/functions/get"
-  status = 200
-
-[[redirects]]
-  from = "/api/post"
-  to = "/.netlify/functions/post"
+  from = "/api"
+  to = "/.netlify/functions/api"
   status = 200

@@ -1,7 +1,7 @@
 import { MOCK_DATE_RANGE, MOCK_MAX_TIMESTAMPS_COUNT, MOCK_RECORDS_COUNT, type TData } from ".";
 
 export const mockData = (props?: { range?: number, count?: number, timestampsCount?: number }) => {
-  const envRange = parseInt(process.env.VITE_ANALOG_TIME_RANGE || "", 10);
+  const envRange = parseInt(process.env.VITE_ANALOG_TIME_RANGE as string, 10);
   const dateRange = props?.range || isNaN(envRange) ? MOCK_DATE_RANGE : envRange;
   const recordsCount = props?.count || MOCK_RECORDS_COUNT;
   const tsCount = props?.timestampsCount || MOCK_MAX_TIMESTAMPS_COUNT;

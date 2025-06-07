@@ -46,8 +46,7 @@ export default defineConfig(({ command }) => {
       server: {
         port,
         proxy: {
-          "/api/get": `http://localhost:${port + 1}`,
-          "/api/post": `http://localhost:${port + 1}`,
+          "/api": `http://localhost:${port + 1}`,
         }
       }
     };
