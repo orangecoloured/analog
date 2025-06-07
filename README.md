@@ -35,7 +35,7 @@ Currently, it only deploys on [Netlify](https://netlify.com). The settings are i
 If you have `ANALOG_TOKEN` environment variable present, then you need the `token` query parameter in the url. For example, `hostname/?token=ANALOG_TOKEN`.
 
 ### API
-Endpoint `/api`
+Endpoint `/api/events`
 #### `GET`
 ##### Request headers:
 - `Authorization` — if the environment variable `ANALOG_TOKEN` is present, the value must be equal to it, prefixed by `Basic `
