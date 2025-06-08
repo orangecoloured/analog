@@ -10,7 +10,7 @@
   ],
   "functions": {
     "api/**/*.ts": {
-      "runtime": "nodejs@22.x",
+      "runtime": "nodejs",
       "includeFiles": "src/**"
     }
   },
