@@ -5,7 +5,7 @@ console.log('Function bundle contents:');
 console.log(fs.readdirSync(path.resolve(__dirname, '../src/services/redis')));
 
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getData } from "../src/services/redis/get";
+//import { getData } from "../src/services/redis/get";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
@@ -19,9 +19,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const data = await getData();
+    //const data = await getData();
 
-    return res.status(200).json(data);
+    //return res.status(200).json(data);
+    return res.status(200).json({});
   } catch (error) {
     res.status(500).setHeader("Content-Type", "text/plain");
 
