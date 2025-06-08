@@ -1,8 +1,11 @@
-import fs from 'fs';
+import { fileURLToPath } from 'url';
 import path from 'path';
+import fs from 'fs';
 
-console.log('Function bundle contents:');
-console.log(fs.readdirSync(path.resolve(__dirname, '../src/services/redis')));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const redisDir = path.resolve(__dirname, '../src/services/redis');
+console.log('Files in redis dir:', fs.readdirSync(redisDir));
 
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 //import { getData } from "../src/services/redis/get";
