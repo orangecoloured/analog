@@ -9,8 +9,9 @@
     }
   ],
   "functions": {
-    "api/get.ts": {
-      "includeFiles": "src/api/get.ts"
+    "api/**/*.ts": {
+      "runtime": "nodejs22.x",
+      "includeFiles": "src/**"
     }
   },
   "routes": [
