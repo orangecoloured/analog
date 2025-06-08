@@ -1,4 +1,4 @@
-import { type TData } from "../../utils";
+import type { TData } from "../../utils";
 import { redis, REDIS_KEY_PREFIX } from ".";
 
 export const getData = async(): Promise<TData> => {
