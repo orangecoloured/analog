@@ -8,7 +8,7 @@ const redisDir = path.resolve(__dirname, '../src/services/redis');
 console.log('Files in redis dir:', fs.readdirSync(redisDir));
 
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-//import { getData } from "../src/services/redis/get";
+import { getData } from "../src/services/redis/get.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
@@ -22,10 +22,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    //const data = await getData();
+    const data = await getData();
 
-    //return res.status(200).json(data);
-    return res.status(200).json({});
+    return res.status(200).json(data);
+    //return res.status(200).json({});
   } catch (error) {
     res.status(500).setHeader("Content-Type", "text/plain");
 
