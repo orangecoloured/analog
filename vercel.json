@@ -10,7 +10,6 @@
   ],
   "functions": {
     "api/**/*.ts": {
-      "runtime": "vercel/node@22.x",
       "includeFiles": "src/**"
     }
   },
