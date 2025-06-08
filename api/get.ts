@@ -1,5 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getData } from "../src/services/redis/get";
+import fs from 'fs';
+import path from 'path';
+
+console.log('Function bundle contents:');
+console.log(fs.readdirSync(path.resolve(__dirname, '../src/services/redis')));
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "GET") {
