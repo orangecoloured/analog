@@ -1,5 +1,6 @@
-import { uuid } from "../../utils";
-import { redis, REDIS_KEY_PREFIX } from ".";
+import { uuid } from "../../utils/uuid.js";
+import { redis } from "./redis.js";
+import { REDIS_KEY_PREFIX } from "./contants.js";
 
 export const pushData = (event: string) => {
   const timestamp = Date.now();
