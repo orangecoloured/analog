@@ -1,5 +1,5 @@
 # ΛNΛLOG
-**A minimal analytics tool.**
+**A minimal analytics tool to self-host.**
 
 ![Untitled-1](https://github.com/user-attachments/assets/ac2de3d5-d722-4b3e-abc6-4d40a6cb02b6)
 
