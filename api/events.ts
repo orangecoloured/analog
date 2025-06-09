@@ -11,7 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       body: "Method Not Allowed",
     }
   }
-  console.log(JSON.stringify(req));
+  console.log(req);
   const token = req.query.token as string;
 
   if (process.env.VITE_ANALOG_GET_TOKEN && token !== process.env.VITE_ANALOG_GET_TOKEN) {
