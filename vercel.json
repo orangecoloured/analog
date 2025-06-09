@@ -14,7 +14,7 @@
     }
   },
   "routes": [
-    { "src": "/api/events", "methods": ["GET", "POST", "OPTIONS"], "dest": "api/get.ts" },
+    { "src": "/api/events", "methods": ["GET", "POST", "OPTIONS"], "dest": "api/events.ts" },
     { "src": "/api/cleanUp", "status": 404, "continue": false }
   ]
 }

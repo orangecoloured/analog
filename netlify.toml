@@ -9,5 +9,5 @@
 
 [[redirects]]
   from = "/api/events"
-  to = "/.netlify/functions/api"
+  to = "/.netlify/functions/events"
   status = 200
