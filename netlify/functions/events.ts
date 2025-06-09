@@ -1,5 +1,5 @@
 import type { Handler } from "@netlify/functions";
-import { API_ENDPOINT, responseAccessHeaders } from "../../src/services/api";
+import { API_ENDPOINT, HEADERS_CROSS_ORIGIN, HEADER_APPLICATION_JSON, HEADER_PLAIN_TEXT } from "../../src/services/api";
 import { getData, pushData } from "../../src/services/redis";
 
 export const handler: Handler = async (event) => {
@@ -7,7 +7,8 @@ export const handler: Handler = async (event) => {
     return {
       statusCode: 405,
       headers: {
-        ...responseAccessHeaders(),
+        ...HEADERS_CROSS_ORIGIN,
+        ...HEADER_PLAIN_TEXT,
       },
       body: "Method Not Allowed",
     }
@@ -17,13 +18,14 @@ export const handler: Handler = async (event) => {
     return {
       statusCode: 404,
       headers: {
-        ...responseAccessHeaders(),
+        ...HEADERS_CROSS_ORIGIN,
+        ...HEADER_PLAIN_TEXT,
       },
       body: "Not Found",
     };
   }
 
-  const token = event.headers["authorization"] ? event.headers["authorization"].replace("Basic ", "") : null;
+  const token = event.headers.authorization ? event.headers.authorization.replace("Basic ", "") : null;
 
   switch (event.httpMethod) {
     default:
@@ -31,7 +33,8 @@ export const handler: Handler = async (event) => {
       return {
         statusCode: 200,
         headers: {
-          ...responseAccessHeaders(),
+          ...HEADERS_CROSS_ORIGIN,
+          ...HEADER_PLAIN_TEXT,
         },
       };
     }
@@ -41,8 +44,10 @@ export const handler: Handler = async (event) => {
         return {
           statusCode: 401,
           headers: {
-            ...responseAccessHeaders(),
+            ...HEADERS_CROSS_ORIGIN,
+            ...HEADER_PLAIN_TEXT,
           },
+          body: "Unauthorized",
         }
       }
 
@@ -52,7 +57,8 @@ export const handler: Handler = async (event) => {
         return {
           statusCode: 200,
           headers: {
-            ...responseAccessHeaders(),
+            ...HEADERS_CROSS_ORIGIN,
+            ...HEADER_APPLICATION_JSON,
           },
           body: JSON.stringify(data),
         };
@@ -60,7 +66,8 @@ export const handler: Handler = async (event) => {
         return {
           statusCode: 500,
           headers: {
-            ...responseAccessHeaders(),
+            ...HEADERS_CROSS_ORIGIN,
+            ...HEADER_PLAIN_TEXT,
           },
           body: `Internal Server Error: ${error instanceof Error ? error.message : error}`,
         }
@@ -72,8 +79,10 @@ export const handler: Handler = async (event) => {
         return {
           statusCode: 401,
           headers: {
-            ...responseAccessHeaders(),
+            ...HEADERS_CROSS_ORIGIN,
+            ...HEADER_PLAIN_TEXT,
           },
+          body: "Unauthorized",
         }
       }
 
@@ -86,14 +95,16 @@ export const handler: Handler = async (event) => {
           return {
             statusCode: 200,
             headers: {
-              ...responseAccessHeaders(),
+              ...HEADERS_CROSS_ORIGIN,
+              ...HEADER_PLAIN_TEXT,
             },
           }
         } catch (error) {
           return {
             statusCode: 500,
             headers: {
-              ...responseAccessHeaders(),
+              ...HEADERS_CROSS_ORIGIN,
+              ...HEADER_PLAIN_TEXT,
             },
             body: `Internal Server Error: ${error instanceof Error ? error.message : error}`,
           }
@@ -102,7 +113,8 @@ export const handler: Handler = async (event) => {
         return {
           statusCode: 500,
           headers: {
-              ...responseAccessHeaders(),
+              ...HEADERS_CROSS_ORIGIN,
+              ...HEADER_PLAIN_TEXT,
             },
           body: "Internal Server Error: No `event` found",
         }

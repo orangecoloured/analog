@@ -1,7 +1,7 @@
 import * as http  from "http";
 import * as url from "url";
+import { API_ENDPOINT, HEADER_APPLICATION_JSON, HEADER_PLAIN_TEXT, sendError } from "../services/api";
 import { PORT_DEV } from "../utils";
-import { API_ENDPOINT, sendError } from "../services/api";
 import { getData, pushData } from "../services/redis";
 
 let port = parseInt(process.env.ANALOG_PORT_DEV as string, 10);
@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url as string, true);
 
   if (![API_ENDPOINT, `${API_ENDPOINT}/`].includes(parsedUrl.pathname as string)) {
-    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.writeHead(404, { ...HEADER_PLAIN_TEXT });
     res.end("Not Found");
 
     return;
@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
   switch (req.method) {
     case "GET": {
       if (process.env.ANALOG_TOKEN && token !== process.env.ANALOG_TOKEN) {
-        res.writeHead(401, { "Content-Type": "text/plain" });
+        res.writeHead(401, { ...HEADER_PLAIN_TEXT });
         res.end("Unauthorized");
 
         return;
@@ -31,7 +31,7 @@ const server = http.createServer((req, res) => {
 
       getData()
         .then(data => {
-          res.writeHead(200, { "Content-Type": "application/json" });
+          res.writeHead(200, { ...HEADER_APPLICATION_JSON });
           res.end(JSON.stringify(data));
         })
         .catch(error => {
@@ -43,7 +43,7 @@ const server = http.createServer((req, res) => {
 
     case "POST": {
       if (process.env.ANALOG_PROTECT_POST === "true" && token !== process.env.ANALOG_TOKEN) {
-        res.writeHead(401, { "Content-Type": "text/plain" });
+        res.writeHead(401, { ...HEADER_PLAIN_TEXT });
         res.end("Unauthorized");
 
         return;
@@ -80,7 +80,7 @@ const server = http.createServer((req, res) => {
     }
 
     default: {
-      res.writeHead(405, { "Content-Type": "text/plain" });
+      res.writeHead(405, { ...HEADER_PLAIN_TEXT });
       res.end("Method Not Allowed");
 
       break;
