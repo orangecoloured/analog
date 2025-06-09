@@ -3,7 +3,7 @@
 
 ![Untitled-1](https://github.com/user-attachments/assets/ac2de3d5-d722-4b3e-abc6-4d40a6cb02b6)
 
-This is highly inspired by the [piratepx](https://piratepx.com).
+This is heavily inspired by the [piratepx](https://piratepx.com).
 
 ## Storage
 To store data you need a Redis instance. You can get one for free from [Upstash](https://upstash.com) or [Render](https://render.com).
