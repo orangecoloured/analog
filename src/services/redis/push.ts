@@ -6,6 +6,6 @@ export const pushData = (event: string) => {
   const timestamp = Date.now();
   const member = `${timestamp}-${uuid()}`;
   const key = `${REDIS_KEY_PREFIX}:${event}`;
-  console.log(key, timestamp, member);
+
   return redis.zadd(key, timestamp, member);
 }

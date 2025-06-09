@@ -21,7 +21,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   switch (req.method) {
     default:
     case "OPTIONS": {
-      return res.status(200).setHeaders(HEADERS_CROSS_ORIGIN_MAP).setHeaders(HEADER_PLAIN_TEXT_MAP);
+      res.status(200).setHeaders(HEADERS_CROSS_ORIGIN_MAP).setHeaders(HEADER_PLAIN_TEXT_MAP);
+
+      return res.send("");
     }
 
     case "GET": {
@@ -51,7 +53,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         try {
           await pushData(body.event);
 
-          return res.status(200).setHeaders(HEADER_PLAIN_TEXT_MAP);
+          res.status(200).setHeaders(HEADER_PLAIN_TEXT_MAP);
+
+          return res.send("");
         } catch (error) {
           res.status(500).setHeaders(HEADER_PLAIN_TEXT_MAP);
 
