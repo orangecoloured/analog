@@ -20,15 +20,20 @@ For some variables the `VITE_` prefix is required, because the app is built usin
 | `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | |
 | `VITE_ANALOG_PORT_DEV` | Port to use while developing. Defaults to `5173`. | |
 
-## How to develop
-```
+## Deployment
+### Local
+Clone this repository.
+
+Create `.env.local` with your settings.
+```bash
 npm install
 npm run dev
 ```
 This launches the frontend app and the node server.
-
-## Deployment
-Currently, it only deploys on [Netlify](https://netlify.com). The settings are in the `netlify.toml`.
+### Netlify
+Create a project, forking this repository. The settings are in the `netlify.toml`.
+### Vercel
+Create a project, forking this repository. The settings are in the `vercel.json`.
 
 ## Usage
 ### Web application
@@ -40,7 +45,7 @@ Endpoint `/api/events`
 ##### Request headers:
 - `Authorization` — if the environment variable `ANALOG_TOKEN` is present, the value must be equal to it, prefixed by `Basic `
 ##### Response
-```
+```json
 {
   "event-name": [1749223782651, 1749228792052],
 }
@@ -52,6 +57,6 @@ Endpoint `/api/events`
 ##### Request body parametres:
 - `event: string` — contains the event name (**required**)
 ##### Response
-```
+```bash
 OK
 ```
