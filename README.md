@@ -27,7 +27,7 @@ Clone this repository.
 
 Create `.env.local` with your settings.
 
-Then run:
+Then run these commands:
 ```bash
 npm install
 npm run dev
@@ -38,7 +38,7 @@ Create a project with a copy of this repository. The settings are in the `netlif
 ### Vercel
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
 ### Docker
-Run these to
+Run these commands to build and run the Docker container, based on your environment:
 ```bash
 docker build -t analog-analytics .
 docker run -d \
