@@ -11,29 +11,44 @@ To store data you need a Redis instance. You can get one for free from [Upstash]
 ## Environment variables
 For some variables the `VITE_` prefix is required, because the app is built using [Vite](https://vite.dev).
 
-| Key  | Value | Required |
-| :--- | :--- | :---: |
-| `ANALOG_TOKEN` | Used to protect requests. Leave empty if no protection is required.  | |
-| `ANALOG_REDIS_URL` | The connection url to your Redis instance. |❗|
-| `ANALOG_PROTECT_POST` | Use `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` requests. | |
-| `VITE_ANALOG_PAGE_TITLE` | Page title. | |
-| `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | |
-| `VITE_ANALOG_PORT_DEV` | Port to use while developing. Defaults to `5173`. | |
+| Key  | Value | Default | Required |
+| :--- | :--- | :--- | :---: |
+| `ANALOG_TOKEN` | Protects requests. Leave empty if no protection is required.  | | |
+| `ANALOG_REDIS_URL` | The connection url to your Redis instance. | |❗|
+| `ANALOG_PROTECT_POST` | Set to `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` requests. | `false` | |
+| `ANALOG_STATIC_SERVER` | Set to `true` to make the Node.js server also serve static content. In this case the contents of `./src/services/server/dist` folder are used. | `false` | |
+| `ANALOG_PORT_SERVER` | The port you want the Node.js server to listen on. | | |
+| `VITE_ANALOG_PAGE_TITLE` | Page title. | | |
+| `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | `30` | |
 
 ## Deployment
 ### Local
 Clone this repository.
 
 Create `.env.local` with your settings.
+
+Then run:
 ```bash
 npm install
 npm run dev
 ```
 This launches the frontend app and the node server.
 ### Netlify
-Create a project, forking this repository. The settings are in the `netlify.toml`.
+Create a project with a copy of this repository. The settings are in the `netlify.toml`.
 ### Vercel
-Create a project, forking this repository. The settings are in the `vercel.json`.
+Create a project with a copy of this repository. The settings are in the `vercel.json`.
+### Docker
+Run these to
+```bash
+docker build -t analog-analytics .
+docker run -d \
+  -p 80:80 \ # For local development
+  -e ANALOG_STATIC_SERVER=true \
+  -e ANALOG_PORT_SERVER="" \ # 80 for HTTP or 443 for HTTPS
+  -e ANALOG_REDIS_URL="" \
+  --name analog-analytics \
+  analog-analytics
+```
 
 ## Usage
 ### Web application

@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "api", "netlify"]
+  "include": ["src", "api", "netlify", "./vite.env.d.ts"]
 }

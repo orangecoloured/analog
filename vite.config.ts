@@ -2,12 +2,6 @@ import { defineConfig, type UserConfig } from "vite";
 import netlify from "@netlify/vite-plugin";
 import { PORT_DEV } from "./src/utils";
 
-/*const vercelBuildApiFiles = [
-  'src/api/get.ts',
-  'src/api/push.ts',
-  'src/api/cleanUp.ts',
-]*/
-
 const baseConfig = {
   root: ".",
   publicDir: "public",
@@ -37,9 +31,7 @@ const platformSpecificConfig = (config: UserConfig) => {
 
 export default defineConfig(({ command }) => {
   if (command === 'serve') {
-    let port = parseInt(process.env.VITE_ANALOG_PORT_DEV as string, 10);
-
-    port = isNaN(port) ? PORT_DEV : port;
+    const port = PORT_DEV;
 
     return {
       ...baseConfig,

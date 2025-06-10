@@ -58,12 +58,12 @@ h1, h2, h3, h4, h5, h6 {
 */
 :root {
   color-scheme: light dark;
-  --colour-light: #F9F6EE;
+  --colour-light: #f9f6ee;
   --colour-dark: #28282b;
   --color-gradient: linear-gradient(200deg, light-dark(var(--colour-dark), var(--colour-light)) 0%, light-dark(color-mix(in srgb, var(--colour-dark) 60%, transparent), color-mix(in srgb, var(--colour-light) 60%, transparent)) 100%);
   --gap-m-max: max(2dvw, 2dvh);
   --gap-s-min: min(1dvw, 1dvh);
-  --columns-count: 10;
+  --columns-count: 30;
 }
 
 @keyframes rotate {
