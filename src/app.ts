@@ -1,5 +1,5 @@
 import { TIME_RANGE_MAX, TIME_RANGE_MIN, type TData } from "./utils";
-console.log(1);
+
 const ANALOG = {
   data: {
     rangeMap: new Map(),
