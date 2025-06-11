@@ -42,7 +42,7 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,mjs}": [
+    "*.{ts,mjs}": [
       "prettier --write",
       "eslint --fix",
       "git add"

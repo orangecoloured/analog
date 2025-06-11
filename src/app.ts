@@ -1,5 +1,5 @@
 import { TIME_RANGE_MAX, TIME_RANGE_MIN, type TData } from "./utils";
-
+console.log(1);
 const ANALOG = {
   data: {
     rangeMap: new Map(),
@@ -22,7 +22,10 @@ const ANALOG = {
   },
 
   generateRangeMap: function () {
-    let timeRange = parseInt(import.meta.env.VITE_ANALOG_TIME_RANGE as string, 10);
+    let timeRange = parseInt(
+      import.meta.env.VITE_ANALOG_TIME_RANGE as string,
+      10,
+    );
 
     if (!isNaN(timeRange)) {
       timeRange = Math.min(Math.max(timeRange, TIME_RANGE_MIN), TIME_RANGE_MAX);
@@ -37,22 +40,25 @@ const ANALOG = {
     this.data.dateStart = new Date(startDate.getTime());
 
     for (let i = timeRange; i >= 1; i--) {
-      this.data.rangeMap.set(startDate.toLocaleString("en-GB", { month: "2-digit", day: "2-digit" }), 0);
+      this.data.rangeMap.set(
+        startDate.toLocaleString("en-GB", { month: "2-digit", day: "2-digit" }),
+        0,
+      );
       startDate.setDate(startDate.getDate() + 1);
     }
   },
 
   renderData: async function () {
     const loading = document.getElementById("loading");
-    const token = (new URL(location.href)).searchParams.get("token");
+    const token = new URL(location.href).searchParams.get("token");
     const response = await fetch(`/api/events`, {
       headers: {
-        ...(token ?
-          {
-            "Authorization": `Basic ${token}`,
-          } : null
-        )
-      }
+        ...(token
+          ? {
+              Authorization: `Basic ${token}`,
+            }
+          : null),
+      },
     });
 
     if (!response.ok) {
@@ -61,24 +67,30 @@ const ANALOG = {
       throw new Error(response.statusText);
     }
 
-    const dataset = await response.json() as TData;
+    const dataset = (await response.json()) as TData;
 
     const root = document.getElementById("root");
     const columnsCount = this.data.rangeMap.size;
     let lastMonth: string | null = null;
     let highestVisitsCount = 0;
 
-    const timeRangeArray = Array.from(this.data.rangeMap).flat().filter((_, i) => i % 2 === 0).map((label: string) => {
-      if (!lastMonth || !label.endsWith(lastMonth)) {
-        lastMonth = label.substring(label.indexOf("/") + 1);
+    const timeRangeArray = Array.from(this.data.rangeMap)
+      .flat()
+      .filter((_, i) => i % 2 === 0)
+      .map((label: string) => {
+        if (!lastMonth || !label.endsWith(lastMonth)) {
+          lastMonth = label.substring(label.indexOf("/") + 1);
 
-        return label;
-      } else {
-        return label.replace(`/${lastMonth}`, "");
-      }
-    });
+          return label;
+        } else {
+          return label.replace(`/${lastMonth}`, "");
+        }
+      });
 
-    (document.querySelector(":root") as HTMLElement)?.style.setProperty("--columns-count", `${columnsCount}`);
+    (document.querySelector(":root") as HTMLElement)?.style.setProperty(
+      "--columns-count",
+      `${columnsCount}`,
+    );
 
     const header = `<div class="row" data-type="header">${timeRangeArray.reduce((markup, label) => `${markup}<div class="value">${label}</div>`, "")}</div>`;
 
@@ -89,7 +101,7 @@ const ANALOG = {
         const timestampStart = this.data.dateStart.getTime();
         const timestampEnd = this.data.dateEnd.getTime();
 
-        const timestampsFiltered =  timestamps.filter(timestamp => {
+        const timestampsFiltered = timestamps.filter((timestamp) => {
           return timestamp >= timestampStart && timestamp <= timestampEnd;
         });
 
@@ -97,34 +109,45 @@ const ANALOG = {
           eventOrderValues[event] = Math.max(...timestampsFiltered);
         }
 
-        timestampsFiltered.forEach(timestamp => {
-          const label = (new Date(timestamp)).toLocaleString("en-GB", { month: "2-digit", day: "2-digit" });
+        timestampsFiltered.forEach((timestamp) => {
+          const label = new Date(timestamp).toLocaleString("en-GB", {
+            month: "2-digit",
+            day: "2-digit",
+          });
 
           range.set(label, range.get(label) + 1);
         });
 
-        highestVisitsCount = Math.max(highestVisitsCount, Math.max(...range.values()));
+        highestVisitsCount = Math.max(
+          highestVisitsCount,
+          Math.max(...range.values()),
+        );
 
         return {
           event,
-          dataset: Array.from(range).flat().filter((_, i) => i % 2 !== 0),
-        }
+          dataset: Array.from(range)
+            .flat()
+            .filter((_, i) => i % 2 !== 0),
+        };
       })
-      .filter(({ dataset }) => dataset.some(value => value > 0))
+      .filter(({ dataset }) => dataset.some((value) => value > 0))
       .sort((a, b) => eventOrderValues[b.event] - eventOrderValues[a.event]);
 
     const rows = dataWithRanges.reduce((markup, data) => {
-      return `${markup}<div class="event">${data.event}</div><div class="row" data-type="bars">${data.dataset.reduce((valuesMarkup, value) => {
-        let bar = ""
+      return `${markup}<div class="event">${data.event}</div><div class="row" data-type="bars">${data.dataset.reduce(
+        (valuesMarkup, value) => {
+          let bar = "";
 
-        if (value) {
-          const ratio = Math.floor((value / highestVisitsCount) * 100);
+          if (value) {
+            const ratio = Math.floor((value / highestVisitsCount) * 100);
 
-          bar = `<div class="bar" style="clip-path: polygon(0 ${100 - ratio}%, 100% ${100 - ratio}%, 100% 100%, 0% 100%)"></div><div class="value">${value}</div>`;
-        }
+            bar = `<div class="bar" style="clip-path: polygon(0 ${100 - ratio}%, 100% ${100 - ratio}%, 100% 100%, 0% 100%)"></div><div class="value">${value}</div>`;
+          }
 
-        return `${valuesMarkup}<div>${bar}</div>`;
-      }, "")}</div>`
+          return `${valuesMarkup}<div>${bar}</div>`;
+        },
+        "",
+      )}</div>`;
     }, "");
 
     loading?.remove();
@@ -135,7 +158,7 @@ const ANALOG = {
     this.updateTitle();
     this.generateRangeMap();
     this.renderData();
-  }
-}
+  },
+};
 
 ANALOG.init();
