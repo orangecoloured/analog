@@ -27,7 +27,7 @@ Clone this repository.
 
 Create `.env.local` with your settings.
 
-Then run these commands:
+Then run:
 ```bash
 npm install
 npm run dev
