@@ -38,7 +38,7 @@ Create a project with a copy of this repository. The settings are in the `netlif
 ### Vercel
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
 ### Docker
-Run these commands to build and run the app in a Docker container, based on your environment:
+Use the Dockerfile to build and run the app in a Docker container, based on your environment:
 ```bash
 docker build -t analog-analytics .
 docker run -d \
