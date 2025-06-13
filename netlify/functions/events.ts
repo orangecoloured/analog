@@ -59,9 +59,10 @@ export const handler: Handler = async (event) => {
       }
 
       try {
-        console.log("DEBUG", 1);
         const data = await getData();
-        console.log("DEBUG", 2);
+
+        console.debug("Data was fetched successfully");
+
         return {
           statusCode: 200,
           headers: {
