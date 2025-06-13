@@ -1,5 +1,10 @@
 import type { Handler } from "@netlify/functions";
-import { API_ENDPOINT, HEADERS_CROSS_ORIGIN, HEADER_APPLICATION_JSON, HEADER_TEXT_PLAIN } from "../../src/services/api";
+import {
+  API_ENDPOINT,
+  HEADERS_CROSS_ORIGIN,
+  HEADER_APPLICATION_JSON,
+  HEADER_TEXT_PLAIN,
+} from "../../src/services/api";
 import { getData, pushData } from "../../src/services/redis";
 
 export const handler: Handler = async (event) => {
@@ -11,7 +16,7 @@ export const handler: Handler = async (event) => {
         ...HEADER_TEXT_PLAIN,
       },
       body: "Method Not Allowed",
-    }
+    };
   }
 
   if (![API_ENDPOINT, `${API_ENDPOINT}/`].includes(event.path as string)) {
@@ -25,7 +30,9 @@ export const handler: Handler = async (event) => {
     };
   }
 
-  const token = event.headers.authorization ? event.headers.authorization.replace("Basic ", "") : null;
+  const token = event.headers.authorization
+    ? event.headers.authorization.replace("Basic ", "")
+    : null;
 
   switch (event.httpMethod) {
     default:
@@ -48,12 +55,13 @@ export const handler: Handler = async (event) => {
             ...HEADER_TEXT_PLAIN,
           },
           body: "Unauthorized",
-        }
+        };
       }
 
       try {
+        console.log("debug 1");
         const data = await getData();
-
+        console.log("debug 2", data);
         return {
           statusCode: 200,
           headers: {
@@ -70,12 +78,15 @@ export const handler: Handler = async (event) => {
             ...HEADER_TEXT_PLAIN,
           },
           body: `Internal Server Error: ${error instanceof Error ? error.message : error}`,
-        }
+        };
       }
     }
 
-    case "POST" : {
-      if (process.env.ANALOG_PROTECT_POST === "true" && token !== process.env.ANALOG_TOKEN) {
+    case "POST": {
+      if (
+        process.env.ANALOG_PROTECT_POST === "true" &&
+        token !== process.env.ANALOG_TOKEN
+      ) {
         return {
           statusCode: 401,
           headers: {
@@ -83,7 +94,7 @@ export const handler: Handler = async (event) => {
             ...HEADER_TEXT_PLAIN,
           },
           body: "Unauthorized",
-        }
+        };
       }
 
       const body = JSON.parse(event.body || "{}");
@@ -98,7 +109,7 @@ export const handler: Handler = async (event) => {
               ...HEADERS_CROSS_ORIGIN,
               ...HEADER_TEXT_PLAIN,
             },
-          }
+          };
         } catch (error) {
           return {
             statusCode: 500,
@@ -107,17 +118,17 @@ export const handler: Handler = async (event) => {
               ...HEADER_TEXT_PLAIN,
             },
             body: `Internal Server Error: ${error instanceof Error ? error.message : error}`,
-          }
+          };
         }
       } else {
         return {
           statusCode: 500,
           headers: {
-              ...HEADERS_CROSS_ORIGIN,
-              ...HEADER_TEXT_PLAIN,
-            },
+            ...HEADERS_CROSS_ORIGIN,
+            ...HEADER_TEXT_PLAIN,
+          },
           body: "Internal Server Error: No `event` found",
-        }
+        };
       }
     }
   }
