@@ -59,8 +59,9 @@ export const handler: Handler = async (event) => {
       }
 
       try {
+        console.log("DEBUG", 1);
         const data = await getData();
-
+        console.log("DEBUG", 2);
         return {
           statusCode: 200,
           headers: {
