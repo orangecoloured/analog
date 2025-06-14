@@ -30,7 +30,7 @@ export const getDataByCursor = async (
   const data: TData = {};
   const prefix = `${REDIS_KEY_PREFIX}:`;
   const requestItemsCount = parseInt(
-    process.env.ANALOG_REDIS_REQUEST_ITEMS_COUNT as string,
+    process.env.ANALOG_REDIS_REQUEST_ITEM_COUNT as string,
     10,
   );
 
