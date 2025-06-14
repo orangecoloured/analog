@@ -6,7 +6,8 @@ import {
   HEADER_TEXT_PLAIN,
 } from "../../src/services/api";
 import {
-  /*getAllData, */ getDataByCursor,
+  getAllData,
+  getDataByCursor,
   pushData,
 } from "../../src/services/redis";
 
@@ -62,9 +63,14 @@ export const handler: Handler = async (event) => {
       }
 
       try {
-        const data = await getDataByCursor(event.queryStringParameters?.cursor);
+        const cursor = event.queryStringParameters?.cursor;
+        let data;
 
-        console.debug("Data was fetched successfully");
+        if (cursor) {
+          data = await getDataByCursor(cursor);
+        } else {
+          data = await getAllData();
+        }
 
         return {
           statusCode: 200,

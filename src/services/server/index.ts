@@ -8,7 +8,7 @@ import {
   sendError,
 } from "../api";
 import { PORT_DEV } from "../../utils";
-import { /*getAllData, */ getDataByCursor, pushData } from "../redis";
+import { getAllData, getDataByCursor, pushData } from "../redis";
 import { staticServer } from "./static";
 
 let port = parseInt(process.env.ANALOG_PORT_SERVER as string, 10);
@@ -36,7 +36,7 @@ const server = http.createServer((req, res) => {
 
         const cursor = parsedUrl.query.cursor as string | undefined;
 
-        getDataByCursor(cursor)
+        (cursor ? getDataByCursor(cursor) : getAllData())
           .then((data) => {
             res.writeHead(200, {
               ...HEADERS_CROSS_ORIGIN,
@@ -47,15 +47,6 @@ const server = http.createServer((req, res) => {
           .catch((error) => {
             sendError(res, error);
           });
-
-        /*getAllData()
-          .then(data => {
-            res.writeHead(200, { ...HEADERS_CROSS_ORIGIN, ...HEADER_APPLICATION_JSON });
-            res.end(JSON.stringify(data));
-          })
-          .catch(error => {
-            sendError(res, error);
-          });*/
 
         break;
       }

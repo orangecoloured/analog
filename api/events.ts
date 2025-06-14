@@ -5,7 +5,7 @@ import {
   HEADER_TEXT_PLAIN_MAP,
   HEADERS_CROSS_ORIGIN_MAP,
 } from "../src/services/api/contants.js";
-import { getAllData } from "../src/services/redis/get.js";
+import { getAllData, getDataByCursor } from "../src/services/redis/get.js";
 import { pushData } from "../src/services/redis/push.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -53,7 +53,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       try {
-        const data = await getAllData();
+        const cursor = req.query.cursor as string | undefined;
+        let data;
+
+        if (cursor) {
+          data = await getDataByCursor(cursor);
+        } else {
+          data = await getAllData();
+        }
 
         res
           .status(200)

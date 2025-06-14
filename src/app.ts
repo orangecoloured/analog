@@ -52,11 +52,10 @@ const ANALOG = {
     const loading = document.getElementById("loading");
     const token = new URL(location.href).searchParams.get("token");
 
-    let cursor = "0";
     let dataset: TData = {};
 
-    do {
-      const response = await fetch(`/api/events?cursor=${cursor}`, {
+    if (import.meta.env.VITE_ANALOG_REDIS_REQUEST_QUEUE === "false") {
+      const response = await fetch(`/api/events`, {
         headers: {
           ...(token
             ? {
@@ -66,24 +65,40 @@ const ANALOG = {
         },
       });
 
-      if (!response.ok) {
-        loading?.remove();
+      dataset = (await response.json()) as TData;
+    } else {
+      let cursor = "0";
 
-        throw new Error(response.statusText);
-      }
+      do {
+        const response = await fetch(`/api/events?cursor=${cursor}`, {
+          headers: {
+            ...(token
+              ? {
+                  Authorization: `Basic ${token}`,
+                }
+              : null),
+          },
+        });
 
-      const responseBody = (await response.json()) as {
-        data: TData;
-        nextCursor: string;
-      };
+        if (!response.ok) {
+          loading?.remove();
 
-      dataset = {
-        ...dataset,
-        ...responseBody.data,
-      };
+          throw new Error(response.statusText);
+        }
 
-      cursor = responseBody.nextCursor;
-    } while (cursor !== "0");
+        const responseBody = (await response.json()) as {
+          data: TData;
+          nextCursor: string;
+        };
+
+        dataset = {
+          ...dataset,
+          ...responseBody.data,
+        };
+
+        cursor = responseBody.nextCursor;
+      } while (cursor !== "0");
+    }
 
     const root = document.getElementById("root");
     const columnsCount = this.data.rangeMap.size;
