@@ -5,7 +5,10 @@ import {
   HEADER_APPLICATION_JSON,
   HEADER_TEXT_PLAIN,
 } from "../../src/services/api";
-import { getData, pushData } from "../../src/services/redis";
+import {
+  /*getAllData, */ getDataByCursor,
+  pushData,
+} from "../../src/services/redis";
 
 export const handler: Handler = async (event) => {
   if (!["GET", "POST", "OPTIONS"].includes(event.httpMethod)) {
@@ -59,7 +62,7 @@ export const handler: Handler = async (event) => {
       }
 
       try {
-        const data = await getData();
+        const data = await getDataByCursor(event.queryStringParameters?.cursor);
 
         console.debug("Data was fetched successfully");
 

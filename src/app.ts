@@ -51,23 +51,39 @@ const ANALOG = {
   renderData: async function () {
     const loading = document.getElementById("loading");
     const token = new URL(location.href).searchParams.get("token");
-    const response = await fetch(`/api/events`, {
-      headers: {
-        ...(token
-          ? {
-              Authorization: `Basic ${token}`,
-            }
-          : null),
-      },
-    });
 
-    if (!response.ok) {
-      loading?.remove();
+    let cursor = "0";
+    let dataset: TData = {};
 
-      throw new Error(response.statusText);
-    }
+    do {
+      const response = await fetch(`/api/events?cursor=${cursor}`, {
+        headers: {
+          ...(token
+            ? {
+                Authorization: `Basic ${token}`,
+              }
+            : null),
+        },
+      });
 
-    const dataset = (await response.json()) as TData;
+      if (!response.ok) {
+        loading?.remove();
+
+        throw new Error(response.statusText);
+      }
+
+      const responseBody = (await response.json()) as {
+        data: TData;
+        nextCursor: string;
+      };
+
+      dataset = {
+        ...dataset,
+        ...responseBody.data,
+      };
+
+      cursor = responseBody.nextCursor;
+    } while (cursor !== "0");
 
     const root = document.getElementById("root");
     const columnsCount = this.data.rangeMap.size;
