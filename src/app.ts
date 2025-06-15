@@ -1,4 +1,9 @@
-import { TIME_RANGE_MAX, TIME_RANGE_MIN, type TData } from "./utils";
+import {
+  TIME_RANGE_MAX,
+  TIME_RANGE_MIN,
+  type TData,
+  type TPaginatedData,
+} from "./utils";
 
 const ANALOG = {
   data: {
@@ -86,10 +91,7 @@ const ANALOG = {
           throw new Error(response.statusText);
         }
 
-        const responseBody = (await response.json()) as {
-          data: TData;
-          nextCursor: string;
-        };
+        const responseBody = (await response.json()) as TPaginatedData;
 
         dataset = {
           ...dataset,

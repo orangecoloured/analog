@@ -61,10 +61,20 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 #### `GET`
 ##### Request headers:
 - `Authorization` — if the environment variable `ANALOG_TOKEN` is present, the value must be equal to it, prefixed by `Basic `
+##### Request parametres:
+- `cursor` — page pointer to query the database; if omitted, the API tries to fetch all the data in one go
 ##### Response
+###### With `cursor`
+```json
+data: {
+  "event-name": [1749223782651, 1749228792052]
+},
+nextCursor: "4"
+```
+###### Without `cursor`
 ```json
 {
-  "event-name": [1749223782651, 1749228792052],
+  "event-name": [1749223782651, 1749228792052]
 }
 ```
 

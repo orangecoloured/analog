@@ -1,4 +1,4 @@
-import type { TData } from "../../utils";
+import type { TData, TPaginatedData } from "../../utils";
 import { REDIS_KEY_PREFIX, REDIS_REQUEST_ITEMS_COUNT } from "./contants.js";
 import { redis } from "./redis.js";
 
@@ -26,7 +26,7 @@ export const getAllData = async (): Promise<TData> => {
 
 export const getDataByCursor = async (
   cursor: string = "0",
-): Promise<{ data: TData; nextCursor: string }> => {
+): Promise<TPaginatedData> => {
   const data: TData = {};
   const prefix = `${REDIS_KEY_PREFIX}:`;
   const requestItemsCount = parseInt(
