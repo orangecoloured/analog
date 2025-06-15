@@ -67,10 +67,10 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 ###### With `cursor`
 ```json
 {
-  data: {
+  "data": {
     "event-name": [1749223782651, 1749228792052]
   },
-  nextCursor: "4"
+  "nextCursor": "4"
 }
 ```
 ###### Without `cursor`
