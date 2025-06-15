@@ -1,5 +1,5 @@
 import { redis } from "./redis.js";
-import { REDIS_KEY_PREFIX, REDIS_REQUEST_ITEMS_COUNT } from "./contants.js";
+import { REDIS_KEY_PREFIX, DATABASE_REQUEST_ITEMS_COUNT } from "./contants.js";
 import { TIME_RANGE_MAX } from "../../utils/constants.js";
 
 export const cleanUpOldData = async () => {
@@ -13,7 +13,7 @@ export const cleanUpOldData = async () => {
   const pattern = `${REDIS_KEY_PREFIX}:*`;
   let cursor = "0";
   const requestItemsCount = parseInt(
-    process.env.ANALOG_REDIS_REQUEST_ITEM_COUNT as string,
+    process.env.ANALOG_DATABASE_REQUEST_ITEM_COUNT as string,
     10,
   );
 
@@ -23,7 +23,9 @@ export const cleanUpOldData = async () => {
       "MATCH",
       pattern,
       "COUNT",
-      isNaN(requestItemsCount) ? REDIS_REQUEST_ITEMS_COUNT : requestItemsCount,
+      isNaN(requestItemsCount)
+        ? DATABASE_REQUEST_ITEMS_COUNT
+        : requestItemsCount,
     );
     cursor = nextCursor;
 

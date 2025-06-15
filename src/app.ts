@@ -59,7 +59,7 @@ const ANALOG = {
 
     let dataset: TData = {};
 
-    if (import.meta.env.VITE_ANALOG_REDIS_REQUEST_QUEUE === "false") {
+    if (import.meta.env.VITE_ANALOG_API_REQUEST_QUEUE === "false") {
       const response = await fetch(`/api/events`, {
         headers: {
           ...(token
