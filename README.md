@@ -62,7 +62,7 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 ##### Request headers:
 - `Authorization` — if the environment variable `ANALOG_TOKEN` is present, the value must be equal to it, prefixed by `Basic `
 ##### Request parametres:
-- `cursor` — page pointer to query the database; if omitted, the API tries to fetch all the data in one go
+- `cursor` — page pointer to query the database; if omitted, the API fetches all the data in one go
 ##### Response
 ###### With `cursor`
 ```json
