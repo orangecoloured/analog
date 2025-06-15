@@ -18,7 +18,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.send("Method Not Allowed");
   }
   console.log("REQ", req.query, req.url);
-  if (![API_ENDPOINT, `${API_ENDPOINT}/`].includes(req.url as string)) {
+  if (
+    ![API_ENDPOINT, `${API_ENDPOINT}/`].includes(
+      (req.url as string).replace(/\?.*/, ""),
+    )
+  ) {
     res
       .status(404)
       .setHeaders(HEADERS_CROSS_ORIGIN_MAP)
