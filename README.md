@@ -21,7 +21,7 @@ For some variables the `VITE_` prefix is required, because the app is built usin
 | `ANALOG_PORT_SERVER` | The port you want the Node.js server to listen on. | | |
 | `VITE_ANALOG_PAGE_TITLE` | Page title. | | |
 | `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | `30` | |
-| `VITE_ANALOG_REDIS_REQUEST_QUEUE` | Determines if the requests to the API are done sequentially, rather than fetching all data in one go. | `true` | |
+| `VITE_ANALOG_REDIS_REQUEST_QUEUE` | Defines if the request to the API is done in a sequence, rather than fetching all the data in one go. | `true` | |
 
 ## Deployment
 ### Local
