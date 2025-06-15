@@ -66,10 +66,12 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 ##### Response
 ###### With `cursor`
 ```json
-data: {
-  "event-name": [1749223782651, 1749228792052]
-},
-nextCursor: "4"
+{
+  data: {
+    "event-name": [1749223782651, 1749228792052]
+  },
+  nextCursor: "4"
+}
 ```
 ###### Without `cursor`
 ```json
