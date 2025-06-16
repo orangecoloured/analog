@@ -6,7 +6,7 @@
 This is heavily inspired by the [piratepx](https://piratepx.com).
 
 ## Storage
-To store data you need a Redis instance. You can get one for free from [Upstash](https://upstash.com) or [Render](https://render.com).
+Right now the app only works with Redis. You can get an instance for free from [Upstash](https://upstash.com) or [Render](https://render.com).
 
 ## Environment variables
 For some variables the `VITE_` prefix is required, because the app is built using [Vite](https://vite.dev).
