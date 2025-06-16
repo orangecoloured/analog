@@ -81,10 +81,10 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 `/api/events`
 #### `GET`
 ##### Request headers:
-- `Authorization: Bacis *` — if the environment variable `ANALOG_TOKEN` is present, the value must be equal to it, prefixed by `Basic `
+- `Authorization?: Bacis *` — if the environment variable `ANALOG_TOKEN` is present, the value must be equal to it, prefixed by `Basic `
 ##### Request parametres:
-- `cursor: string` — page pointer to query the database; if omitted, the API fetches all the data in one go
-- `clean-up: boolean` — if the parametre is present, the clean up occurs along with fetching the data
+- `cursor?: string` — page pointer to query the database; if omitted, the API fetches all the data in one go
+- `clean-up?: boolean` — if the parametre is present, the clean up occurs along with fetching the data
 ##### Response
 ###### With `cursor`
 ```json
@@ -104,9 +104,9 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 
 #### `POST`
 ##### Request headers:
-- `Authorization: Basic *` — if the environment variables `ANALOG_PROTECT_POST` and `ANALOG_TOKEN` are present, the value must be equal to `ANALOG_TOKEN`, prefixed by `Basic `
+- `Authorization?: Basic *` — if the environment variables `ANALOG_PROTECT_POST` and `ANALOG_TOKEN` are present, the value must be equal to `ANALOG_TOKEN`, prefixed by `Basic `
 ##### Request body parametres:
-- `event: string` — contains the event name (**required**)
+- `event: string` — contains the event name
 ##### Response
 ```bash
 OK
