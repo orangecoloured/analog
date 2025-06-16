@@ -38,8 +38,28 @@ npm run dev
 This launches the frontend app and the node server.
 ### Netlify
 Create a project with a copy of this repository. The settings are in the `netlify.toml`.
+
+Configuration to schedule the clean up function to run every day:
+```toml
+[functions."cleanUp"]
+  schedule = "@daily"
+```
+> [!IMPORTANT]  
+> Scheduling may not work, because of the memory or runtime limits.
 ### Vercel
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
+
+Configuration to schedule the clean up function to run every day:
+```
+"crons": [
+  {
+    "path": "/api/cleanUp",
+    "schedule": "0 0 * * *"
+  }
+]
+```
+> [!IMPORTANT]  
+> Scheduling may not work, because of the memory or runtime limits.
 ### Docker
 Use the Dockerfile to build and run the app in a Docker container, based on your environment:
 ```bash

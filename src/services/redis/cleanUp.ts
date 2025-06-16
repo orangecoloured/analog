@@ -6,6 +6,7 @@ export const cleanUpAllData = async (): Promise<"OK"> => {
   let cursor = "0";
 
   do {
+    console.log("YO", cursor);
     cursor = await cleanUpDataByCursor(cursor);
   } while (cursor !== "0");
 

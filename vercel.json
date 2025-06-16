@@ -2,12 +2,6 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
-  "crons": [
-    {
-      "path": "/api/cleanUp",
-      "schedule": "0 8 * * *"
-    }
-  ],
   "functions": {
     "api/**/*.ts": {
       "includeFiles": "src/**"
