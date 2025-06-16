@@ -28,7 +28,7 @@ export const getDataByCursor = async (
   cursor: string = "0",
 ): Promise<TPaginatedData> => {
   const data: TData = {};
-  const prefix = `${REDIS_KEY_PREFIX}:`;
+  const prefix = `${REDIS_KEY_PREFIX}:*`;
   const requestItemsCount = parseInt(
     process.env.ANALOG_DATABASE_REQUEST_ITEM_COUNT as string,
     10,
@@ -37,7 +37,7 @@ export const getDataByCursor = async (
   const [nextCursor, keys] = await redis.scan(
     cursor,
     "MATCH",
-    `${prefix}*`,
+    prefix,
     "COUNT",
     isNaN(requestItemsCount) ? DATABASE_REQUEST_ITEMS_COUNT : requestItemsCount,
   );

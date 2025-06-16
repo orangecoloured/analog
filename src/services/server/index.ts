@@ -8,7 +8,13 @@ import {
   sendError,
 } from "../api";
 import { PORT_DEV } from "../../utils";
-import { getAllData, getDataByCursor, pushData } from "../redis";
+import {
+  cleanUpAllData,
+  cleanUpDataByCursor,
+  getAllData,
+  getDataByCursor,
+  pushData,
+} from "../redis";
 import { staticServer } from "./static";
 
 let port = parseInt(process.env.ANALOG_PORT_SERVER as string, 10);
@@ -35,6 +41,15 @@ const server = http.createServer((req, res) => {
         }
 
         const cursor = parsedUrl.query.cursor as string | undefined;
+        const cleanUp = parsedUrl.query["clean-up"] as string | undefined;
+
+        if (cleanUp) {
+          if (cursor) {
+            cleanUpDataByCursor(cursor);
+          } else {
+            cleanUpAllData();
+          }
+        }
 
         (cursor ? getDataByCursor(cursor) : getAllData())
           .then((data) => {

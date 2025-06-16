@@ -7,6 +7,10 @@ import {
 } from "../src/services/api/contants.js";
 import { getAllData, getDataByCursor } from "../src/services/redis/get.js";
 import { pushData } from "../src/services/redis/push.js";
+import {
+  cleanUpAllData,
+  cleanUpDataByCursor,
+} from "../src/services/redis/cleanUp.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!["GET", "POST", "OPTIONS"].includes(req.method as string)) {
@@ -17,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     return res.send("Method Not Allowed");
   }
-  console.log("REQ", req.query, req.url);
+
   if (
     ![API_ENDPOINT, `${API_ENDPOINT}/`].includes(
       (req.url as string).replace(/\?.*/, ""),
@@ -58,12 +62,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       try {
         const cursor = req.query.cursor as string | undefined;
+        const cleanUp = req.query["clean-up"] as string | undefined;
         let data;
 
         if (cursor) {
           data = await getDataByCursor(cursor);
         } else {
           data = await getAllData();
+        }
+
+        if (cleanUp) {
+          if (cursor) {
+            await cleanUpDataByCursor(cursor);
+          } else {
+            await cleanUpAllData();
+          }
         }
 
         res

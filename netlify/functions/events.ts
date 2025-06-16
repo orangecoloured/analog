@@ -6,6 +6,8 @@ import {
   HEADER_TEXT_PLAIN,
 } from "../../src/services/api";
 import {
+  cleanUpAllData,
+  cleanUpDataByCursor,
   getAllData,
   getDataByCursor,
   pushData,
@@ -64,12 +66,22 @@ export const handler: Handler = async (event) => {
 
       try {
         const cursor = event.queryStringParameters?.cursor;
+        const cleanUp = event.queryStringParameters?.["clean-up"];
+
         let data;
 
         if (cursor) {
           data = await getDataByCursor(cursor);
         } else {
           data = await getAllData();
+        }
+
+        if (cleanUp) {
+          if (cursor) {
+            await cleanUpDataByCursor(cursor);
+          } else {
+            await cleanUpAllData();
+          }
         }
 
         return {
