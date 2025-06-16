@@ -50,7 +50,7 @@ Configuration to schedule the clean up function to run every day:
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
 
 Configuration to schedule the clean up function to run every day:
-```
+```json
 "crons": [
   {
     "path": "/api/cleanUp",
