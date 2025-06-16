@@ -45,7 +45,7 @@ Configuration to schedule the clean up function to run every day:
   schedule = "@daily"
 ```
 > [!IMPORTANT]  
-> Scheduling may not work, because of the memory or runtime limits.
+> Scheduling may not work, because of the runtime limits.
 ### Vercel
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
 
@@ -59,7 +59,7 @@ Configuration to schedule the clean up function to run every day:
 ]
 ```
 > [!IMPORTANT]  
-> Scheduling may not work, because of the memory or runtime limits.
+> Scheduling may not work, because of the runtime limits.
 ### Docker
 Use the Dockerfile to build and run the app in a Docker container, based on your environment:
 ```bash
