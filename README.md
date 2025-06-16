@@ -21,7 +21,8 @@ For some variables the `VITE_` prefix is required, because the app is built usin
 | `ANALOG_PORT_SERVER` | The port you want the Node.js server to listen on. | | |
 | `VITE_ANALOG_PAGE_TITLE` | Page title. | | |
 | `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | `30` | |
-| `VITE_ANALOG_API_REQUEST_QUEUE` | Defines if the request to the API is done in a sequence, rather than fetching all the data in one go. | `true` | |
+| `VITE_ANALOG_API_GET_REQUEST_QUEUE` | Defines if the request to the API is done in a sequence, rather than fetching all the data in one go. | `true` | |
+| `VITE_ANALOG_API_GET_REQUEST_CLEAN_UP` | Defines if the data clean up occurs along with the `GET` request. | `true` | |
 
 ## Deployment
 ### Local
@@ -37,8 +38,28 @@ npm run dev
 This launches the frontend app and the node server.
 ### Netlify
 Create a project with a copy of this repository. The settings are in the `netlify.toml`.
+
+Configuration to schedule the clean up function to run every day:
+```toml
+[functions."cleanUp"]
+  schedule = "@daily"
+```
+> [!IMPORTANT]  
+> Scheduling may not work, because of the memory or runtime limits.
 ### Vercel
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
+
+Configuration to schedule the clean up function to run every day:
+```json
+"crons": [
+  {
+    "path": "/api/cleanUp",
+    "schedule": "0 0 * * *"
+  }
+]
+```
+> [!IMPORTANT]  
+> Scheduling may not work, because of the memory or runtime limits.
 ### Docker
 Use the Dockerfile to build and run the app in a Docker container, based on your environment:
 ```bash
@@ -60,9 +81,10 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 `/api/events`
 #### `GET`
 ##### Request headers:
-- `Authorization` — if the environment variable `ANALOG_TOKEN` is present, the value must be equal to it, prefixed by `Basic `
+- `Authorization?: Bacis *` — if the environment variable `ANALOG_TOKEN` is present, the value must be equal to it, prefixed by `Basic `
 ##### Request parametres:
-- `cursor` — page pointer to query the database; if omitted, the API fetches all the data in one go
+- `cursor?: string` — page pointer to query the database; if omitted, the API fetches all the data in one go
+- `clean-up?: boolean` — if the parametre is present, the clean up occurs along with fetching the data
 ##### Response
 ###### With `cursor`
 ```json
@@ -82,9 +104,9 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 
 #### `POST`
 ##### Request headers:
-- `Authorization` — if the environment variables `ANALOG_PROTECT_POST` and `ANALOG_TOKEN` are present, the value must be equal to `ANALOG_TOKEN`, prefixed by `Basic `
+- `Authorization?: Basic *` — if the environment variables `ANALOG_PROTECT_POST` and `ANALOG_TOKEN` are present, the value must be equal to `ANALOG_TOKEN`, prefixed by `Basic `
 ##### Request body parametres:
-- `event: string` — contains the event name (**required**)
+- `event: string` — contains the event name
 ##### Response
 ```bash
 OK

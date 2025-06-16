@@ -4,9 +4,6 @@
   command = "vite build"
   publish = "dist"
 
-[functions."cleanUp"]
-  schedule = "@daily"
-
 [[redirects]]
   from = "/api/events"
   to = "/.netlify/functions/events"

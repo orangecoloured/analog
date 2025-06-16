@@ -1,4 +1,5 @@
 import {
+  generateQuery,
   TIME_RANGE_MAX,
   TIME_RANGE_MIN,
   type TData,
@@ -56,11 +57,16 @@ const ANALOG = {
   renderData: async function () {
     const loading = document.getElementById("loading");
     const token = new URL(location.href).searchParams.get("token");
+    const cleanUpParametre =
+      import.meta.env.VITE_ANALOG_API_GET_REQUEST_CLEAN_UP === "false"
+        ? ""
+        : "clean-up=true";
 
     let dataset: TData = {};
 
-    if (import.meta.env.VITE_ANALOG_API_REQUEST_QUEUE === "false") {
-      const response = await fetch(`/api/events`, {
+    if (import.meta.env.VITE_ANALOG_API_GET_REQUEST_QUEUE === "false") {
+      const queryPath = generateQuery("/api/events", [cleanUpParametre]);
+      const response = await fetch(queryPath, {
         headers: {
           ...(token
             ? {
@@ -75,7 +81,11 @@ const ANALOG = {
       let cursor = "0";
 
       do {
-        const response = await fetch(`/api/events?cursor=${cursor}`, {
+        const queryPath = generateQuery("/api/events", [
+          cleanUpParametre,
+          `cursor=${cursor}`,
+        ]);
+        const response = await fetch(queryPath, {
           headers: {
             ...(token
               ? {

@@ -8,8 +8,15 @@ import {
   sendError,
 } from "../api";
 import { PORT_DEV } from "../../utils";
-import { getAllData, getDataByCursor, pushData } from "../redis";
+import {
+  cleanUpAllData,
+  cleanUpDataByCursor,
+  getAllData,
+  getDataByCursor,
+  pushData,
+} from "../redis";
 import { staticServer } from "./static";
+import { ToadScheduler, AsyncTask, CronJob } from "toad-scheduler";
 
 let port = parseInt(process.env.ANALOG_PORT_SERVER as string, 10);
 
@@ -35,6 +42,15 @@ const server = http.createServer((req, res) => {
         }
 
         const cursor = parsedUrl.query.cursor as string | undefined;
+        const cleanUp = parsedUrl.query["clean-up"] as string | undefined;
+
+        if (cleanUp) {
+          if (cursor) {
+            cleanUpDataByCursor(cursor);
+          } else {
+            cleanUpAllData();
+          }
+        }
 
         (cursor ? getDataByCursor(cursor) : getAllData())
           .then((data) => {
@@ -116,6 +132,22 @@ const server = http.createServer((req, res) => {
   return;
 });
 
-server.listen(port, () => {
-  console.log(`ANALOG server is running on port ${port}`);
+const scheduler = new ToadScheduler();
+const cleanUpTask = new AsyncTask(
+  "ΛNΛLOG database records clean up",
+  () => {
+    return cleanUpAllData();
+  },
+  (error: Error) => {
+    console.log(`Error while cleaning up: ${error.message}`);
+  },
+);
+const cleanUpJob = new CronJob({ cronExpression: "0 0 * * *" }, cleanUpTask, {
+  preventOverrun: true,
 });
+
+server.listen(port, () => {
+  console.log(`ΛNΛLOG server is running on port ${port}`);
+});
+
+scheduler.addCronJob(cleanUpJob);

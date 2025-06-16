@@ -13,7 +13,8 @@ interface ImportMetaEnv {
   readonly ANALOG_DATABASE_REQUEST_ITEM_COUNT?: string;
   readonly VITE_ANALOG_PAGE_TITLE?: string;
   readonly VITE_ANALOG_TIME_RANGE?: string;
-  readonly VITE_ANALOG_API_REQUEST_QUEUE?: "true" | "false";
+  readonly VITE_ANALOG_API_GET_REQUEST_QUEUE?: "true" | "false";
+  readonly VITE_ANALOG_API_GET_REQUEST_CLEAN_UP?: "true" | "false";
 }
 
 interface ImportMeta {
