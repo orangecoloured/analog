@@ -63,6 +63,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       try {
         const cursor = req.query.cursor as string | undefined;
         const cleanUp = req.query["clean-up"] as string | undefined;
+        console.log("REQ QUERY", req.query, req.query["clean-up"]);
         let data;
 
         if (cursor) {
