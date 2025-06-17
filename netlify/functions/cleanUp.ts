@@ -3,10 +3,10 @@ import {
   HEADER_TEXT_PLAIN,
   HEADERS_CROSS_ORIGIN,
 } from "../../src/services/api";
-import { cleanUpAllData } from "../../src/services/redis";
+import { databaseAdapter } from "../../src/services/server/databaseAdapter";
 
 export const handler: Handler = async () => {
-  await cleanUpAllData();
+  await databaseAdapter.cleanUpAllData();
 
   return {
     statusCode: 200,
