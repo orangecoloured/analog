@@ -108,6 +108,10 @@ const ANALOG = {
           ...responseBody.data,
         };
 
+        if (loading) {
+          loading.dataset.text = `${Object.keys(dataset).length} events fetched...`;
+        }
+
         cursor = responseBody.nextCursor;
       } while (cursor !== "0");
     }

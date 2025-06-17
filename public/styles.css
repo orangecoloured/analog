@@ -1,5 +1,7 @@
 /* 1. Use a more-intuitive box-sizing model */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -23,18 +25,31 @@ body {
 }
 
 /* 6. Improve media defaults */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* 7. Inherit fonts for form controls */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
 /* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -42,7 +57,12 @@ p, h1, h2, h3, h4, h5, h6 {
 p {
   text-wrap: pretty;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
@@ -60,15 +80,29 @@ h1, h2, h3, h4, h5, h6 {
   color-scheme: light dark;
   --colour-light: #f9f6ee;
   --colour-dark: #28282b;
-  --color-gradient: linear-gradient(200deg, light-dark(var(--colour-dark), var(--colour-light)) 0%, light-dark(color-mix(in srgb, var(--colour-dark) 60%, transparent), color-mix(in srgb, var(--colour-light) 60%, transparent)) 100%);
+  --color-gradient: linear-gradient(
+    200deg,
+    light-dark(var(--colour-dark), var(--colour-light)) 0%,
+    light-dark(
+        color-mix(in srgb, var(--colour-dark) 60%, transparent),
+        color-mix(in srgb, var(--colour-light) 60%, transparent)
+      )
+      100%
+  );
   --gap-m-max: max(2dvw, 2dvh);
   --gap-s-min: min(1dvw, 1dvh);
   --columns-count: 30;
+  --font-small: 10px;
+  --font-medium: 14px;
 }
 
 @keyframes rotate {
-  0% { transform: rotateZ(0) }
-  100% { transform: rotateZ(360deg) }
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
 }
 
 #root {
@@ -104,7 +138,16 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   gap: 6px 0;
   align-self: center;
-  clip-path: polygon(4% 0%, 96% 0%, 100% 4%, 100% 96%, 96% 100%, 8% 100%, 0% 92%, 0% 4%);
+  clip-path: polygon(
+    4% 0%,
+    96% 0%,
+    100% 4%,
+    100% 96%,
+    96% 100%,
+    8% 100%,
+    0% 92%,
+    0% 4%
+  );
   position: relative;
 }
 
@@ -119,8 +162,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo > * {
-  font-size: 14px;
-  line-height: 14px;
+  font-size: var(--font-medium);
+  line-height: var(--font-medium);
   font-weight: bold;
   color: light-dark(var(--colour-light), var(--colour-dark));
   letter-spacing: 6px;
@@ -129,7 +172,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .title {
-  font-size: 14px;
+  font-size: var(--font-medium);
 }
 
 .title:empty {
@@ -156,7 +199,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .row > *:empty:before {
   content: "0";
-  font-size: 10px;
+  font-size: var(--font-small);
   font-weight: bold;
   opacity: 0.2;
 }
@@ -183,7 +226,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .value {
-  font-size: 10px;
+  font-size: var(--font-small);
   flex-shrink: 0;
   font-weight: bold;
 }
@@ -191,16 +234,33 @@ h1, h2, h3, h4, h5, h6 {
 .event {
   position: sticky;
   left: 0;
-  font-size: 14px;
+  font-size: var(--font-medium);
   font-weight: bold;
 }
 
 #loading {
+  align-self: center;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: var(--gap-m-max) 0;
+}
+
+#loading:before {
+  content: "";
   width: 16px;
   height: 16px;
   border: 2px solid light-dark(var(--colour-dark), var(--colour-light));
-  border-top-color: light-dark(color-mix(in srgb, var(--colour-dark) 40%, transparent), color-mix(in srgb, var(--colour-light) 40%, transparent));
+  border-top-color: light-dark(
+    color-mix(in srgb, var(--colour-dark) 40%, transparent),
+    color-mix(in srgb, var(--colour-light) 40%, transparent)
+  );
   border-radius: 50%;
-  align-self: center;
   animation: rotate 800ms linear infinite;
+}
+
+#loading:after {
+  content: attr(data-text);
+  font-size: var(--font-small);
+  font-weight: bold;
 }
