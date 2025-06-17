@@ -73,6 +73,12 @@ const ANALOG = {
         },
       });
 
+      if (!response.ok) {
+        loading?.remove();
+
+        throw new Error(response.statusText);
+      }
+
       dataset = (await response.json()) as TData;
     } else {
       let cursor = "0";
