@@ -5,13 +5,7 @@ import {
   HEADER_APPLICATION_JSON,
   HEADER_TEXT_PLAIN,
 } from "../../src/services/api";
-import {
-  cleanUpAllData,
-  cleanUpDataByCursor,
-  getAllData,
-  getDataByCursor,
-  pushData,
-} from "../../src/services/redis";
+import { databaseAdapter as adapter } from "../../src/services/server/databaseAdapter";
 
 export const handler: Handler = async (event) => {
   if (!["GET", "POST", "OPTIONS"].includes(event.httpMethod)) {
@@ -71,16 +65,16 @@ export const handler: Handler = async (event) => {
         let data;
 
         if (cursor) {
-          data = await getDataByCursor(cursor);
+          data = await adapter.getDataByCursor(cursor);
         } else {
-          data = await getAllData();
+          data = await adapter.getAllData();
         }
 
         if (cleanUp) {
           if (cursor) {
-            await cleanUpDataByCursor(cursor);
+            await adapter.cleanUpDataByCursor(cursor);
           } else {
-            await cleanUpAllData();
+            await adapter.cleanUpAllData();
           }
         }
 
@@ -123,7 +117,7 @@ export const handler: Handler = async (event) => {
 
       if (body.event) {
         try {
-          await pushData(body.event);
+          await adapter.pushData(body.event);
 
           return {
             statusCode: 200,

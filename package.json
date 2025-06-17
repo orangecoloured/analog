@@ -15,6 +15,7 @@
   "devDependencies": {
     "@eslint/js": "^9.29.0",
     "@types/node": "^24.0.3",
+    "@types/pg": "^8.15.4",
     "concurrently": "^9.1.2",
     "eslint": "^9.29.0",
     "globals": "^16.2.0",
@@ -29,6 +30,7 @@
     "@netlify/vite-plugin": "^2.2.3",
     "@vercel/node": "^5.2.2",
     "ioredis": "^5.6.1",
+    "pg": "^8.16.0",
     "toad-scheduler": "^3.1.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",

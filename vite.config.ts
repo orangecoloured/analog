@@ -31,7 +31,7 @@ const platformSpecificConfig = (config: UserConfig) => {
 
 export default defineConfig(({ command }) => {
   if (command === "serve") {
-    const port = parseInt(process.env.ANALOG_PORT_SERVER as string, 10);
+    const port = Number(process.env.ANALOG_PORT_SERVER as string);
 
     return {
       ...baseConfig,
