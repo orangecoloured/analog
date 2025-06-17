@@ -6,9 +6,9 @@ import {
   HEADER_TEXT_PLAIN,
   HEADERS_CROSS_ORIGIN,
   sendError,
+  databaseAdapter as adapter,
 } from "../api";
 import { PORT_DEV } from "../../utils";
-import { databaseAdapter as adapter } from "./databaseAdapter";
 import { staticServer } from "./static";
 import { ToadScheduler, AsyncTask, CronJob } from "toad-scheduler";
 

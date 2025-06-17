@@ -5,12 +5,7 @@ import {
   HEADER_TEXT_PLAIN_MAP,
   HEADERS_CROSS_ORIGIN_MAP,
 } from "../src/services/api/contants.js";
-import { getAllData, getDataByCursor } from "../src/services/redis/get.js";
-import { pushData } from "../src/services/redis/push.js";
-import {
-  cleanUpAllData,
-  cleanUpDataByCursor,
-} from "../src/services/redis/cleanUp.js";
+import { databaseAdapter as adapter } from "../src/services/api/databaseAdapter.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!["GET", "POST", "OPTIONS"].includes(req.method as string)) {
@@ -67,16 +62,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         let data;
 
         if (cursor) {
-          data = await getDataByCursor(cursor);
+          data = await adapter.getDataByCursor(cursor);
         } else {
-          data = await getAllData();
+          data = await adapter.getAllData();
         }
 
         if (cleanUp) {
           if (cursor) {
-            await cleanUpDataByCursor(cursor);
+            await adapter.cleanUpDataByCursor(cursor);
           } else {
-            await cleanUpAllData();
+            await adapter.cleanUpAllData();
           }
         }
 
@@ -103,7 +98,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (body.event) {
         try {
-          await pushData(body.event);
+          await adapter.pushData(body.event);
 
           res.status(200).setHeaders(HEADER_TEXT_PLAIN_MAP);
 

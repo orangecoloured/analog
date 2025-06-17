@@ -3,13 +3,13 @@ import {
   HEADER_TEXT_PLAIN_MAP,
   HEADERS_CROSS_ORIGIN_MAP,
 } from "../src/services/api/contants.js";
-import { cleanUpAllData } from "../src/services/redis/cleanUp.js";
+import { databaseAdapter as adapter } from "../src/services/api/databaseAdapter.js";
 
 export default async function handler(
   _req: VercelRequest,
   res: VercelResponse,
 ) {
-  await cleanUpAllData();
+  await adapter.cleanUpAllData();
 
   return res
     .status(200)

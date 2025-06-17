@@ -2,17 +2,22 @@ import type { TData, TPaginatedData } from "../../utils";
 import {
   cleanUpAllData as redisCleanUpAllData,
   cleanUpDataByCursor as redisCleanUpDataByCursor,
+} from "../redis/cleanUp.js";
+import {
   getAllData as redisGetAllData,
   getDataByCursor as redisGetDataByCursor,
-  pushData as redisPushData,
-} from "../redis";
+} from "../redis/get.js";
+import { pushData as redisPushData } from "../redis/push.js";
+
 import {
   cleanUpAllData as postgresqlCleanUpAllData,
   cleanUpDataByCursor as postgresqlCleanUpDataByCursor,
+} from "../postgresql/cleanUp.js";
+import {
   getAllData as postgresqlGetAllData,
   getDataByCursor as postgresqlGetDataByCursor,
-  pushData as postgresqlPushData,
-} from "../postgresql";
+} from "../postgresql/get.js";
+import { pushData as postgresqlPushData } from "../postgresql/push.js";
 
 const generateDatabaseAdapter = () => {
   switch (process.env.ANALOG_DATABASE_PROVIDER) {

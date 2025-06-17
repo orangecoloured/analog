@@ -4,8 +4,8 @@ import {
   HEADERS_CROSS_ORIGIN,
   HEADER_APPLICATION_JSON,
   HEADER_TEXT_PLAIN,
+  databaseAdapter as adapter,
 } from "../../src/services/api";
-import { databaseAdapter as adapter } from "../../src/services/server/databaseAdapter";
 
 export const handler: Handler = async (event) => {
   if (!["GET", "POST", "OPTIONS"].includes(event.httpMethod)) {
