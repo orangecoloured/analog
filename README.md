@@ -72,11 +72,11 @@ docker build -t analog-analytics .
 docker run -d \
   -p 80:80 \ # For local development
   -e ANALOG_STATIC_SERVER=true \
-  -e ANALOG_PORT_SERVER="" \ # 80 for HTTP or 443 for HTTPS
-  -e ANALOG_DATABASE_PROVIDER="" \
-  -e ANALOG_REDIS_URL="" \
-  -e VITE_ANALOG_API_GET_REQUEST_QUEUE="false"
-  -e VITE_ANALOG_API_GET_REQUEST_CLEAN_UP="false"
+  -e ANALOG_PORT_SERVER= \ # 80 for HTTP or 443 for HTTPS
+  -e ANALOG_DATABASE_PROVIDER= \
+  -e ANALOG_REDIS_URL= \
+  -e VITE_ANALOG_API_GET_REQUEST_QUEUE=false
+  -e VITE_ANALOG_API_GET_REQUEST_CLEAN_UP=false
   --name analog-analytics \
   analog-analytics
 ```
