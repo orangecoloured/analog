@@ -1,15 +1,15 @@
 # ΛNΛLOG
 **A minimal analytics tool to self-host.**
 
-![Untitled-1](https://github.com/user-attachments/assets/ac2de3d5-d722-4b3e-abc6-4d40a6cb02b6)
+![ΛNΛLOG dashboard](https://github.com/user-attachments/assets/ac2de3d5-d722-4b3e-abc6-4d40a6cb02b6)
 
 This is heavily inspired by the [piratepx](https://piratepx.com).
 
 ## Storage
 ### Redis
-You can get a free instance from [Upstash](https://upstash.com) or [Render](https://render.com).
+Get one from [Upstash](https://upstash.com) or [Render](https://render.com).
 ### PostgreSQL
-You can get a free instance from [Supabase](https://supabase.com).
+Get one from [Supabase](https://supabase.com).
 
 ## Environment variables
 For some variables the `VITE_` prefix is required, because the app is built using [Vite](https://vite.dev).

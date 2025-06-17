@@ -5,7 +5,7 @@ import {
   HEADER_APPLICATION_JSON,
   HEADER_TEXT_PLAIN,
 } from "../../src/services/api";
-import { databaseAdapter } from "../../src/services/server/databaseAdapter";
+import { databaseAdapter as adapter } from "../../src/services/server/databaseAdapter";
 
 export const handler: Handler = async (event) => {
   if (!["GET", "POST", "OPTIONS"].includes(event.httpMethod)) {
@@ -65,16 +65,16 @@ export const handler: Handler = async (event) => {
         let data;
 
         if (cursor) {
-          data = await databaseAdapter.getDataByCursor(cursor);
+          data = await adapter.getDataByCursor(cursor);
         } else {
-          data = await databaseAdapter.getAllData();
+          data = await adapter.getAllData();
         }
 
         if (cleanUp) {
           if (cursor) {
-            await databaseAdapter.cleanUpDataByCursor(cursor);
+            await adapter.cleanUpDataByCursor(cursor);
           } else {
-            await databaseAdapter.cleanUpAllData();
+            await adapter.cleanUpAllData();
           }
         }
 
@@ -117,7 +117,7 @@ export const handler: Handler = async (event) => {
 
       if (body.event) {
         try {
-          await databaseAdapter.pushData(body.event);
+          await adapter.pushData(body.event);
 
           return {
             statusCode: 200,
