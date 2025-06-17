@@ -28,10 +28,7 @@ const ANALOG = {
   },
 
   generateRangeMap: function () {
-    let timeRange = parseInt(
-      import.meta.env.VITE_ANALOG_TIME_RANGE as string,
-      10,
-    );
+    let timeRange = Number(import.meta.env.VITE_ANALOG_TIME_RANGE as string);
 
     if (!isNaN(timeRange)) {
       timeRange = Math.min(Math.max(timeRange, TIME_RANGE_MIN), TIME_RANGE_MAX);
@@ -113,7 +110,7 @@ const ANALOG = {
         }
 
         cursor = responseBody.nextCursor;
-      } while (cursor !== "0");
+      } while (!["0", "null"].includes(cursor));
     }
 
     const root = document.getElementById("root");

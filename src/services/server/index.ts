@@ -8,17 +8,11 @@ import {
   sendError,
 } from "../api";
 import { PORT_DEV } from "../../utils";
-import {
-  cleanUpAllData,
-  cleanUpDataByCursor,
-  getAllData,
-  getDataByCursor,
-  pushData,
-} from "../redis";
+import { databaseAdapter as adapter } from "./databaseAdapter";
 import { staticServer } from "./static";
 import { ToadScheduler, AsyncTask, CronJob } from "toad-scheduler";
 
-let port = parseInt(process.env.ANALOG_PORT_SERVER as string, 10);
+let port = Number(process.env.ANALOG_PORT_SERVER as string);
 
 port = isNaN(port) ? PORT_DEV + 1 : port;
 
@@ -46,13 +40,13 @@ const server = http.createServer((req, res) => {
 
         if (cleanUp) {
           if (cursor) {
-            cleanUpDataByCursor(cursor);
+            adapter.cleanUpDataByCursor(cursor);
           } else {
-            cleanUpAllData();
+            adapter.cleanUpAllData();
           }
         }
 
-        (cursor ? getDataByCursor(cursor) : getAllData())
+        (cursor ? adapter.getDataByCursor(cursor) : adapter.getAllData())
           .then((data) => {
             res.writeHead(200, {
               ...HEADERS_CROSS_ORIGIN,
@@ -89,8 +83,10 @@ const server = http.createServer((req, res) => {
             const event = JSON.parse(data).event;
 
             if (event) {
-              pushData(event)
-                .then(() => {
+              adapter
+                .pushData(event)
+                .then((a) => {
+                  console.log("RESPONSE", a);
                   res.writeHead(200, {
                     ...HEADERS_CROSS_ORIGIN,
                     ...HEADER_TEXT_PLAIN,
@@ -136,7 +132,7 @@ const scheduler = new ToadScheduler();
 const cleanUpTask = new AsyncTask(
   "ΛNΛLOG database records clean up",
   () => {
-    return cleanUpAllData();
+    return adapter.cleanUpAllData();
   },
   (error: Error) => {
     console.log(`Error while cleaning up: ${error.message}`);
