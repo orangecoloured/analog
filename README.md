@@ -11,6 +11,16 @@ Get one from [Upstash](https://upstash.com) or [Render](https://render.com).
 ### PostgreSQL
 Get one from [Supabase](https://supabase.com).
 
+Here's how to create the table:
+```sql
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY,
+  event_name TEXT NOT NULL,
+  timestamp BIGINT NOT NULL DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)
+);
+CREATE INDEX idx_events_eventname_timestamp ON events(event_name, timestamp);
+```
+
 ## Environment variables
 For some variables the `VITE_` prefix is required, because the app is built using [Vite](https://vite.dev).
 
