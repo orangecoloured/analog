@@ -29,28 +29,26 @@ export const getAllData = async () => {
 };
 
 export const getDataByCursor = async (
-  cursor: string = "null",
+  cursor: string = "0",
 ): Promise<TPaginatedData> => {
   const requestItemsCount = getRequestItemsCount();
   const cutoff = getCutoff();
   const params = [cutoff];
   let query = GET_QUERY.replace("SELECT", "SELECT id,");
 
-  if (cursor !== "null") {
+  if (cursor !== "0") {
     query += ` AND id > $${params.length + 1}`;
     params.push(Number(cursor));
   }
 
   query += " ORDER BY id ASC";
 
-  if (cursor !== null) {
-    query += ` LIMIT $${params.length + 1}`;
-    params.push(requestItemsCount);
-  }
+  query += ` LIMIT $${params.length + 1}`;
+  params.push(requestItemsCount);
 
   const response = await postgresql.query<EventRow>(query, params);
   const data = mergeRowsToObject(response.rows);
-  const nextCursor = response.rows.at(-1)?.id || null;
+  const nextCursor = response.rows.at(-1)?.id || 0;
 
   return {
     data,

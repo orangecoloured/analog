@@ -16,13 +16,13 @@ export const cleanUpAllData = async () => {
   );
 };
 
-export const cleanUpDataByCursor = async (cursor: string = "null") => {
+export const cleanUpDataByCursor = async (cursor: string = "0") => {
   const requestItemsCount = getRequestItemsCount();
   const cutoff = getCutoff();
   const params = [cutoff];
   let cursorPart = "";
 
-  if (cursor !== "null") {
+  if (cursor !== "0") {
     cursorPart = `  AND id > $${params.length + 1}`;
     params.push(Number(cursor));
   }
@@ -45,6 +45,7 @@ SELECT MAX(id)::int AS id
 FROM deleted;`;
 
   const response = await postgresql.query<CleanUpEventRow>(query, params);
+  const nextCursor = response.rows.at(-1)?.id || 0;
 
-  return response.rows[0]?.id || null;
+  return String(nextCursor);
 };

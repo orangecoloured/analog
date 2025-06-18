@@ -116,7 +116,7 @@ const ANALOG = {
         }
 
         cursor = responseBody.nextCursor;
-      } while (!["0", "null"].includes(cursor));
+      } while (cursor !== "0");
     }
 
     const root = document.getElementById("root");
