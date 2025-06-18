@@ -1,6 +1,8 @@
-import { mongodb } from "./mongodb.js";
+import { mongodbCollection } from "./mongodb.js";
 
-export const pushData = (event: string) => {
+export const pushData = async (event: string) => {
+  const mongodb = await mongodbCollection();
+
   return mongodb.insertOne({
     event,
     timestamp: Date.now(),

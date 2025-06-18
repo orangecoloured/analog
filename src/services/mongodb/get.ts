@@ -2,9 +2,10 @@ import type { TData } from "../../utils";
 import type { TEventDoc, TPaginatedQuery } from "./types";
 import { getCutoff } from "../../utils/getCutoff.js";
 import { getRequestItemCount } from "../../utils/getRequestItemCount.js";
-import { mongodb } from "./mongodb.js";
+import { mongodbCollection } from "./mongodb.js";
 
 export const getAllData = async () => {
+  const mongodb = await mongodbCollection();
   const cutoff = getCutoff();
   const query = { timestamp: { $gte: cutoff } };
 
@@ -23,6 +24,7 @@ export const getAllData = async () => {
 };
 
 export const getDataByCursor = async (cursorString: string = "0") => {
+  const mongodb = await mongodbCollection();
   const cutoff = getCutoff();
   const requestItemCount = getRequestItemCount();
   const cursor = Number(cursorString);

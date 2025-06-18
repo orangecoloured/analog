@@ -1,15 +1,17 @@
 import type { TEventDoc, TPaginatedQuery } from "./types";
 import { getCutoff } from "../../utils/getCutoff.js";
-import { mongodb } from "./mongodb.js";
+import { mongodbCollection } from "./mongodb.js";
 import { getRequestItemCount } from "../../utils/getRequestItemCount.js";
 
 export const cleanUpAllData = async () => {
   const cutoff = getCutoff();
+  const mongodb = await mongodbCollection();
 
   return await mongodb.deleteMany({ timestamp: { $lt: cutoff } });
 };
 
 export const cleanUpDataByCursor = async (cursorString: string = "0") => {
+  const mongodb = await mongodbCollection();
   const cursor = Number(cursorString);
   const cutoff = getCutoff();
   const requestItemCount = getRequestItemCount();

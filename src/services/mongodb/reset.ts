@@ -1,5 +1,7 @@
-import { mongodb } from "./mongodb.js";
+import { mongodbCollection } from "./mongodb.js";
 
-export const resetData = () => {
+export const resetData = async () => {
+  const mongodb = await mongodbCollection();
+
   return mongodb.drop();
 };
