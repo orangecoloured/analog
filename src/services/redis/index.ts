@@ -1,5 +1,5 @@
 export * from "./cleanUp";
-export * from "./contants";
+export * from "./constants";
 export * from "./get";
 export * from "./mock";
 export * from "./push";

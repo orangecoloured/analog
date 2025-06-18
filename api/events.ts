@@ -4,7 +4,7 @@ import {
   HEADER_APPLICATION_JSON_MAP,
   HEADER_TEXT_PLAIN_MAP,
   HEADERS_CROSS_ORIGIN_MAP,
-} from "../src/services/api/contants.js";
+} from "../src/services/api/constants.js";
 import { databaseAdapter as adapter } from "../src/services/api/databaseAdapter.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

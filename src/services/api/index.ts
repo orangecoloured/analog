@@ -1,3 +1,3 @@
 export * from "./sendError";
-export * from "./contants";
+export * from "./constants";
 export * from "./databaseAdapter";

@@ -1,6 +1,6 @@
 import { uuid } from "../../utils/uuid.js";
 import { redis } from "./redis.js";
-import { REDIS_KEY_PREFIX } from "./contants.js";
+import { REDIS_KEY_PREFIX } from "./constants.js";
 
 export const pushData = (event: string) => {
   const timestamp = Date.now();
@@ -8,4 +8,4 @@ export const pushData = (event: string) => {
   const key = `${REDIS_KEY_PREFIX}:${event}`;
 
   return redis.zadd(key, timestamp, member);
-}
+};

@@ -1,6 +1,6 @@
 import type { TData, TPaginatedData } from "../../utils";
 import { getRequestItemsCount } from "../../utils/getRequestItemsCount.js";
-import { REDIS_KEY_PREFIX } from "./contants.js";
+import { REDIS_KEY_PREFIX } from "./constants.js";
 import { redis } from "./redis.js";
 
 export const getAllData = async () => {

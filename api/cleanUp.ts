@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import {
   HEADER_TEXT_PLAIN_MAP,
   HEADERS_CROSS_ORIGIN_MAP,
-} from "../src/services/api/contants.js";
+} from "../src/services/api/constants.js";
 import { databaseAdapter as adapter } from "../src/services/api/databaseAdapter.js";
 
 export default async function handler(

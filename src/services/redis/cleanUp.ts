@@ -1,5 +1,5 @@
 import { redis } from "./redis.js";
-import { REDIS_KEY_PREFIX } from "./contants.js";
+import { REDIS_KEY_PREFIX } from "./constants.js";
 import { getRequestItemsCount } from "../../utils/getRequestItemsCount.js";
 import { getCutoff } from "../../utils/getCutoff.js";
 
