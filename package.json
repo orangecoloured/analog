@@ -1,6 +1,6 @@
 {
   "name": "analog",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A minimal analytics tool to self-host.",
   "main": "index.js",
   "scripts": {
