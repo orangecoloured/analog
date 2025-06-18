@@ -1,5 +1,5 @@
 export const POSTGRESQL_DATABASE_NAME = "analog";
-export const POSTGRESQL_KEY_EVENT_NAME = "event_name";
+export const POSTGRESQL_KEY_EVENT_NAME = "event";
 export const POSTGRESQL_KEY_TIMESTAMP_NAME = "timestamp";
 
 export const GET_QUERY = `SELECT ${POSTGRESQL_KEY_EVENT_NAME}, ${POSTGRESQL_KEY_TIMESTAMP_NAME}

@@ -1,6 +1,6 @@
 import { redis } from "./redis.js";
 import { REDIS_KEY_PREFIX } from "./constants.js";
-import { getRequestItemsCount } from "../../utils/getRequestItemsCount.js";
+import { getRequestItemCount } from "../../utils/getRequestItemCount.js";
 import { getCutoff } from "../../utils/getCutoff.js";
 
 export const cleanUpAllData = async (): Promise<"OK"> => {
@@ -18,14 +18,14 @@ export const cleanUpDataByCursor = async (
 ): Promise<string> => {
   const cutoff = getCutoff();
   const prefix = `${REDIS_KEY_PREFIX}:*`;
-  const requestItemsCount = getRequestItemsCount();
+  const requestItemCount = getRequestItemCount();
 
   const [nextCursor, keys] = await redis.scan(
     cursor,
     "MATCH",
     prefix,
     "COUNT",
-    requestItemsCount,
+    requestItemCount,
   );
 
   for (const key of keys) {

@@ -1,6 +1,6 @@
-import type { CleanUpEventRow } from "./types";
+import type { TCleanUpEventRow } from "./types";
 import { getCutoff } from "../../utils/getCutoff.js";
-import { getRequestItemsCount } from "../../utils/getRequestItemsCount.js";
+import { getRequestItemCount } from "../../utils/getRequestItemCount.js";
 import {
   POSTGRESQL_DATABASE_NAME,
   POSTGRESQL_KEY_TIMESTAMP_NAME,
@@ -17,7 +17,7 @@ export const cleanUpAllData = async () => {
 };
 
 export const cleanUpDataByCursor = async (cursor: string = "0") => {
-  const requestItemsCount = getRequestItemsCount();
+  const requestItemCount = getRequestItemCount();
   const cutoff = getCutoff();
   const params = [cutoff];
   let cursorPart = "";
@@ -33,7 +33,7 @@ export const cleanUpDataByCursor = async (cursor: string = "0") => {
   WHERE ${POSTGRESQL_KEY_TIMESTAMP_NAME} < $1
 ${cursorPart}
   ORDER BY id ASC
-  LIMIT ${requestItemsCount}
+  LIMIT ${requestItemCount}
 ),
 deleted AS (
   DELETE FROM ${POSTGRESQL_DATABASE_NAME}
@@ -44,7 +44,7 @@ deleted AS (
 SELECT MAX(id)::int AS id
 FROM deleted;`;
 
-  const response = await postgresql.query<CleanUpEventRow>(query, params);
+  const response = await postgresql.query<TCleanUpEventRow>(query, params);
   const nextCursor = response.rows.at(-1)?.id || 0;
 
   return String(nextCursor);

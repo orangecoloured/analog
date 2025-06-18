@@ -1,9 +1,9 @@
-export type EventRow = {
-  event_name: string;
+export type TEventRow = {
+  event: string;
   timestamp: number;
   id?: number;
 };
 
-export type CleanUpEventRow = {
+export type TCleanUpEventRow = {
   id: number | null;
 };

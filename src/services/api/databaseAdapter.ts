@@ -1,4 +1,5 @@
 import type { TData, TPaginatedData } from "../../utils";
+
 import {
   cleanUpAllData as redisCleanUpAllData,
   cleanUpDataByCursor as redisCleanUpDataByCursor,
@@ -19,6 +20,16 @@ import {
 } from "../postgresql/get.js";
 import { pushData as postgresqlPushData } from "../postgresql/push.js";
 
+import {
+  cleanUpAllData as mongodbCleanUpAllData,
+  cleanUpDataByCursor as mongodbCleanUpDataByCursor,
+} from "../mongodb/cleanUp.js";
+import {
+  getAllData as mongodbGetAllData,
+  getDataByCursor as mongodbGetDataByCursor,
+} from "../mongodb/get.js";
+import { pushData as mongodbPushData } from "../mongodb/push.js";
+
 const generateDatabaseAdapter = () => {
   switch (process.env.ANALOG_DATABASE_PROVIDER) {
     case "postgresql": {
@@ -38,6 +49,16 @@ const generateDatabaseAdapter = () => {
         getAllData: redisGetAllData,
         getDataByCursor: redisGetDataByCursor,
         pushData: redisPushData,
+      };
+    }
+
+    case "mongodb": {
+      return {
+        cleanUpAllData: mongodbCleanUpAllData,
+        cleanUpDataByCursor: mongodbCleanUpDataByCursor,
+        getAllData: mongodbGetAllData,
+        getDataByCursor: mongodbGetDataByCursor,
+        pushData: mongodbPushData,
       };
     }
 

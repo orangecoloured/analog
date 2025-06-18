@@ -1,5 +1,5 @@
 import type { TData, TPaginatedData } from "../../utils";
-import { getRequestItemsCount } from "../../utils/getRequestItemsCount.js";
+import { getRequestItemCount } from "../../utils/getRequestItemCount.js";
 import { REDIS_KEY_PREFIX } from "./constants.js";
 import { redis } from "./redis.js";
 
@@ -30,14 +30,14 @@ export const getDataByCursor = async (
 ): Promise<TPaginatedData> => {
   const data: TData = {};
   const prefix = `${REDIS_KEY_PREFIX}:*`;
-  const requestItemsCount = getRequestItemsCount();
+  const requestItemCount = getRequestItemCount();
 
   const [nextCursor, keys] = await redis.scan(
     cursor,
     "MATCH",
     prefix,
     "COUNT",
-    requestItemsCount,
+    requestItemCount,
   );
 
   for (const key of keys) {

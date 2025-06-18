@@ -15,13 +15,17 @@ Here's how to create the table:
 ```sql
 CREATE TABLE analog (
   id SERIAL PRIMARY KEY,
-  event_name TEXT NOT NULL,
+  event TEXT NOT NULL,
   timestamp BIGINT NOT NULL DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)
 );
-CREATE INDEX idx_analog_eventname_timestamp ON analog(event_name, timestamp);
+CREATE INDEX index_analog_eventname_timestamp ON analog(event, timestamp);
 ```
 > [!IMPORTANT]  
 > You should use a transaction pooler connection.
+### MongoDB
+Get one from [MongoDB](https://mongodb.com).
+
+Create a database `analog` with a collection `events`.
 ## Environment variables
 For some variables the `VITE_` prefix is required, because the app is built using [Vite](https://vite.dev).
 
@@ -31,6 +35,7 @@ For some variables the `VITE_` prefix is required, because the app is built usin
 | `ANALOG_DATABASE_PROVIDER` | Defines which database provider is used. | |
 | `ANALOG_REDIS_URL` | Redis connection url. | |
 | `ANALOG_POSTGRESQL_URL` | PostgreSQL connection url. | |
+| `ANALOG_MONGODB_URL` | MongoDB connection url. | |
 | `ANALOG_DATABASE_REQUEST_ITEM_COUNT` | The item count the API server requests from the database. | `10` |
 | `ANALOG_PROTECT_POST` | Set to `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` requests. | `false` |
 | `ANALOG_STATIC_SERVER` | Set to `true` to make the Node.js server also serve static content. In this case the contents of `./src/services/server/dist` folder are used. | `false` |

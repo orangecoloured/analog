@@ -85,8 +85,7 @@ const server = http.createServer((req, res) => {
             if (event) {
               adapter
                 .pushData(event)
-                .then((a) => {
-                  console.log("RESPONSE", a);
+                .then(() => {
                   res.writeHead(200, {
                     ...HEADERS_CROSS_ORIGIN,
                     ...HEADER_TEXT_PLAIN,

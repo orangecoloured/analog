@@ -1,19 +1,19 @@
 import type { TData, TPaginatedData } from "../../utils";
-import type { EventRow } from "./types";
-import { getRequestItemsCount } from "../../utils/getRequestItemsCount.js";
+import type { TEventRow } from "./types";
+import { getRequestItemCount } from "../../utils/getRequestItemCount.js";
 import { getCutoff } from "../../utils/getCutoff.js";
 import { GET_QUERY } from "./constants.js";
 import { postgresql } from "./postgresql.js";
 
-const mergeRowsToObject = (rows: EventRow[]) => {
+const mergeRowsToObject = (rows: TEventRow[]) => {
   const data: TData = {};
 
   rows.forEach((row) => {
-    if (!data[row.event_name]) {
-      data[row.event_name] = [];
+    if (!data[row.event]) {
+      data[row.event] = [];
     }
 
-    data[row.event_name].push(Number(row.timestamp));
+    data[row.event].push(Number(row.timestamp));
   });
 
   return data;
@@ -22,7 +22,7 @@ const mergeRowsToObject = (rows: EventRow[]) => {
 export const getAllData = async () => {
   const cutoff = getCutoff();
   const params = [cutoff];
-  const response = await postgresql.query<EventRow>(GET_QUERY, params);
+  const response = await postgresql.query<TEventRow>(GET_QUERY, params);
   const data = mergeRowsToObject(response.rows);
 
   return data;
@@ -31,7 +31,7 @@ export const getAllData = async () => {
 export const getDataByCursor = async (
   cursor: string = "0",
 ): Promise<TPaginatedData> => {
-  const requestItemsCount = getRequestItemsCount();
+  const requestItemCount = getRequestItemCount();
   const cutoff = getCutoff();
   const params = [cutoff];
   let query = GET_QUERY.replace("SELECT", "SELECT id,");
@@ -44,9 +44,9 @@ export const getDataByCursor = async (
   query += " ORDER BY id ASC";
 
   query += ` LIMIT $${params.length + 1}`;
-  params.push(requestItemsCount);
+  params.push(requestItemCount);
 
-  const response = await postgresql.query<EventRow>(query, params);
+  const response = await postgresql.query<TEventRow>(query, params);
   const data = mergeRowsToObject(response.rows);
   const nextCursor = response.rows.at(-1)?.id || 0;
 
