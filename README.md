@@ -13,12 +13,12 @@ Get one from [Supabase](https://supabase.com).
 
 Here's how to create the table:
 ```sql
-CREATE TABLE events (
+CREATE TABLE analog (
   id SERIAL PRIMARY KEY,
   event_name TEXT NOT NULL,
   timestamp BIGINT NOT NULL DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)
 );
-CREATE INDEX idx_events_eventname_timestamp ON events(event_name, timestamp);
+CREATE INDEX idx_analog_eventname_timestamp ON analog(event_name, timestamp);
 ```
 > [!IMPORTANT]  
 > You should use a transaction pooler connection.

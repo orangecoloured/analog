@@ -1,4 +1,4 @@
-export const POSTGRESQL_DATABASE_NAME = "events";
+export const POSTGRESQL_DATABASE_NAME = "analog";
 export const POSTGRESQL_KEY_EVENT_NAME = "event_name";
 export const POSTGRESQL_KEY_TIMESTAMP_NAME = "timestamp";
 
