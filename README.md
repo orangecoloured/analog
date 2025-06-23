@@ -32,14 +32,14 @@ For some variables the `VITE_` prefix is required, because the app is built usin
 | Key  | Value | Default |
 | :--- | :--- | :--- |
 | `ANALOG_TOKEN` | Protects requests. Leave empty if no protection is required.  | |
-| `ANALOG_DATABASE_PROVIDER` | Defines which database provider is used. | |
+| `ANALOG_DATABASE_PROVIDER` | Defines which database provider is used. Available values: `redis`, `postgresql`, `mongodb`. | |
 | `ANALOG_REDIS_URL` | Redis connection url. | |
 | `ANALOG_POSTGRESQL_URL` | PostgreSQL connection url. | |
 | `ANALOG_MONGODB_URL` | MongoDB connection url. | |
 | `ANALOG_DATABASE_REQUEST_ITEM_COUNT` | The item count the API server requests from the database. | `10` |
 | `ANALOG_PROTECT_POST` | Set to `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` requests. | `false` |
 | `ANALOG_STATIC_SERVER` | Set to `true` to make the Node.js server also serve static content. In this case the contents of `./src/services/server/dist` folder are used. | `false` |
-| `ANALOG_PORT_SERVER` | The port you want the Node.js server to listen on. | |
+| `ANALOG_PORT_SERVER` | The port you want the Node.js server to listen on.  | |
 | `VITE_ANALOG_PAGE_TITLE` | Page title. | |
 | `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | `30` |
 | `VITE_ANALOG_API_GET_REQUEST_QUEUE` | Defines if the request to the API is done in a sequence, rather than fetching all the data in one go. | `true` |
