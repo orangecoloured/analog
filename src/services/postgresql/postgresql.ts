@@ -1,5 +1,11 @@
 import { Pool } from "pg";
 
-export const postgresql = new Pool({
-  connectionString: process.env.ANALOG_POSTGRESQL_URL,
-});
+const connectionString = process.env.ANALOG_POSTGRESQL_URL as string;
+
+export let postgresql: Pool;
+
+if (connectionString) {
+  postgresql = new Pool({
+    connectionString,
+  });
+}
