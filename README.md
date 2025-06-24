@@ -18,6 +18,7 @@ CREATE TABLE analog (
   event TEXT NOT NULL,
   timestamp BIGINT NOT NULL DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)
 );
+
 CREATE INDEX index_analog_eventname_timestamp ON analog(event, timestamp);
 ```
 > [!IMPORTANT]
@@ -32,7 +33,7 @@ For some variables the `VITE_` prefix is required, because the app is built usin
 | Key  | Value | Default |
 | :--- | :--- | :--- |
 | `ANALOG_TOKEN` | Protects requests. Leave empty if no protection is required.  | |
-| `ANALOG_DATABASE_PROVIDER` | Defines which database provider is used. Available values: `redis`, `postgresql`, `mongodb`. | |
+| `ANALOG_DATABASE_PROVIDER` | Defines the kind of database to use. Possible values: `redis`, `postgresql`, `mongodb`. | |
 | `ANALOG_REDIS_URL` | Redis connection url. | |
 | `ANALOG_POSTGRESQL_URL` | PostgreSQL connection url. | |
 | `ANALOG_MONGODB_URL` | MongoDB connection url. | |
