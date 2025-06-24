@@ -20,7 +20,7 @@ CREATE TABLE analog (
 );
 CREATE INDEX index_analog_eventname_timestamp ON analog(event, timestamp);
 ```
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > You should use a transaction pooler connection.
 ### MongoDB
 Get one from [MongoDB](https://mongodb.com).
@@ -65,7 +65,7 @@ Configuration to schedule the clean up function to run every day:
 [functions."cleanUp"]
   schedule = "@daily"
 ```
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Scheduling may not work, because of the runtime limitations.
 ### Vercel
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
@@ -79,20 +79,22 @@ Configuration to schedule the clean up function to run every day:
   }
 ]
 ```
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Scheduling may not work, because of the runtime limitations.
 ### Docker
 Use the Dockerfile to build and run the app in a Docker container, based on your environment:
 ```bash
-docker build -t analog-analytics .
+docker build \
+  --build-arg VITE_ANALOG_API_GET_REQUEST_QUEUE=false \
+  --build-arg VITE_ANALOG_API_GET_REQUEST_CLEAN_UP=false \
+  -t analog-analytics .
+
 docker run -d \
   -p 80:80 \ # For local development
   -e ANALOG_STATIC_SERVER=true \
   -e ANALOG_PORT_SERVER= \ # 80 for HTTP or 443 for HTTPS
   -e ANALOG_DATABASE_PROVIDER= \
   -e ANALOG_REDIS_URL= \
-  -e VITE_ANALOG_API_GET_REQUEST_QUEUE=false
-  -e VITE_ANALOG_API_GET_REQUEST_CLEAN_UP=false
   --name analog-analytics \
   analog-analytics
 ```
