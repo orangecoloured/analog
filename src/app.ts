@@ -106,10 +106,9 @@ const ANALOG = {
 
         const responseBody = (await response.json()) as TPaginatedData;
 
-        dataset = {
-          ...dataset,
-          ...responseBody.data,
-        };
+        Object.entries(responseBody.data).forEach(([event, timestamps]) => {
+          dataset[event] = (dataset[event] || []).concat(timestamps);
+        });
 
         if (loading) {
           loading.dataset.text = `${Object.keys(dataset).length} events fetched...`;
