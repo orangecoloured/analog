@@ -7,7 +7,7 @@ This is heavily inspired by the [piratepx](https://piratepx.com).
 
 ## Storage
 ### Redis
-Get one from [Upstash](https://upstash.com) or [Render](https://render.com).
+Get one from [Upstash](https://upstash.com), [Render](https://render.com) or [Redis](https://redis.io).
 ### PostgreSQL
 Get one from [Supabase](https://supabase.com).
 
