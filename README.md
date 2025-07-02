@@ -9,7 +9,7 @@ This is heavily inspired by the [piratepx](https://piratepx.com).
 ### Redis
 Get one from [Upstash](https://upstash.com), [Render](https://render.com) or [Redis](https://redis.io).
 ### PostgreSQL
-Get one from [Supabase](https://supabase.com).
+Get one from [Supabase](https://supabase.com) or [Render](https://render.com).
 
 Here's how to create the table:
 ```sql
