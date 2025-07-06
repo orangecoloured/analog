@@ -26,9 +26,9 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
-    "@netlify/functions": "^4.1.8",
-    "@netlify/vite-plugin": "^2.3.4",
-    "@vercel/node": "^5.3.0",
+    "@netlify/functions": "^4.1.9",
+    "@netlify/vite-plugin": "^2.3.5",
+    "@vercel/node": "^5.3.3",
     "ioredis": "^5.6.1",
     "mongodb": "^6.17.0",
     "pg": "^8.16.3",
