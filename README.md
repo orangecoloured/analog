@@ -3,6 +3,12 @@
 
 ![ΛNΛLOG dashboard](https://github.com/user-attachments/assets/ac2de3d5-d722-4b3e-abc6-4d40a6cb02b6)
 
+<details>
+  <summary>Short demo video</summary>
+
+  https://github.com/user-attachments/assets/13d13086-7315-4e28-96ee-08f586b9151b
+</details>
+
 This is heavily inspired by the [piratepx](https://piratepx.com).
 
 ## Storage
