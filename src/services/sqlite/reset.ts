@@ -1,4 +1,4 @@
-import { SQLITE_DATABASE_NAME } from "./constants";
+import { SQLITE_DATABASE_NAME } from "./constants.js";
 import { sqlite } from "./sqlite.js";
 
 export const resetData = () => {
