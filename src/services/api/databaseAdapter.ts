@@ -30,6 +30,16 @@ import {
 } from "../mongodb/get.js";
 import { pushData as mongodbPushData } from "../mongodb/push.js";
 
+import {
+  cleanUpAllData as sqliteCleanUpAllData,
+  cleanUpDataByCursor as sqliteCleanUpDataByCursor,
+} from "../sqlite/cleanUp.js";
+import {
+  getAllData as sqliteGetAllData,
+  getDataByCursor as sqliteGetDataByCursor,
+} from "../sqlite/get.js";
+import { pushData as sqlitePushData } from "../sqlite/push.js";
+
 const generateDatabaseAdapter = () => {
   switch (process.env.ANALOG_DATABASE_PROVIDER) {
     case "postgresql": {
@@ -59,6 +69,16 @@ const generateDatabaseAdapter = () => {
         getAllData: mongodbGetAllData,
         getDataByCursor: mongodbGetDataByCursor,
         pushData: mongodbPushData,
+      };
+    }
+
+    case "sqlite": {
+      return {
+        cleanUpAllData: sqliteCleanUpAllData,
+        cleanUpDataByCursor: sqliteCleanUpDataByCursor,
+        getAllData: sqliteGetAllData,
+        getDataByCursor: sqliteGetDataByCursor,
+        pushData: sqlitePushData,
       };
     }
 

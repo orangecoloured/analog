@@ -16,33 +16,28 @@ This is heavily inspired by the [piratepx](https://piratepx.com).
 Get one from [Upstash](https://upstash.com), [Render](https://render.com) or [Redis](https://redis.io).
 ### PostgreSQL
 Get one from [Supabase](https://supabase.com) or [Render](https://render.com).
-
-Here's how to create the table:
-```sql
-CREATE TABLE analog (
-  id SERIAL PRIMARY KEY,
-  event TEXT NOT NULL,
-  timestamp BIGINT NOT NULL DEFAULT (EXTRACT(EPOCH FROM NOW()) * 1000)
-);
-
-CREATE INDEX index_analog_eventname_timestamp ON analog(event, timestamp);
-```
 > [!IMPORTANT]
 > You should use a transaction pooler connection.
 ### MongoDB
 Get one from [MongoDB](https://mongodb.com).
 
 Create a database `analog` with a collection `events`.
+### SQLite
+Get one from [Turso](https://turso.tech).
+Or use a local file with `file:./path/to/file.db` as the connection url.
+
+It uses [libsql](https://github.com/tursodatabase/libsql-client-ts) to establish the connection.
 ## Environment variables
 For some variables the `VITE_` prefix is required, because the app is built using [Vite](https://vite.dev).
 
 | Key  | Value | Default |
 | :--- | :--- | :--- |
 | `ANALOG_TOKEN` | Protects requests. Leave empty if no protection is required.  | |
-| `ANALOG_DATABASE_PROVIDER` | Defines the kind of database to use. Possible values: `redis`, `postgresql`, `mongodb`. | |
+| `ANALOG_DATABASE_PROVIDER` | Defines the kind of database to use. Possible values: `redis`, `postgresql`, `mongodb`, `sqlite`. | |
 | `ANALOG_REDIS_URL` | Redis connection url. | |
 | `ANALOG_POSTGRESQL_URL` | PostgreSQL connection url. | |
 | `ANALOG_MONGODB_URL` | MongoDB connection url. | |
+| `ANALOG_SQLITE_URL` | SQLite connection url. Add an `authtoken` query parametre if you need to use the `authToken` to initilise the connection. | |
 | `ANALOG_DATABASE_REQUEST_ITEM_COUNT` | The item count the API server requests from the database. | `10` |
 | `ANALOG_PROTECT_POST` | Set to `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` requests. | `false` |
 | `ANALOG_STATIC_SERVER` | Set to `true` to make the Node.js server also serve static content. In this case the contents of `./src/services/server/dist` folder are used. | `false` |
@@ -108,7 +103,7 @@ docker run -d \
 
 ## Usage
 ### Web application
-If you have `ANALOG_TOKEN` environment variable present, then you need the `token` query parameter in the url. For example, `hostname/?token=ANALOG_TOKEN`.
+If you have `ANALOG_TOKEN` environment variable present, then you need the `token` query parametre in the url. For example, `hostname/?token=ANALOG_TOKEN`.
 
 ### API
 `/api/events`
