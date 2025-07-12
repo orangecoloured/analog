@@ -1,4 +1,4 @@
-import { createClient, type Client } from "@libsql/client";
+import { createClient, type Client } from "@libsql/client/web";
 import { extractAuthTokenFromUrl } from "../../utils/extractAuthTokenFromUrl.js";
 import {
   SQLITE_DATABASE_NAME,
