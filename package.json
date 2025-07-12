@@ -1,6 +1,6 @@
 {
   "name": "analog",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A minimal analytics tool to self-host.",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,7 @@
     "vite": "^7.0.4"
   },
   "dependencies": {
+    "@libsql/client": "^0.15.9",
     "@netlify/functions": "^4.1.10",
     "@netlify/vite-plugin": "^2.3.9",
     "@vercel/node": "^5.3.5",
