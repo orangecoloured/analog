@@ -6,10 +6,15 @@ interface ViteTypeOptions {
 
 interface ImportMetaEnv {
   readonly ANALOG_TOKEN?: string;
-  readonly ANALOG_DATABASE_PROVIDER: "redis" | "postgresql" | "mongodb";
+  readonly ANALOG_DATABASE_PROVIDER:
+    | "redis"
+    | "postgresql"
+    | "mongodb"
+    | "sqlite";
   readonly ANALOG_REDIS_URL?: string;
   readonly ANALOG_POSTGRESQL_URL?: string;
   readonly ANALOG_MONGODB_URL?: string;
+  readonly ANALOG_SQLITE_URL?: string;
   readonly ANALOG_PROTECT_POST?: "true" | "false";
   readonly ANALOG_SERVE_STATIC?: "true" | "false";
   readonly ANALOG_PORT_SERVER?: string;

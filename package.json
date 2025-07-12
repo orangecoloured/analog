@@ -26,6 +26,7 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
+    "@libsql/client": "^0.15.9",
     "@netlify/functions": "^4.1.10",
     "@netlify/vite-plugin": "^2.3.9",
     "@vercel/node": "^5.3.5",

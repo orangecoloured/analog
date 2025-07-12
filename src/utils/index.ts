@@ -5,3 +5,4 @@ export * from "./uuid";
 export * from "./generateQuery";
 export * from "./getRequestItemCount";
 export * from "./getCutoff";
+export * from "./extractAuthTokenFromUrl";
