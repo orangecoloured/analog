@@ -23,8 +23,7 @@ Get one from [MongoDB](https://mongodb.com).
 
 Create a database `analog` with a collection `events`.
 ### SQLite
-Get one from [Turso](https://turso.tech).
-Or use a local file with `file:./path/to/file.db` as the connection url.
+Get one from [Turso](https://turso.tech) or use a local file with `file:./path/to/file.db` as the connection url.
 
 It uses [libsql](https://github.com/tursodatabase/libsql-client-ts) to establish the connection.
 ## Environment variables
