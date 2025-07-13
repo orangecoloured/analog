@@ -115,15 +115,15 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 ```json
 {
   "data": {
-    "event-name": [1749223782651, 1749228792052]
+    "<eventName>": [<timestamp>, ...]
   },
-  "nextCursor": "4"
+  "nextCursor": "<string>"
 }
 ```
 ###### Without `cursor`
 ```json
 {
-  "event-name": [1749223782651, 1749228792052]
+  "<eventName>": [<timestamp>, ...]
 }
 ```
 
