@@ -20,8 +20,6 @@ Get one from [Supabase](https://supabase.com), [Render](https://render.com) or [
 > You should use a transaction pooler connection.
 ### MongoDB
 Get one from [MongoDB](https://mongodb.com).
-
-Create a database `analog` with a collection `events`.
 ### SQLite
 Get one from [Turso](https://turso.tech) or use a local file with `file:./path/to/file.db` as the connection url.
 
