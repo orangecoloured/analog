@@ -1,6 +1,6 @@
 import type { TEventDoc } from "./types";
 import { Collection, MongoClient, ServerApiVersion } from "mongodb";
-import { COLLECTION_NAME, DATABASE_NAME } from "./constants.js";
+import { MONGODB_COLLECTION_NAME, MONGODB_DATABASE_NAME } from "./constants.js";
 
 const connectionString = process.env.ANALOG_MONGODB_URL as string;
 
@@ -19,6 +19,8 @@ if (connectionString) {
   mongodbCollection = async () => {
     await client.connect();
 
-    return client.db(DATABASE_NAME).collection<TEventDoc>(COLLECTION_NAME);
+    return client
+      .db(MONGODB_DATABASE_NAME)
+      .collection<TEventDoc>(MONGODB_COLLECTION_NAME);
   };
 }
