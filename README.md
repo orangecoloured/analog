@@ -70,7 +70,7 @@ Configuration to schedule the clean up function to run every day:
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
 
 Configuration to schedule the clean up function to run every day:
-```jsonc
+```json
 "crons": [
   {
     "path": "/api/cleanUp",
@@ -112,18 +112,18 @@ If you have `ANALOG_TOKEN` environment variable present, then you need the `toke
 - `clean-up?: boolean` — if the parametre is present, the clean up occurs along with fetching the data
 ##### Response
 ###### With `cursor`
-```jsonc
+```typescript
 {
-  "data": {
-    "<eventName>": [<timestamp>, ...]
-  },
-  "nextCursor": "<string>"
+  data: {
+    [event: string]: number[];
+  };
+  nextCursor: string;
 }
 ```
 ###### Without `cursor`
-```jsonc
+```typescript
 {
-  "<eventName>": [<timestamp>, ...]
+  [event: string]: number[];
 }
 ```
 
