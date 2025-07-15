@@ -14,7 +14,7 @@
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^9.31.0",
-    "@types/node": "^24.0.13",
+    "@types/node": "^24.0.14",
     "@types/pg": "^8.15.4",
     "concurrently": "^9.2.0",
     "eslint": "^9.31.0",
@@ -22,13 +22,13 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
-    "typescript-eslint": "^8.36.0",
+    "typescript-eslint": "^8.37.0",
     "vite": "^7.0.4"
   },
   "dependencies": {
     "@libsql/client": "^0.15.9",
-    "@netlify/functions": "^4.1.10",
-    "@netlify/vite-plugin": "^2.3.9",
+    "@netlify/functions": "^4.1.11",
+    "@netlify/vite-plugin": "^2.4.1",
     "@vercel/node": "^5.3.5",
     "ioredis": "^5.6.1",
     "mongodb": "^6.17.0",
