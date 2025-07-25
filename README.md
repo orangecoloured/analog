@@ -22,8 +22,8 @@ Get one from [Supabase](https://supabase.com), [Render](https://render.com) or [
 Get one from [MongoDB](https://mongodb.com).
 ### SQLite
 Get one from [Turso](https://turso.tech) or use a local file with `file:./path/to/file.db` as the connection url.
-
-It uses [libsql](https://github.com/tursodatabase/libsql-client-ts) to establish the connection.
+> [!IMPORTANT]
+> It uses [libsql](https://github.com/tursodatabase/libsql-client-ts) to connect to the database.
 ## Environment variables
 For some variables the `VITE_` prefix is required, because the app is built using [Vite](https://vite.dev).
 
