@@ -27,8 +27,8 @@
   },
   "dependencies": {
     "@libsql/client": "^0.15.10",
-    "@netlify/functions": "^4.1.15",
-    "@netlify/vite-plugin": "^2.5.1",
+    "@netlify/functions": "^4.2.0",
+    "@netlify/vite-plugin": "^2.5.2",
     "@vercel/node": "^5.3.7",
     "ioredis": "^5.6.1",
     "mongodb": "^6.18.0",
