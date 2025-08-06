@@ -29,7 +29,7 @@
     "@libsql/client": "^0.15.10",
     "@netlify/functions": "^4.2.1",
     "@netlify/vite-plugin": "^2.5.4",
-    "@vercel/node": "^5.3.10",
+    "@vercel/node": "^5.3.11",
     "ioredis": "^5.7.0",
     "mongodb": "^6.18.0",
     "pg": "^8.16.3",
