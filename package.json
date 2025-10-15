@@ -23,12 +23,12 @@
     "lint-staged": "^16.2.4",
     "prettier": "^3.6.2",
     "typescript-eslint": "^8.46.1",
-    "vite": "^7.1.9"
+    "vite": "^7.1.10"
   },
   "dependencies": {
     "@libsql/client": "^0.15.15",
-    "@netlify/functions": "^4.3.0",
-    "@netlify/vite-plugin": "^2.7.0",
+    "@netlify/functions": "^5.0.0",
+    "@netlify/vite-plugin": "^2.7.1",
     "@vercel/node": "^5.3.26",
     "ioredis": "^5.8.1",
     "mongodb": "^6.20.0",
