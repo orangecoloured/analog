@@ -14,8 +14,8 @@
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^9.38.0",
-    "@types/node": "^24.9.1",
-    "@types/pg": "^8.15.5",
+    "@types/node": "^24.9.2",
+    "@types/pg": "^8.15.6",
     "concurrently": "^9.2.1",
     "eslint": "^9.38.0",
     "globals": "^16.4.0",
@@ -28,8 +28,8 @@
   "dependencies": {
     "@libsql/client": "^0.15.15",
     "@netlify/functions": "^5.0.1",
-    "@netlify/vite-plugin": "^2.7.6",
-    "@vercel/node": "^5.5.0",
+    "@netlify/vite-plugin": "^2.7.8",
+    "@vercel/node": "^5.5.2",
     "ioredis": "^5.8.2",
     "mongodb": "^6.20.0",
     "pg": "^8.16.3",
