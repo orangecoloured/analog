@@ -23,15 +23,15 @@
     "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
     "typescript-eslint": "^8.46.3",
-    "vite": "^7.1.12"
+    "vite": "^7.2.2"
   },
   "dependencies": {
     "@libsql/client": "^0.15.15",
-    "@netlify/functions": "^5.0.1",
-    "@netlify/vite-plugin": "^2.7.9",
-    "@vercel/node": "^5.5.4",
+    "@netlify/functions": "^5.1.0",
+    "@netlify/vite-plugin": "^2.7.11",
+    "@vercel/node": "^5.5.5",
     "ioredis": "^5.8.2",
-    "mongodb": "^6.20.0",
+    "mongodb": "^7.0.0",
     "pg": "^8.16.3",
     "toad-scheduler": "^3.1.0",
     "tsx": "^4.20.6",
