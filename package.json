@@ -22,13 +22,13 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
-    "typescript-eslint": "^8.50.0",
+    "typescript-eslint": "^8.50.1",
     "vite": "^7.3.0"
   },
   "dependencies": {
     "@libsql/client": "^0.15.15",
-    "@netlify/functions": "^5.1.1",
-    "@netlify/vite-plugin": "^2.7.18",
+    "@netlify/functions": "^5.1.2",
+    "@netlify/vite-plugin": "^2.7.19",
     "@vercel/node": "^5.5.16",
     "ioredis": "^5.8.2",
     "mongodb": "^7.0.0",
