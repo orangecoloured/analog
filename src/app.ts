@@ -207,7 +207,7 @@ const ANALOG = {
     this.data.highestVisitsCount = highestVisitsCount;
 
     const rows = dataWithRanges.reduce((markup, data, index) => {
-      return `${markup}<div class="event-title">${data.event}</div><div class="event-values" data-type="bars" data-index="${index}">${this.renderBars(data.dataset)}</div>`;
+      return `${markup}<div class="event-title">${data.event}</div><div class="event-values" data-type="bars" data-index="${index}"></div>`;
     }, "");
 
     loading?.remove();
@@ -245,6 +245,8 @@ const ANALOG = {
     this.data.itemsHtml = Array.from(
       root?.querySelectorAll(`[data-type="bars"]`) || [],
     );
+
+    this.processHtmlItems();
   },
 
   init: async function () {
