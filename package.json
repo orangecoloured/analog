@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "vite build",
-    "dev": "concurrently 'vite' 'DEBUG=ioredis:* npx tsx watch --env-file=.env.local src/services/server/index.ts'",
+    "dev": "concurrently 'vite --host' 'DEBUG=ioredis:* npx tsx watch --env-file=.env.local src/services/server/index.ts'",
     "prepare": "husky install"
   },
   "keywords": [],

@@ -8,9 +8,12 @@ import {
 
 const ANALOG = {
   data: {
-    rangeMap: new Map(),
+    rangeMap: new Map<string, number>(),
     dateEnd: new Date(),
     dateStart: new Date(),
+    itemsHtml: [] as HTMLDivElement[],
+    rangedData: [] as { event: string; dataset: number[] }[],
+    highestVisitsCount: 0,
   },
 
   updateTitle: function () {
@@ -49,6 +52,20 @@ const ANALOG = {
       );
       startDate.setDate(startDate.getDate() + 1);
     }
+  },
+
+  renderBars: function renderDataset(dataset: number[]) {
+    return dataset.reduce((valuesMarkup, value) => {
+      let bar = "";
+
+      if (typeof value === "number") {
+        const ratio = Math.floor((value / this.data.highestVisitsCount) * 100);
+
+        bar = `<div class="bar" style="clip-path: polygon(0 ${100 - ratio}%, 100% ${100 - ratio}%, 100% 100%, 0% 100%)"></div><div class="value">${value}</div>`;
+      }
+
+      return `${valuesMarkup}<div>${bar}</div>`;
+    }, "");
   },
 
   renderData: async function () {
@@ -123,25 +140,26 @@ const ANALOG = {
     let lastMonth: string | null = null;
     let highestVisitsCount = 0;
 
-    const timeRangeArray = Array.from(this.data.rangeMap)
-      .flat()
-      .filter((_, i) => i % 2 === 0)
-      .map((label: string) => {
-        if (!lastMonth || !label.endsWith(lastMonth)) {
-          lastMonth = label.substring(label.indexOf("/") + 1);
+    const timeRangeArray = (
+      Array.from(this.data.rangeMap)
+        .flat()
+        .filter((_, i) => i % 2 === 0) as string[]
+    ).map((label) => {
+      if (!lastMonth || !label.endsWith(lastMonth)) {
+        lastMonth = label.substring(label.indexOf("/") + 1);
 
-          return label;
-        } else {
-          return label.replace(`/${lastMonth}`, "");
-        }
-      });
+        return label;
+      } else {
+        return label.replace(`/${lastMonth}`, "");
+      }
+    });
 
     (document.querySelector(":root") as HTMLElement)?.style.setProperty(
       "--columns-count",
       `${columnsCount}`,
     );
 
-    const header = `<div class="row" data-type="header">${timeRangeArray.reduce((markup, label) => `${markup}<div class="value">${label}</div>`, "")}</div>`;
+    const header = `<div class="event-values" data-type="header">${timeRangeArray.reduce((markup, label) => `${markup}<div class="value">${label}</div>`, "")}</div>`;
 
     const eventOrderValues: Record<string, number> = {};
     const dataWithRanges = Object.entries(dataset)
@@ -164,7 +182,7 @@ const ANALOG = {
             day: "2-digit",
           });
 
-          range.set(label, range.get(label) + 1);
+          range.set(label, (range.get(label) || 0) + 1);
         });
 
         highestVisitsCount = Math.max(
@@ -176,37 +194,64 @@ const ANALOG = {
           event,
           dataset: Array.from(range)
             .flat()
-            .filter((_, i) => i % 2 !== 0),
+            .filter((_, i) => i % 2 !== 0) as number[],
         };
       })
-      .filter(({ dataset }) => dataset.some((value) => value > 0))
+      .filter(({ dataset }) =>
+        dataset.some((value) => typeof value === "number" && value > 0),
+      )
       .sort((a, b) => eventOrderValues[b.event] - eventOrderValues[a.event]);
 
-    const rows = dataWithRanges.reduce((markup, data) => {
-      return `${markup}<div class="event">${data.event}</div><div class="row" data-type="bars">${data.dataset.reduce(
-        (valuesMarkup, value) => {
-          let bar = "";
+    // side-effects, but considering there are no plans to scale this, it's fine
+    this.data.rangedData = dataWithRanges;
+    this.data.highestVisitsCount = highestVisitsCount;
 
-          if (value) {
-            const ratio = Math.floor((value / highestVisitsCount) * 100);
-
-            bar = `<div class="bar" style="clip-path: polygon(0 ${100 - ratio}%, 100% ${100 - ratio}%, 100% 100%, 0% 100%)"></div><div class="value">${value}</div>`;
-          }
-
-          return `${valuesMarkup}<div>${bar}</div>`;
-        },
-        "",
-      )}</div>`;
+    const rows = dataWithRanges.reduce((markup, data, index) => {
+      return `${markup}<div class="event-title">${data.event}</div><div class="event-values" data-type="bars" data-index="${index}">${this.renderBars(data.dataset)}</div>`;
     }, "");
 
     loading?.remove();
     root?.insertAdjacentHTML("beforeend", `${header}${rows}`);
   },
 
-  init: function () {
+  processHtmlItems: function processHtmlItems() {
+    this.data.itemsHtml.forEach((item) => {
+      const { top, height } = item.getBoundingClientRect();
+
+      if (top + height < 0 || top > window.innerHeight) {
+        if (item.innerHTML) {
+          item.innerHTML = "";
+        }
+      } else {
+        if (!item.innerHTML) {
+          item.innerHTML = this.renderBars(
+            this.data.rangedData[Number(item.dataset.index)].dataset,
+          );
+        }
+      }
+    });
+  },
+
+  initialiseVirtualisation: function initialiseVirtualisation() {
+    const root = document.getElementById("root");
+
+    root?.addEventListener("scroll", this.processHtmlItems.bind(this), {
+      passive: true,
+    });
+    window.addEventListener("resize", this.processHtmlItems.bind(this), {
+      passive: true,
+    });
+
+    this.data.itemsHtml = Array.from(
+      root?.querySelectorAll(`[data-type="bars"]`) || [],
+    );
+  },
+
+  init: async function () {
     this.updateTitle();
     this.generateRangeMap();
-    this.renderData();
+    await this.renderData();
+    this.initialiseVirtualisation();
   },
 };
 
