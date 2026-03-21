@@ -15,9 +15,9 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^25.5.0",
-    "@types/pg": "^8.18.0",
+    "@types/pg": "^8.20.0",
     "concurrently": "^9.2.1",
-    "eslint": "^10.0.3",
+    "eslint": "^10.1.0",
     "globals": "^17.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
