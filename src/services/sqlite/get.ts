@@ -4,10 +4,11 @@ import {
   SQLITE_KEY_EVENT_NAME,
   SQLITE_KEY_TIMESTAMP_NAME,
 } from "./constants.js";
-import { sqlite } from "./sqlite.js";
+import { getSqliteClient } from "./sqlite.js";
 import { getRequestItemCount } from "../../utils/getRequestItemCount.js";
 
 export const getAllData = async () => {
+  const sqlite = await getSqliteClient();
   const rows = await sqlite.execute({
     sql: `SELECT ${SQLITE_KEY_EVENT_NAME}, ${SQLITE_KEY_TIMESTAMP_NAME} FROM ${SQLITE_DATABASE_NAME}`,
   });
@@ -29,6 +30,7 @@ export const getAllData = async () => {
 };
 
 export const getDataByCursor = async (cursor: string = "0") => {
+  const sqlite = await getSqliteClient();
   const requestItemCount = getRequestItemCount();
   const rows = await sqlite.execute({
     sql: `

@@ -1,0 +1,17 @@
+0 verbose cli E:\nodejs\node.exe E:\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.9.0
+2 info using node@v24.14.0
+3 silly config load:file:E:\nodejs\node_modules\npm\npmrc
+4 silly config load:file:D:\coding-work\solocoder\Trae_04\analog\.npmrc
+5 silly config load:file:C:\Users\13626\.npmrc
+6 silly config load:file:E:\nodejs\node_global\etc\npmrc
+7 verbose title npm exec tsx scripts/verify-fixes.ts
+8 verbose argv "exec" "--" "tsx" "scripts/verify-fixes.ts"
+9 verbose logfile logs-max:10 dir:d:\coding-work\solocoder\Trae_04\analog\.npm-cache\_logs\2026-04-19T14_05_31_087Z-
+10 verbose logfile d:\coding-work\solocoder\Trae_04\analog\.npm-cache\_logs\2026-04-19T14_05_31_087Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 http fetch GET 200 https://registry.npmmirror.com/tsx 1630ms (cache miss)
+14 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+15 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+16 http fetch GET 200 https://registry.npmmirror.com/npm 2437ms

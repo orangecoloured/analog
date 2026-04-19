@@ -94,6 +94,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     case "POST": {
+      if (
+        process.env.ANALOG_PROTECT_POST === "true" &&
+        token !== process.env.ANALOG_TOKEN
+      ) {
+        res
+          .status(401)
+          .setHeaders(HEADERS_CROSS_ORIGIN_MAP)
+          .setHeaders(HEADER_TEXT_PLAIN_MAP);
+
+        return res.send("Unauthorized");
+      }
+
       const body = req.body || {};
 
       if (body.event) {

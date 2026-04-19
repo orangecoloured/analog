@@ -3,9 +3,10 @@ import {
   SQLITE_KEY_EVENT_NAME,
   SQLITE_KEY_TIMESTAMP_NAME,
 } from "./constants.js";
-import { sqlite } from "./sqlite.js";
+import { getSqliteClient } from "./sqlite.js";
 
-export const pushData = (event: string) => {
+export const pushData = async (event: string) => {
+  const sqlite = await getSqliteClient();
   const timestamp = Date.now();
 
   return sqlite.execute({
