@@ -4,9 +4,10 @@ import {
   SQLITE_DATABASE_NAME,
   SQLITE_KEY_TIMESTAMP_NAME,
 } from "./constants.js";
-import { sqlite } from "./sqlite.js";
+import { getSqliteClient } from "./sqlite.js";
 
 export const cleanUpAllData = async (): Promise<"OK"> => {
+  const sqlite = await getSqliteClient();
   const cutoff = getCutoff();
 
   await sqlite.execute({
@@ -18,6 +19,7 @@ export const cleanUpAllData = async (): Promise<"OK"> => {
 };
 
 export const cleanUpDataByCursor = async (cursor: string = "0") => {
+  const sqlite = await getSqliteClient();
   const cutoff = getCutoff();
   const requestItemCount = getRequestItemCount();
   const response = await sqlite.execute({
