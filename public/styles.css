@@ -264,3 +264,79 @@ h6 {
   font-size: var(--font-small);
   font-weight: bold;
 }
+
+.hidden {
+  display: none !important;
+}
+
+#error,
+#empty {
+  align-self: center;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: var(--gap-s-min) 0;
+  text-align: center;
+  padding: var(--gap-m-max);
+}
+
+#error:before,
+#empty:before {
+  font-size: 32px;
+  margin-bottom: var(--gap-s-min);
+}
+
+#error:before {
+  content: "⚠️";
+}
+
+#empty:before {
+  content: "📭";
+}
+
+.error-title,
+.empty-title {
+  font-size: var(--font-medium);
+  font-weight: bold;
+}
+
+.error-message,
+.empty-message {
+  font-size: var(--font-small);
+  opacity: 0.8;
+}
+
+.error-actions,
+.empty-actions {
+  display: flex;
+  gap: var(--gap-s-min);
+  margin-top: var(--gap-m-max);
+}
+
+.retry-button {
+  background: var(--color-gradient);
+  border: none;
+  padding: var(--gap-s-min) var(--gap-m-max);
+  font-size: var(--font-small);
+  font-weight: bold;
+  cursor: pointer;
+  clip-path: polygon(
+    4% 0%,
+    96% 0%,
+    100% 4%,
+    100% 96%,
+    96% 100%,
+    8% 100%,
+    0% 92%,
+    0% 4%
+  );
+  color: light-dark(var(--colour-light), var(--colour-dark));
+}
+
+.retry-button:hover {
+  opacity: 0.9;
+}
+
+.retry-button:active {
+  transform: scale(0.98);
+}
