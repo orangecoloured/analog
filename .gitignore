@@ -1,5 +1,9 @@
 dist
 node_modules
+.npm-cache
+.npm-global
+.npm-tmp
+.smoke-data
 npm-debug.log
 .DS_Store
 *.db
@@ -7,3 +11,4 @@ npm-debug.log
 .env
 .env.*
 !.env.example
+!.env.smoke

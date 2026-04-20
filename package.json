@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "vite build",
-    "dev": "concurrently 'vite --host' 'DEBUG=ioredis:* npx tsx watch --env-file=.env.local src/services/server/index.ts'",
+    "dev": "concurrently 'vite --host' 'DEBUG=ioredis:* node --import tsx --env-file=.env.local src/services/server/index.ts'",
+    "dev:watch": "concurrently 'vite --host' 'DEBUG=ioredis:* node --import tsx --env-file=.env.local --watch src/services/server/index.ts'",
+    "smoke": "node --import tsx --env-file=.env.smoke smoke/smoke.ts",
+    "smoke:server": "node --import tsx --env-file=.env.smoke smoke/server.ts",
     "prepare": "husky install"
   },
   "keywords": [],
