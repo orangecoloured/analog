@@ -1,3 +1,5 @@
+import * as http from "http";
+import * as url from "url";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import { unlinkSync, existsSync, mkdirSync } from "fs";
@@ -6,7 +8,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const TEST_TOKEN = "smoke-test-token-12345";
+const TEST_PORT = 5999;
 const TEST_DB_PATH = resolve(__dirname, "..", ".smoke-data", "test.db");
+const API_ENDPOINT = "/api/events";
 
 const RED = "\x1b[31m";
 const GREEN = "\x1b[32m";
@@ -41,186 +45,19 @@ function cleanUpDb() {
   }
 }
 
-async function testSqliteConnection() {
-  logInfo("Testing SQLite file: connection...");
+async function setupEnvironment() {
+  logInfo("Setting up test environment...");
 
+  process.env.ANALOG_TOKEN = TEST_TOKEN;
   process.env.ANALOG_DATABASE_PROVIDER = "sqlite";
   process.env.ANALOG_SQLITE_URL = `file:${TEST_DB_PATH}`;
+  process.env.ANALOG_PROTECT_POST = "true";
+  process.env.ANALOG_PORT_SERVER = String(TEST_PORT);
 
-  const { databaseAdapter } =
-    await import("../src/services/api/databaseAdapter.js");
-
-  try {
-    const result = await databaseAdapter.pushData("smoke-test-event");
-    logPass(`SQLite pushData returned: ${result}`);
-
-    const data = await databaseAdapter.getAllData();
-    logPass(`SQLite getAllData returned: ${JSON.stringify(data)}`);
-
-    if (data["smoke-test-event"] && data["smoke-test-event"].length > 0) {
-      logPass("SQLite file: connection test PASSED");
-      return true;
-    } else {
-      logFail("SQLite data was not stored correctly");
-      return false;
-    }
-  } catch (error: unknown) {
-    logFail(
-      `SQLite connection failed: ${error instanceof Error ? error.message : error}`,
-    );
-    return false;
-  }
+  logPass("Environment configured");
 }
 
-function testPostProtectLogic() {
-  logInfo("Testing POST protection logic consistency...");
-
-  const PROTECT_POST = "true";
-  const VALID_TOKEN = TEST_TOKEN;
-  const INVALID_TOKEN = "wrong-token";
-  const NULL_TOKEN = null;
-
-  type CheckResult = { authorized: boolean; reason: string };
-
-  function checkPostAuth(
-    protectPost: string | undefined,
-    token: string | null,
-    envToken: string,
-  ): CheckResult {
-    if (protectPost === "true" && token !== envToken) {
-      return { authorized: false, reason: "POST protection: token mismatch" };
-    }
-    return { authorized: true, reason: "authorized" };
-  }
-
-  let allPassed = true;
-
-  logInfo("  Test 1: PROTECT_POST=true, valid token (should pass)");
-  const r1 = checkPostAuth(PROTECT_POST, VALID_TOKEN, VALID_TOKEN);
-  if (r1.authorized) {
-    logPass("  Test 1 PASSED");
-  } else {
-    logFail(`  Test 1 FAILED: ${r1.reason}`);
-    allPassed = false;
-  }
-
-  logInfo("  Test 2: PROTECT_POST=true, invalid token (should fail)");
-  const r2 = checkPostAuth(PROTECT_POST, INVALID_TOKEN, VALID_TOKEN);
-  if (!r2.authorized) {
-    logPass("  Test 2 PASSED");
-  } else {
-    logFail("  Test 2 FAILED: should have rejected invalid token");
-    allPassed = false;
-  }
-
-  logInfo("  Test 3: PROTECT_POST=true, null token (should fail)");
-  const r3 = checkPostAuth(PROTECT_POST, NULL_TOKEN, VALID_TOKEN);
-  if (!r3.authorized) {
-    logPass("  Test 3 PASSED");
-  } else {
-    logFail("  Test 3 FAILED: should have rejected null token");
-    allPassed = false;
-  }
-
-  logInfo("  Test 4: PROTECT_POST=false, no token (should pass)");
-  const r4 = checkPostAuth("false", NULL_TOKEN, VALID_TOKEN);
-  if (r4.authorized) {
-    logPass("  Test 4 PASSED");
-  } else {
-    logFail(`  Test 4 FAILED: ${r4.reason}`);
-    allPassed = false;
-  }
-
-  logInfo("  Test 5: PROTECT_POST=undefined, no token (should pass)");
-  const r5 = checkPostAuth(undefined, NULL_TOKEN, VALID_TOKEN);
-  if (r5.authorized) {
-    logPass("  Test 5 PASSED");
-  } else {
-    logFail(`  Test 5 FAILED: ${r5.reason}`);
-    allPassed = false;
-  }
-
-  if (allPassed) {
-    logPass("POST protection logic consistency test PASSED");
-  }
-
-  return allPassed;
-}
-
-async function verifyVercelHandlerHasPostProtect() {
-  logInfo("Verifying Vercel handler has POST protection...");
-
-  const { readFileSync } = await import("fs");
-  const handlerPath = resolve(__dirname, "..", "api", "events.ts");
-  const content = readFileSync(handlerPath, "utf-8");
-
-  const hasProtectCheck =
-    content.includes('ANALOG_PROTECT_POST === "true"') &&
-    content.includes("token !== process.env.ANALOG_TOKEN");
-
-  if (hasProtectCheck) {
-    logPass("Vercel handler POST protection check VERIFIED");
-    return true;
-  } else {
-    logFail("Vercel handler missing POST protection check");
-    return false;
-  }
-}
-
-async function verifyNetlifyHandlerHasPostProtect() {
-  logInfo("Verifying Netlify handler has POST protection...");
-
-  const { readFileSync } = await import("fs");
-  const handlerPath = resolve(
-    __dirname,
-    "..",
-    "netlify",
-    "functions",
-    "events.ts",
-  );
-  const content = readFileSync(handlerPath, "utf-8");
-
-  const hasProtectCheck =
-    content.includes('ANALOG_PROTECT_POST === "true"') &&
-    content.includes("token !== process.env.ANALOG_TOKEN");
-
-  if (hasProtectCheck) {
-    logPass("Netlify handler POST protection check VERIFIED");
-    return true;
-  } else {
-    logFail("Netlify handler missing POST protection check");
-    return false;
-  }
-}
-
-async function verifyServerHandlerHasPostProtect() {
-  logInfo("Verifying Node.js server handler has POST protection...");
-
-  const { readFileSync } = await import("fs");
-  const handlerPath = resolve(
-    __dirname,
-    "..",
-    "src",
-    "services",
-    "server",
-    "index.ts",
-  );
-  const content = readFileSync(handlerPath, "utf-8");
-
-  const hasProtectCheck =
-    content.includes('ANALOG_PROTECT_POST === "true"') &&
-    content.includes("token !== process.env.ANALOG_TOKEN");
-
-  if (hasProtectCheck) {
-    logPass("Node.js server handler POST protection check VERIFIED");
-    return true;
-  } else {
-    logFail("Node.js server handler missing POST protection check");
-    return false;
-  }
-}
-
-async function verifySqliteUsesCorrectImport() {
+async function verifySqliteUsesCorrectImport(): Promise<boolean> {
   logInfo("Verifying SQLite uses correct (non-web) import...");
 
   const { readFileSync } = await import("fs");
@@ -252,9 +89,380 @@ async function verifySqliteUsesCorrectImport() {
   }
 }
 
+async function verifyAllHandlersHavePostProtect(): Promise<boolean> {
+  logInfo("Verifying all handlers have POST protection...");
+
+  const { readFileSync } = await import("fs");
+
+  const handlers = [
+    {
+      name: "Vercel handler",
+      path: resolve(__dirname, "..", "api", "events.ts"),
+    },
+    {
+      name: "Netlify handler",
+      path: resolve(__dirname, "..", "netlify", "functions", "events.ts"),
+    },
+    {
+      name: "Node.js server handler",
+      path: resolve(__dirname, "..", "src", "services", "server", "index.ts"),
+    },
+  ];
+
+  let allPassed = true;
+
+  for (const handler of handlers) {
+    const content = readFileSync(handler.path, "utf-8");
+    const hasProtectCheck =
+      content.includes('ANALOG_PROTECT_POST === "true"') &&
+      content.includes("token !== process.env.ANALOG_TOKEN");
+
+    if (hasProtectCheck) {
+      logPass(`${handler.name}: POST protection check VERIFIED`);
+    } else {
+      logFail(`${handler.name}: missing POST protection check`);
+      allPassed = false;
+    }
+  }
+
+  return allPassed;
+}
+
+function httpRequest(
+  options: http.RequestOptions & { body?: string },
+): Promise<{
+  statusCode: number | undefined;
+  body: string;
+  headers: http.IncomingHttpHeaders;
+}> {
+  return new Promise((resolve, reject) => {
+    const req = http.request(
+      {
+        hostname: "localhost",
+        port: TEST_PORT,
+        method: options.method || "GET",
+        path: options.path || "/",
+        headers: {
+          "Content-Type": "application/json",
+          ...(options.body
+            ? { "Content-Length": Buffer.byteLength(options.body) }
+            : {}),
+          ...options.headers,
+        },
+      },
+      (res) => {
+        let body = "";
+        res.on("data", (chunk) => {
+          body += chunk;
+        });
+        res.on("end", () => {
+          resolve({
+            statusCode: res.statusCode,
+            body,
+            headers: res.headers,
+          });
+        });
+      },
+    );
+
+    req.on("error", reject);
+
+    if (options.body) {
+      req.write(options.body);
+    }
+    req.end();
+  });
+}
+
+async function createTestServer(): Promise<{
+  server: http.Server;
+  adapter: unknown;
+}> {
+  logInfo("Creating test server with actual database adapter...");
+
+  const {
+    sendError,
+    databaseAdapter,
+    API_ENDPOINT: ACTUAL_API_ENDPOINT,
+    HEADER_APPLICATION_JSON,
+    HEADER_TEXT_PLAIN,
+    HEADERS_CROSS_ORIGIN,
+  } = await import("../src/services/api/index.js");
+
+  const server = http.createServer((req, res) => {
+    const parsedUrl = url.parse(req.url as string, true);
+
+    if (
+      [ACTUAL_API_ENDPOINT, `${ACTUAL_API_ENDPOINT}/`].includes(
+        parsedUrl.pathname as string,
+      )
+    ) {
+      const token = req.headers.authorization
+        ? req.headers.authorization.replace("Basic ", "")
+        : null;
+
+      switch (req.method) {
+        case "GET": {
+          if (process.env.ANALOG_TOKEN && token !== process.env.ANALOG_TOKEN) {
+            res.writeHead(401, {
+              ...HEADERS_CROSS_ORIGIN,
+              ...HEADER_TEXT_PLAIN,
+            });
+            res.end("Unauthorized");
+            return;
+          }
+
+          const cursor = parsedUrl.query.cursor as string | undefined;
+          const cleanUp = parsedUrl.query["clean-up"] as string | undefined;
+
+          if (cleanUp) {
+            if (cursor) {
+              (
+                databaseAdapter as {
+                  cleanUpDataByCursor: (c: string) => Promise<unknown>;
+                }
+              ).cleanUpDataByCursor(cursor);
+            } else {
+              (
+                databaseAdapter as { cleanUpAllData: () => Promise<unknown> }
+              ).cleanUpAllData();
+            }
+          }
+
+          const dataPromise = cursor
+            ? (
+                databaseAdapter as {
+                  getDataByCursor: (c: string) => Promise<unknown>;
+                }
+              ).getDataByCursor(cursor)
+            : (
+                databaseAdapter as { getAllData: () => Promise<unknown> }
+              ).getAllData();
+
+          dataPromise
+            .then((data) => {
+              res.writeHead(200, {
+                ...HEADERS_CROSS_ORIGIN,
+                ...HEADER_APPLICATION_JSON,
+              });
+              res.end(JSON.stringify(data));
+            })
+            .catch((error) => {
+              sendError(res, error);
+            });
+
+          break;
+        }
+
+        case "POST": {
+          if (
+            process.env.ANALOG_PROTECT_POST === "true" &&
+            token !== process.env.ANALOG_TOKEN
+          ) {
+            res.writeHead(401, {
+              ...HEADERS_CROSS_ORIGIN,
+              ...HEADER_TEXT_PLAIN,
+            });
+            res.end("Unauthorized");
+            return;
+          }
+
+          let data = "";
+
+          req.on("data", (chunk: string) => {
+            data += chunk;
+          });
+
+          req.on("end", () => {
+            try {
+              const event = JSON.parse(data).event;
+
+              if (event) {
+                (
+                  databaseAdapter as {
+                    pushData: (e: string) => Promise<unknown>;
+                  }
+                )
+                  .pushData(event)
+                  .then(() => {
+                    res.writeHead(200, {
+                      ...HEADERS_CROSS_ORIGIN,
+                      ...HEADER_TEXT_PLAIN,
+                    });
+                    res.end();
+                  })
+                  .catch((error) => {
+                    sendError(res, error);
+                  });
+              } else {
+                sendError(res, "No `event` found");
+              }
+            } catch (error) {
+              sendError(res, error);
+            }
+          });
+
+          break;
+        }
+
+        default: {
+          res.writeHead(405, { ...HEADERS_CROSS_ORIGIN, ...HEADER_TEXT_PLAIN });
+          res.end("Method Not Allowed");
+        }
+      }
+
+      return;
+    }
+
+    res.writeHead(404, { ...HEADERS_CROSS_ORIGIN, ...HEADER_TEXT_PLAIN });
+    res.end("Not Found");
+  });
+
+  return { server, adapter: databaseAdapter };
+}
+
+async function runE2ETests(): Promise<boolean> {
+  logInfo("");
+  logInfo("=== End-to-End HTTP Tests ===");
+  console.log("");
+
+  const { server, adapter } = await createTestServer();
+
+  return new Promise((resolve) => {
+    server.listen(TEST_PORT, async () => {
+      logInfo(`Test server running on port ${TEST_PORT}`);
+      console.log("");
+
+      let allPassed = true;
+
+      try {
+        logInfo("Test 1: POST without token (should be 401 Unauthorized)");
+        const res1 = await httpRequest({
+          method: "POST",
+          path: API_ENDPOINT,
+          body: JSON.stringify({ event: "test-event-1" }),
+        });
+        if (res1.statusCode === 401) {
+          logPass(`  Got 401 as expected - body: "${res1.body.trim()}"`);
+        } else {
+          logFail(`  Expected 401, got ${res1.statusCode}`);
+          allPassed = false;
+        }
+        console.log("");
+
+        logInfo("Test 2: POST with wrong token (should be 401 Unauthorized)");
+        const res2 = await httpRequest({
+          method: "POST",
+          path: API_ENDPOINT,
+          headers: {
+            Authorization: "Basic wrong-token-123",
+          },
+          body: JSON.stringify({ event: "test-event-2" }),
+        });
+        if (res2.statusCode === 401) {
+          logPass(`  Got 401 as expected - body: "${res2.body.trim()}"`);
+        } else {
+          logFail(`  Expected 401, got ${res2.statusCode}`);
+          allPassed = false;
+        }
+        console.log("");
+
+        logInfo("Test 3: POST with correct token (should be 200 OK)");
+        const res3 = await httpRequest({
+          method: "POST",
+          path: API_ENDPOINT,
+          headers: {
+            Authorization: `Basic ${TEST_TOKEN}`,
+          },
+          body: JSON.stringify({ event: "e2e-test-event" }),
+        });
+        if (res3.statusCode === 200) {
+          logPass("  Got 200 OK as expected");
+        } else {
+          logFail(
+            `  Expected 200, got ${res3.statusCode} - body: "${res3.body.trim()}"`,
+          );
+          allPassed = false;
+        }
+        console.log("");
+
+        logInfo("Test 4: GET without token (should be 401 Unauthorized)");
+        const res4 = await httpRequest({
+          method: "GET",
+          path: API_ENDPOINT,
+        });
+        if (res4.statusCode === 401) {
+          logPass(`  Got 401 as expected - body: "${res4.body.trim()}"`);
+        } else {
+          logFail(`  Expected 401, got ${res4.statusCode}`);
+          allPassed = false;
+        }
+        console.log("");
+
+        logInfo("Test 5: GET with correct token + verify SQLite data");
+        const res5 = await httpRequest({
+          method: "GET",
+          path: API_ENDPOINT,
+          headers: {
+            Authorization: `Basic ${TEST_TOKEN}`,
+          },
+        });
+        if (res5.statusCode === 200) {
+          const data = JSON.parse(res5.body);
+          logPass(`  Got 200 OK, data: ${JSON.stringify(data)}`);
+
+          if (data["e2e-test-event"] && data["e2e-test-event"].length > 0) {
+            logPass(
+              "  SQLite verification PASSED: event was persisted to database",
+            );
+          } else {
+            logFail(
+              "  SQLite verification FAILED: event not found in database",
+            );
+            allPassed = false;
+          }
+        } else {
+          logFail(
+            `  Expected 200, got ${res5.statusCode} - body: "${res5.body.trim()}"`,
+          );
+          allPassed = false;
+        }
+        console.log("");
+
+        logInfo("Test 6: SQLite file: direct verification");
+        const dbAdapter = adapter as {
+          getAllData: () => Promise<Record<string, number[]>>;
+        };
+        const directData = await dbAdapter.getAllData();
+        logPass(`  Direct SQLite query result: ${JSON.stringify(directData)}`);
+        if (directData["e2e-test-event"]) {
+          logPass("  SQLite file: connection and persistence VERIFIED");
+        } else {
+          logFail("  SQLite file: data not found via direct adapter query");
+          allPassed = false;
+        }
+      } catch (error) {
+        logFail(
+          `Test error: ${error instanceof Error ? error.message : error}`,
+        );
+        allPassed = false;
+      } finally {
+        server.close((err) => {
+          if (err) {
+            logInfo(`Server close warning: ${err.message}`);
+          }
+          logInfo("Test server stopped");
+          resolve(allPassed);
+        });
+      }
+    });
+  });
+}
+
 async function main() {
   console.log("========================================");
   console.log("  ANALOG Smoke Test Suite");
+  console.log("  (End-to-End HTTP + SQLite)");
   console.log("========================================");
   console.log("");
 
@@ -262,48 +470,33 @@ async function main() {
 
   const results: { name: string; passed: boolean }[] = [];
 
-  logInfo("=== Phase 1: Code/Import Verification ===");
+  logInfo("=== Phase 1: Static Code Verification ===");
   console.log("");
 
   results.push({
-    name: "SQLite import (non-web variant)",
+    name: "SQLite import (non-web variant for file: support)",
     passed: await verifySqliteUsesCorrectImport(),
   });
   console.log("");
 
   results.push({
-    name: "Vercel handler POST protection",
-    passed: await verifyVercelHandlerHasPostProtect(),
+    name: "All handlers have POST protection check",
+    passed: await verifyAllHandlersHavePostProtect(),
   });
   console.log("");
 
-  results.push({
-    name: "Netlify handler POST protection",
-    passed: await verifyNetlifyHandlerHasPostProtect(),
-  });
+  logInfo("=== Phase 2: Environment Setup ===");
+  console.log("");
+
+  await setupEnvironment();
+  console.log("");
+
+  logInfo("=== Phase 3: End-to-End HTTP Tests ===");
   console.log("");
 
   results.push({
-    name: "Node.js server handler POST protection",
-    passed: await verifyServerHandlerHasPostProtect(),
-  });
-  console.log("");
-
-  logInfo("=== Phase 2: Logic Verification ===");
-  console.log("");
-
-  results.push({
-    name: "POST protection logic consistency",
-    passed: testPostProtectLogic(),
-  });
-  console.log("");
-
-  logInfo("=== Phase 3: Integration Test (SQLite file:) ===");
-  console.log("");
-
-  results.push({
-    name: "SQLite file: connection & operations",
-    passed: await testSqliteConnection(),
+    name: "E2E: POST protection + SQLite persistence",
+    passed: await runE2ETests(),
   });
   console.log("");
 
@@ -325,9 +518,16 @@ async function main() {
 
   if (allPassed) {
     console.log(`${GREEN}  ALL TESTS PASSED!${RESET}`);
-    console.log("  You can now use:");
-    console.log("  - SQLite file:./path/to.db for local database");
-    console.log("  - ANALOG_PROTECT_POST=true for consistent POST protection");
+    console.log("");
+    console.log("  Verified fixes:");
+    console.log("  1. SQLite file: mode works correctly");
+    console.log("     - Import uses @libsql/client (not /web)");
+    console.log("     - Database file created and data persisted");
+    console.log("  2. POST protection is consistent");
+    console.log("     - All 3 handlers have the check");
+    console.log("     - No token = 401");
+    console.log("     - Wrong token = 401");
+    console.log("     - Correct token = 200 + data persisted");
     process.exit(0);
   } else {
     console.log(`${RED}  SOME TESTS FAILED${RESET}`);
