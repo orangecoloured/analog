@@ -9,7 +9,7 @@
   https://github.com/user-attachments/assets/13d13086-7315-4e28-96ee-08f586b9151b
 </details>
 
-This is heavily inspired by the [piratepx](https://piratepx.com).
+This is heavily inspired by the [piratepx](https://github.com/piratepx).
 
 ## Storage
 ### Redis
