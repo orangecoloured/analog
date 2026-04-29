@@ -22,18 +22,18 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
-    "typescript-eslint": "^8.59.0",
-    "vite": "^8.0.9"
+    "typescript-eslint": "^8.59.1",
+    "vite": "^8.0.10"
   },
   "dependencies": {
-    "@libsql/client": "^0.17.2",
+    "@libsql/client": "^0.17.3",
     "@netlify/functions": "^5.2.0",
-    "@netlify/vite-plugin": "^2.11.7",
-    "@vercel/node": "^5.7.12",
+    "@netlify/vite-plugin": "^2.12.1",
+    "@vercel/node": "^5.7.13",
     "ioredis": "^5.10.1",
     "mongodb": "^7.2.0",
     "pg": "^8.20.0",
-    "toad-scheduler": "^3.1.0",
+    "toad-scheduler": "^4.0.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "uuid": "^14.0.0"
