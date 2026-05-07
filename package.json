@@ -14,16 +14,16 @@
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.1",
     "@types/pg": "^8.20.0",
     "concurrently": "^9.2.1",
     "eslint": "^10.3.0",
     "globals": "^17.6.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.4.0",
+    "lint-staged": "^17.0.2",
     "prettier": "^3.8.3",
     "typescript-eslint": "^8.59.2",
-    "vite": "^8.0.10"
+    "vite": "^8.0.11"
   },
   "dependencies": {
     "@libsql/client": "^0.17.3",
