@@ -31,14 +31,14 @@ const platformSpecificConfig = (config: UserConfig) => {
 
 export default defineConfig(({ command }) => {
   if (command === "serve") {
-    const port = Number(process.env.ANALOG_PORT_SERVER as string);
+    const portServer = Number(process.env.ANALOG_PORT_SERVER as string);
 
     return {
       ...baseConfig,
       server: {
-        port,
+        port: PORT_DEV,
         proxy: {
-          "/api": `http://localhost:${isNaN(port) ? PORT_DEV + 1 : port}`,
+          "/api": `http://localhost:${isNaN(portServer) ? PORT_DEV + 1 : portServer}`,
         },
       },
     };
