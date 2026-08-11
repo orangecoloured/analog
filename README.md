@@ -40,7 +40,7 @@ For some variables the `VITE_` prefix is required, because the app is built usin
 | `ANALOG_STATIC_SERVER` | Set to `true` to make the Node.js server also serve static content. In this case the contents of `./src/services/server/dist` folder are used. | `false` |
 | `ANALOG_PORT_SERVER` | The port you want the Node.js server to listen on.  | |
 | `VITE_ANALOG_PAGE_TITLE` | Page title. | |
-| `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | `30` |
+| `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | `10` |
 | `VITE_ANALOG_API_GET_REQUEST_QUEUE` | Defines if the request to the API is done in a sequence, rather than fetching all the data in one go. | `true` |
 | `VITE_ANALOG_API_GET_REQUEST_CLEAN_UP` | Defines if the data clean up occurs along with the `GET` request. | `true` |
 
