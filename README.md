@@ -56,7 +56,7 @@ npm install
 npm run dev
 ```
 This launches the frontend app and the node server.
-### Netlify
+### [Netlify](https://www.netlify.com)
 Create a project with a copy of this repository. The settings are in the `netlify.toml`.
 
 Configuration to schedule the clean up function to run every day:
@@ -66,7 +66,7 @@ Configuration to schedule the clean up function to run every day:
 ```
 > [!IMPORTANT]
 > Scheduling may not work, because of the runtime limitations.
-### Vercel
+### [Vercel](https://vercel.com)
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
 
 Configuration to schedule the clean up function to run every day:
@@ -80,6 +80,16 @@ Configuration to schedule the clean up function to run every day:
 ```
 > [!IMPORTANT]
 > Scheduling may not work, because of the runtime limitations.
+### [Render](https://render.com)
+Create a web service with a copy of this repository. The settings are in the `render.yaml`.
+
+It's deployed as a Docker container, so you want to set some of the environment variables accordingly.
+```bash
+VITE_ANALOG_API_GET_REQUEST_QUEUE = false
+VITE_ANALOG_API_GET_REQUEST_CLEAN_UP = false
+ANALOG_STATIC_SERVER = true
+ANALOG_PORT_SERVER = 10000 # Render maps the web services to this port
+```
 ### Docker
 Use the Dockerfile to build and run the app in a Docker container, based on your environment:
 ```bash
