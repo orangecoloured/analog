@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: analog-analytics
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
