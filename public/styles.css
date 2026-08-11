@@ -105,6 +105,11 @@ h6 {
   }
 }
 
+html,
+body {
+  background-color: light-dark(var(--colour-light), var(--colour-dark));
+}
+
 #root {
   height: 100dvh;
   background-color: light-dark(var(--colour-light), var(--colour-dark));
