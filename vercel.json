@@ -10,5 +10,11 @@
   "routes": [
     { "src": "/api/events", "methods": ["GET", "POST", "OPTIONS"], "dest": "api/events.ts" },
     { "src": "/api/cleanUp", "status": 404, "continue": false }
+  ],
+  "crons": [
+    {
+      "path": "/api/cleanUp",
+      "schedule": "0 0 * * *"
+    }
   ]
 }

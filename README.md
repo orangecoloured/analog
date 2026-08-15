@@ -56,40 +56,6 @@ npm install
 npm run dev
 ```
 This launches the frontend app and the node server.
-### [Netlify](https://www.netlify.com)
-Create a project with a copy of this repository. The settings are in the `netlify.toml`.
-
-Configuration to schedule the clean up function to run every day:
-```toml
-[functions."cleanUp"]
-  schedule = "@daily"
-```
-> [!IMPORTANT]
-> Scheduling may not work, because of the runtime limitations.
-### [Vercel](https://vercel.com)
-Create a project with a copy of this repository. The settings are in the `vercel.json`.
-
-Configuration to schedule the clean up function to run every day:
-```json
-"crons": [
-  {
-    "path": "/api/cleanUp",
-    "schedule": "0 0 * * *"
-  }
-]
-```
-> [!IMPORTANT]
-> Scheduling may not work, because of the runtime limitations.
-### [Render](https://render.com)
-Create a web service with a copy of this repository. The settings are in the `render.yaml`.
-
-It's deployed as a Docker container, so you want to set some of the environment variables accordingly.
-```bash
-VITE_ANALOG_API_GET_REQUEST_QUEUE = false
-VITE_ANALOG_API_GET_REQUEST_CLEAN_UP = false
-ANALOG_STATIC_SERVER = true
-ANALOG_PORT_SERVER = 10000 # Render maps the web services to this port
-```
 ### Docker
 Use the Dockerfile to build and run the app in a Docker container, based on your environment:
 ```bash
@@ -107,6 +73,50 @@ docker run -d \
   --name analog-analytics \
   analog-analytics
 ```
+### [Koyeb](https://koyeb.com)
+Create a web service with a copy of this repository.
+
+It's deployed as a Docker container, so you want to set some of the environment variables accordingly.
+```bash
+VITE_ANALOG_API_GET_REQUEST_QUEUE = false
+VITE_ANALOG_API_GET_REQUEST_CLEAN_UP = false
+ANALOG_STATIC_SERVER = true
+ANALOG_PORT_SERVER = 8000 # It should match the port in your deployment settings
+```
+### [Netlify](https://www.netlify.com)
+Create a project with a copy of this repository. The settings are in the `netlify.toml`.
+
+Configuration to schedule the clean up function to run every day:
+```toml
+[functions."cleanUp"]
+  schedule = "@daily"
+```
+> [!IMPORTANT]
+> Scheduling may not work, because of the runtime limitations.
+### [Render](https://render.com)
+Create a web service with a copy of this repository. The settings are in the `render.yaml`.
+
+It's deployed as a Docker container, so you want to set some of the environment variables accordingly.
+```bash
+VITE_ANALOG_API_GET_REQUEST_QUEUE = false
+VITE_ANALOG_API_GET_REQUEST_CLEAN_UP = false
+ANALOG_STATIC_SERVER = true
+ANALOG_PORT_SERVER = 10000 # Render maps the web services to this port
+```
+### [Vercel](https://vercel.com)
+Create a project with a copy of this repository. The settings are in the `vercel.json`.
+
+Configuration to schedule the clean up function to run every day:
+```json
+"crons": [
+  {
+    "path": "/api/cleanUp",
+    "schedule": "0 0 * * *"
+  }
+]
+```
+> [!IMPORTANT]
+> Scheduling may not work, because of the runtime limitations.
 
 ## Usage
 ### Web application
