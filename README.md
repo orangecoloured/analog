@@ -29,23 +29,23 @@ For some variables the `VITE_` prefix is required, because the app is built usin
 
 | Key  | Value | Default |
 | :--- | :--- | :--- |
-| `ANALOG_TOKEN` | Protects requests. Leave empty if no protection is required.  | |
 | `ANALOG_DATABASE_PROVIDER` | Defines the kind of database to use. Possible values: `redis`, `postgresql`, `mongodb`, `sqlite`. | |
-| `ANALOG_REDIS_URL` | Redis connection url. | |
-| `ANALOG_POSTGRESQL_URL` | PostgreSQL connection url. | |
-| `ANALOG_MONGODB_URL` | MongoDB connection url. | |
-| `ANALOG_SQLITE_URL` | SQLite connection url. Add an `authtoken` query parametre if you need to use the `authToken` to initilise the connection. | |
 | `ANALOG_DATABASE_REQUEST_ITEM_COUNT` | The item count the API server requests from the database. | `10` |
-| `ANALOG_PROTECT_POST` | Set to `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` requests. | `false` |
-| `ANALOG_STATIC_SERVER` | Set to `true` to make the Node.js server also serve static content. In this case the contents of `./src/services/server/dist` folder are used. | `false` |
+| `ANALOG_MONGODB_URL` | MongoDB connection url. | |
 | `ANALOG_PORT_SERVER` | The port you want the Node.js server to listen on.  | |
+| `ANALOG_POSTGRESQL_URL` | PostgreSQL connection url. | |
+| `ANALOG_PROTECT_POST` | Set to `true` if `ANALOG_TOKEN` is present and you want to protect the `POST` requests. | `false` |
+| `ANALOG_REDIS_URL` | Redis connection url. | |
+| `ANALOG_SQLITE_URL` | SQLite connection url. Add an `authtoken` query parametre if you need to use the `authToken` to initilise the connection. | |
+| `ANALOG_STATIC_SERVER` | Set to `true` to make the Node.js server also serve static content. In this case the contents of `./src/services/server/dist` folder are used. | `false` |
+| `ANALOG_TOKEN` | Protects requests. Leave empty if no protection is required.  | |
+| `VITE_ANALOG_API_GET_REQUEST_CLEAN_UP` | Defines if the data clean up occurs along with the `GET` request. | `true` |
+| `VITE_ANALOG_API_GET_REQUEST_QUEUE` | Defines if the request to the API is done in a sequence, rather than fetching all the data in one go. | `true` |
 | `VITE_ANALOG_PAGE_TITLE` | Page title. | |
 | `VITE_ANALOG_TIME_RANGE` | Time range to show data for. Minimum is `10`, maximum is `30`. | `10` |
-| `VITE_ANALOG_API_GET_REQUEST_QUEUE` | Defines if the request to the API is done in a sequence, rather than fetching all the data in one go. | `true` |
-| `VITE_ANALOG_API_GET_REQUEST_CLEAN_UP` | Defines if the data clean up occurs along with the `GET` request. | `true` |
 
 ## Deployment
-### Local
+### Dev / Local
 Clone this repository.
 
 Create `.env.local` with your settings.
@@ -73,7 +73,8 @@ docker run -d \
   --name analog-analytics \
   analog-analytics
 ```
-### [Koyeb](https://koyeb.com)
+### Cloud Services
+#### [Koyeb](https://koyeb.com)
 Create a web service with a copy of this repository.
 
 It's deployed as a Docker container, so you want to set some of the environment variables accordingly.
@@ -83,7 +84,7 @@ VITE_ANALOG_API_GET_REQUEST_CLEAN_UP = false
 ANALOG_STATIC_SERVER = true
 ANALOG_PORT_SERVER = 8000 # It should match the port in your deployment settings
 ```
-### [Netlify](https://www.netlify.com)
+#### [Netlify](https://www.netlify.com)
 Create a project with a copy of this repository. The settings are in the `netlify.toml`.
 
 Configuration to schedule the clean up function to run every day:
@@ -93,7 +94,7 @@ Configuration to schedule the clean up function to run every day:
 ```
 > [!IMPORTANT]
 > Scheduling may not work, because of the runtime limitations.
-### [Render](https://render.com)
+#### [Render](https://render.com)
 Create a web service with a copy of this repository. The settings are in the `render.yaml`.
 
 It's deployed as a Docker container, so you want to set some of the environment variables accordingly.
@@ -103,7 +104,7 @@ VITE_ANALOG_API_GET_REQUEST_CLEAN_UP = false
 ANALOG_STATIC_SERVER = true
 ANALOG_PORT_SERVER = 10000 # Render maps the web services to this port
 ```
-### [Vercel](https://vercel.com)
+#### [Vercel](https://vercel.com)
 Create a project with a copy of this repository. The settings are in the `vercel.json`.
 
 Configuration to schedule the clean up function to run every day:
