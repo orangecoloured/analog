@@ -12,14 +12,14 @@
 This is heavily inspired by the [piratepx](https://github.com/piratepx).
 
 ## Storage
-### Redis
-Get one from [Upstash](https://upstash.com), [Render](https://render.com) or [Redis](https://redis.io).
+### MongoDB
+Get one from [MongoDB](https://mongodb.com).
 ### PostgreSQL
 Get one from [Supabase](https://supabase.com), [Render](https://render.com) or [CockroachDB](https://cockroachlabs.cloud).
 > [!IMPORTANT]
 > You should use a transaction pooler connection.
-### MongoDB
-Get one from [MongoDB](https://mongodb.com).
+### Redis
+Get one from [Upstash](https://upstash.com), [Render](https://render.com) or [Redis](https://redis.io).
 ### SQLite
 Get one from [Turso](https://turso.tech) or use a local file with `file:./path/to/file.db` as the connection url.
 > [!IMPORTANT]
