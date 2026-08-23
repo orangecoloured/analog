@@ -1,6 +1,6 @@
 import { defineConfig, type UserConfig } from "vite";
 import netlify from "@netlify/vite-plugin";
-import { PORT_DEV } from "./src/utils";
+import { PORT_DEV } from "./src/utils/index.ts";
 
 const baseConfig = {
   root: ".",

@@ -3,7 +3,7 @@ import {
   MOCK_MAX_TIMESTAMPS_COUNT,
   MOCK_RECORDS_COUNT,
   type TData,
-} from ".";
+} from "./index.ts";
 
 export const mockData = (props?: {
   range?: number;
