@@ -80,20 +80,26 @@ h6 {
   color-scheme: light dark;
   --colour-light: #f9f6ee;
   --colour-dark: #28282b;
-  --color-gradient: linear-gradient(
-    200deg,
-    light-dark(var(--colour-dark), var(--colour-light)) 0%,
-    light-dark(
-        color-mix(in srgb, var(--colour-dark) 60%, transparent),
-        color-mix(in srgb, var(--colour-light) 60%, transparent)
-      )
-      100%
-  );
+  --colour-fill: var(--colour-dark);
   --gap-m-max: max(2dvw, 2dvh);
   --gap-s-min: min(1dvw, 1dvh);
   --columns-count: 30;
   --font-small: 10px;
   --font-medium: 14px;
+}
+
+@supports (color: light-dark(black, white)) and (color: color-mix(in srgb, black 10%, transparent)) {
+  :root {
+    --colour-fill: linear-gradient(
+      200deg,
+      light-dark(var(--colour-dark), var(--colour-light)) 0%,
+      light-dark(
+          color-mix(in srgb, var(--colour-dark) 60%, transparent),
+          color-mix(in srgb, var(--colour-light) 60%, transparent)
+        )
+        100%
+    );
+  }
 }
 
 @keyframes rotate {
@@ -107,15 +113,15 @@ h6 {
 
 html,
 body {
-  background-color: light-dark(var(--colour-light), var(--colour-dark));
+  background-color: var(--colour-light);
 }
 
 #root {
   height: 100dvh;
-  background-color: light-dark(var(--colour-light), var(--colour-dark));
+  background-color: var(--colour-light);
   font-family: monospace;
   padding: var(--gap-m-max);
-  color: light-dark(var(--colour-dark), var(--colour-light));
+  color: var(--colour-dark);
   overflow: auto;
   display: flex;
   flex-flow: column nowrap;
@@ -136,7 +142,7 @@ body {
 .logo {
   aspect-ratio: 1;
   width: 64px;
-  background: var(--color-gradient);
+  background: var(--colour-fill);
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -163,14 +169,14 @@ body {
   top: 6px;
   left: 2px;
   width: 4px;
-  background-color: light-dark(var(--colour-light), var(--colour-dark));
+  background-color: var(--colour-light);
 }
 
 .logo > * {
   font-size: var(--font-medium);
   line-height: var(--font-medium);
   font-weight: bold;
-  color: light-dark(var(--colour-light), var(--colour-dark));
+  color: var(--colour-light);
   letter-spacing: 6px;
   text-indent: -6px;
   direction: rtl;
@@ -211,10 +217,10 @@ body {
 
 .event-values[data-type="header"] {
   position: sticky;
-  border-bottom: 1px solid light-dark(var(--colour-dark), var(--colour-light));
+  border-bottom: 1px solid var(--colour-dark);
   padding: var(--gap-s-min) 0;
   top: calc(var(--gap-m-max) * -1);
-  background-color: light-dark(var(--colour-light), var(--colour-dark));
+  background-color: var(--colour-light);
   z-index: 1;
 }
 
@@ -227,7 +233,7 @@ body {
   flex: 1;
   width: 100%;
   max-width: 40px;
-  background: var(--color-gradient);
+  background: var(--colour-fill);
 }
 
 .value {
@@ -255,11 +261,8 @@ body {
   content: "";
   width: 16px;
   height: 16px;
-  border: 2px solid light-dark(var(--colour-dark), var(--colour-light));
-  border-top-color: light-dark(
-    color-mix(in srgb, var(--colour-dark) 40%, transparent),
-    color-mix(in srgb, var(--colour-light) 40%, transparent)
-  );
+  border: 2px solid var(--colour-dark);
+  border-top-color: var(--colour-light);
   border-radius: 50%;
   animation: rotate 800ms linear infinite;
 }
@@ -268,4 +271,37 @@ body {
   content: attr(data-text);
   font-size: var(--font-small);
   font-weight: bold;
+}
+
+@supports (color: light-dark(black, white)) and (color: color-mix(in srgb, black 10%, transparent)) {
+  html,
+  body {
+    background-color: light-dark(var(--colour-light), var(--colour-dark));
+  }
+
+  #root {
+    background-color: light-dark(var(--colour-light), var(--colour-dark));
+    color: light-dark(var(--colour-dark), var(--colour-light));
+  }
+
+  .logo:before {
+    background-color: light-dark(var(--colour-light), var(--colour-dark));
+  }
+
+  .logo > * {
+    color: light-dark(var(--colour-light), var(--colour-dark));
+  }
+
+  .event-values[data-type="header"] {
+    border-bottom: 1px solid light-dark(var(--colour-dark), var(--colour-light));
+    background-color: light-dark(var(--colour-light), var(--colour-dark));
+  }
+
+  #loading:before {
+    border: 2px solid light-dark(var(--colour-dark), var(--colour-light));
+    border-top-color: light-dark(
+      color-mix(in srgb, var(--colour-dark) 40%, transparent),
+      color-mix(in srgb, var(--colour-light) 40%, transparent)
+    );
+  }
 }

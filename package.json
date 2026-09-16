@@ -1,6 +1,6 @@
 {
   "name": "analog",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A minimal analytics tool to self-host.",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "globals": "17.12.0",
     "husky": "9.1.7",
     "lint-staged": "17.5.1",
-    "prettier": "3.9.6",
+    "prettier": "3.9.7",
     "typescript-eslint": "8.70.0",
     "vite": "8.3.0"
   },
@@ -30,7 +30,7 @@
     "@libsql/client": "0.18.0",
     "@netlify/functions": "6.0.0",
     "@netlify/vite-plugin": "3.0.1",
-    "@vercel/node": "13.0.0",
+    "@vercel/node": "13.0.1",
     "ioredis": "6.0.0",
     "mongodb": "7.6.0",
     "pg": "8.23.0",
