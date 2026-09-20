@@ -15,14 +15,14 @@
   "type": "module",
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@types/node": "26.5.1",
+    "@types/node": "26.6.2",
     "@types/pg": "8.23.1",
     "concurrently": "10.0.5",
-    "eslint": "10.10.0",
+    "eslint": "10.11.0",
     "globals": "17.12.0",
     "husky": "9.1.7",
     "lint-staged": "17.5.1",
-    "prettier": "3.9.7",
+    "prettier": "3.9.8",
     "typescript-eslint": "8.70.0",
     "vite": "8.3.0"
   },
@@ -35,7 +35,7 @@
     "mongodb": "7.6.0",
     "pg": "8.23.0",
     "toad-scheduler": "4.2.0",
-    "tsx": "4.23.13",
+    "tsx": "4.23.15",
     "typescript": "6.0.3",
     "uuid": "14.0.2"
   },
