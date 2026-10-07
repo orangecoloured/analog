@@ -23,14 +23,14 @@
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
     "prettier": "3.9.9",
-    "typescript-eslint": "8.71.0",
-    "vite": "8.3.2"
+    "typescript-eslint": "8.71.1",
+    "vite": "8.3.3"
   },
   "dependencies": {
     "@libsql/client": "0.18.0",
     "@netlify/functions": "6.0.2",
     "@netlify/vite-plugin": "3.0.1",
-    "@vercel/node": "20.0.0",
+    "@vercel/node": "22.0.0",
     "ioredis": "6.0.0",
     "mongodb": "7.7.0",
     "pg": "8.23.1",
