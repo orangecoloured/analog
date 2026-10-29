@@ -15,7 +15,7 @@
   "type": "module",
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@types/node": "26.6.5",
+    "@types/node": "26.6.6",
     "@types/pg": "8.23.1",
     "concurrently": "10.0.6",
     "eslint": "10.13.0",
@@ -23,14 +23,14 @@
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
     "prettier": "3.9.10",
-    "typescript-eslint": "8.72.0",
+    "typescript-eslint": "8.72.1",
     "vite": "8.3.5"
   },
   "dependencies": {
     "@libsql/client": "0.18.0",
     "@netlify/functions": "6.0.3",
     "@netlify/vite-plugin": "3.0.1",
-    "@vercel/node": "27.0.2",
+    "@vercel/node": "29.0.0",
     "ioredis": "6.0.0",
     "mongodb": "7.7.0",
     "pg": "8.23.1",
